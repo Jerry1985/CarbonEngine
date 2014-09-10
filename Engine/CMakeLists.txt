@@ -5,7 +5,7 @@ set(CMAKE_SUPPRESS_REGENERATION TRUE)
 
 #set(CMAKE_INCLUDE_DIRECTORIES_BEFORE ON)
 
-#include_directories( "${Carbon_SOURCE_DIR}/Source" )
+include_directories( "${Carbon_SOURCE_DIR}/Source/Runtime/Common" )
 include_directories( "C:/wxWidgets-3.0.1/include" )
 include_directories( "C:/wxWidgets-3.0.1/lib/vc_lib/mswud" )
 
