@@ -1,6 +1,8 @@
 #ifndef CARBON_VECTOR4
 #define CARBON_VECTOR4
 
+#include "VectorCommon.h"
+
 template<typename T>
 class Vector4
 {
@@ -11,68 +13,45 @@ public:
 	Vector4(const Vector4<T>& v) :x(v.x), y(v.y), z(v.z), w(v.w){}
 	~Vector4(){}
 
-#define DEFINE_BASIC_OP_METHOD(OPERATOR) \
-	OPERATOR(+)\
-	OPERATOR(-)\
-	OPERATOR(*)\
-	OPERATOR(/ )
-
-#define DEFINE_BASIC_OP0(op) \
-	const Vector3<T> operator op(const Vector3<T>& v) \
-	{ \
-	Vector3 r; \
-	r.data[0] = v.data[0] op data[0]; \
-	r.data[1] = v.data[1] op data[1]; \
-	r.data[2] = v.data[2] op data[2]; \
-	r.data[3] = v.data[3] op data[3]; \
-	return r; \
+#define BASIC_METHOD0(op) \
+	Vector4<T>	operator op (const Vector4<T>& v) const\
+	{\
+		return Vector4<T>(x op v.x, y op v.y, z op v.z, w op v.w); \
 	}
 
-#define DEFINE_BASIC_OP1(op) \
-	const Vector3<T> operator op(const T& d) \
-	{ \
-		Vector3 r; \
-		data[0] = data[0] op d; \
-		data[1] = data[1] op d; \
-		data[2] = data[2] op d; \
-		data[3] = data[3] op d; \
-		return r; \
+#define BASIC_METHOD1(op) \
+	const Vector4<T>& operator ##op= (const Vector4<T>& v) \
+	{\
+		x = x op v.x;\
+		y = y op v.y;\
+		z = z op v.z;\
+		w = w op v.w;\
+		return *this;\
 	}
 
-#define DEFINE_BASIC_OP2(op) \
-	const Vector3<T> operator ##op= (const Vector3<T>& v) \
-	{ \
-		Vector3 r; \
-		data[0] ##op= v.data[0]; \
-		data[1] ##op= v.data[1]; \
-		data[2] ##op= v.data[2]; \
-		data[2] ##op= v.data[3]; \
-		return r; \
+#define BASIC_METHOD2(op)	\
+	Vector4<T>	operator op (T s) const \
+	{\
+		return Vector4<T>(x op s, y op s, z op s, w op s); \
 	}
 
-#define DEFINE_BASIC_OP3(op) \
-	const Vector3<T> operator ##op= (const T& d) \
-	{ \
-		Vector3 r; \
-		data[0] ##op= d; \
-		data[1] ##op= d; \
-		data[2] ##op= d; \
-		data[3] ##op= d; \
-		return r; \
+	DEFINE_ALL_BASIC_METHODS
+
+#undef BASIC_METHOD0
+#undef BASIC_METHOD1
+#undef BASIC_METHOD2
+
+	friend Vector4<T> operator * (T s , const Vector4<T>& v )
+	{
+		return v * s;
 	}
 
-	DEFINE_BASIC_OP_METHOD(DEFINE_BASIC_OP0)
-	DEFINE_BASIC_OP_METHOD(DEFINE_BASIC_OP1)
-	DEFINE_BASIC_OP_METHOD(DEFINE_BASIC_OP2)
-	DEFINE_BASIC_OP_METHOD(DEFINE_BASIC_OP3)
-
-
-	friend T Dot3(const Vector4& v0, const Vector4& v1)
+	friend T Dot3(const Vector4<T>& v0, const Vector4<T>& v1)
 	{
 		return v0.x * v1.x + v0.y * v1.y + v0.z * v1.z;
 	}
 
-	friend T Dot4(const Vector4& v0, const Vector4& v1)
+	friend T Dot4(const Vector4<T>& v0, const Vector4<T>& v1)
 	{
 		return v0.x * v1.x + v0.y * v1.y + v0.z * v1.z + v0.w * v1.w;
 	}
@@ -135,8 +114,6 @@ public:
 	};
 };
 
-typedef Vector4<float>		Vector4f;
-typedef Vector4<int>		Vector4i;
-typedef Vector4<double>		Vector4d;
+VECTOR_TYPE(Vector4)
 
 #endif

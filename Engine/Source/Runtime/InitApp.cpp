@@ -1,32 +1,14 @@
-#include <wx/wxprec.h>
+#include <iostream>
+using namespace std;
 
-#ifndef WX_PRECOMP
-#include <wx/wx.h>
-#endif
+#include "Math\Vector4.h"
 
-// The main frame for rendering
-class MyFrame : public wxFrame
+int main(int argc, char** argv)
 {
-	// Public method
-public:
-	// Constructor
-	MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
-		: wxFrame(NULL, wxID_ANY, title, pos, size){}
-};
+	Vector4f v0( 1.0f , 2.0f , 4.0f , 2.0f );
+	Vector4f v1( 3.0f , 1.0f , 5.0f, 5.0f );
+	
+	float t = Dot3( v0 , v1 );
 
-// The app
-class MyApp : public wxApp
-{
-public:
-	virtual bool OnInit();
-};
-
-wxIMPLEMENT_APP_NO_THEMES(MyApp);
-
-// Initialization
-bool MyApp::OnInit()
-{
-	MyFrame *frame = new MyFrame("Carbon Engine", wxPoint(50, 50), wxSize(450, 340));
-	frame->Show(true);
-	return true;
+	return 0;
 }

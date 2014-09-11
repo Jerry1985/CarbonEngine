@@ -6,8 +6,8 @@ set(CMAKE_SUPPRESS_REGENERATION TRUE)
 #set(CMAKE_INCLUDE_DIRECTORIES_BEFORE ON)
 
 include_directories( "${Carbon_SOURCE_DIR}/Source/Runtime/Common" )
-include_directories( "C:/wxWidgets-3.0.1/include" )
-include_directories( "C:/wxWidgets-3.0.1/lib/vc_lib/mswud" )
+#include_directories( "C:/wxWidgets-3.0.1/include" )
+#include_directories( "C:/wxWidgets-3.0.1/lib/vc_lib/mswud" )
 
 link_directories( C:/wxWidgets-3.0.1/lib/vc_lib )
 
@@ -42,6 +42,6 @@ target_link_libraries( Carbon debug wxmsw30ud_core.lib debug wxbase30ud.lib debu
 target_link_libraries( Carbon optimized wxmsw30u_core.lib optimized wxbase30u.lib optimized wxtiff.lib optimized wxjpeg.lib optimized wxpng.lib optimized wxzlib.lib optimized comctl32.lib optimized uuid.lib optimized rpcrt4.lib)
 
 if(WIN32)
-   set_target_properties(Carbon PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:WINDOWS")
-   set_target_properties(Carbon PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS")
+   #set_target_properties(Carbon PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:WINDOWS")
+   #set_target_properties(Carbon PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS")
 endif(WIN32)

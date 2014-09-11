@@ -1,6 +1,8 @@
 #ifndef CARBON_VECTOR2
 #define CARBON_VECTOR2
 
+#include "VectorCommon.h"
+
 template<typename T>
 class Vector2
 {
@@ -11,52 +13,31 @@ public:
 	Vector2(const Vector2<T>& v) :x(v.x), y(v.y){}
 	~Vector2(){}
 
-#define DEFINE_BASIC_OP_METHOD(OPERATOR) \
-	OPERATOR(+)\
-	OPERATOR(-)\
-	OPERATOR(*)\
-	OPERATOR(/ )
-
-#define DEFINE_BASIC_OP0(op) \
-	const Vector2<T> operator op(const Vector2<T>& v) \
-	{ \
-		Vector2 r; \
-		r.data[0] = v.data[0] op data[0]; \
-		r.data[1] = v.data[1] op data[1]; \
-		return r; \
+#define BASIC_METHOD0(op) \
+	Vector2<T>	operator op (const Vector2<T>& v) const\
+	{\
+		return Vector2<T>(x op v.x, y op v.y); \
 	}
 
-#define DEFINE_BASIC_OP1(op) \
-	const Vector2<T> operator op(const T& d) \
-	{ \
-		Vector2 r; \
-		r.data[0] = v.data[0] op d; \
-		r.data[1] = v.data[1] op d; \
-		return r; \
+#define BASIC_METHOD1(op) \
+	const Vector2<T>& operator ##op= (const Vector2<T>& v) \
+	{\
+		x = x op v.x; \
+		y = y op v.y; \
+		return *this; \
 	}
 
-#define DEFINE_BASIC_OP2(op) \
-	const Vector2<T> operator ##op= (const Vector2<T>& v) \
-	{ \
-		Vector2 r; \
-		data[0] ##op= v.data[0]; \
-		data[1] ##op= v.data[1]; \
-		return r; \
+#define BASIC_METHOD2(op)	\
+	Vector2<T>	operator op (T s) const \
+	{\
+		return Vector2<T>(x op s, y op s); \
 	}
 
-#define DEFINE_BASIC_OP3(op) \
-	const Vector2<T> operator ##op= (const T& d) \
-	{ \
-		Vector2 r; \
-		data[0] ##op= d; \
-		data[1] ##op= d; \
-		return r; \
-	}
+	DEFINE_ALL_BASIC_METHODS
 
-	DEFINE_BASIC_OP_METHOD(DEFINE_BASIC_OP0)
-	DEFINE_BASIC_OP_METHOD(DEFINE_BASIC_OP1)
-	DEFINE_BASIC_OP_METHOD(DEFINE_BASIC_OP2)
-	DEFINE_BASIC_OP_METHOD(DEFINE_BASIC_OP3)
+#undef BASIC_METHOD0
+#undef BASIC_METHOD1
+#undef BASIC_METHOD2
 
 	friend T Dot(const Vector2& v0, const Vector2& v1)
 	{
@@ -111,8 +92,6 @@ public:
 	};
 };
 
-typedef Vector2<float>		Vector2f;
-typedef Vector2<int>		Vector2i;
-typedef Vector2<double>		Vector2d;
+VECTOR_TYPE(Vector2)
 
 #endif

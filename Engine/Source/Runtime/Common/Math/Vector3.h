@@ -1,6 +1,8 @@
 #ifndef CARBON_VECTOR3
 #define CARBON_VECTOR3
 
+#include "VectorCommon.h"
+
 template<typename T>
 class Vector3
 {
@@ -11,56 +13,37 @@ public:
 	Vector3(const Vector3<T>& v) :x(v.x), y(v.y), z(v.z){}
 	~Vector3(){}
 
-#define DEFINE_BASIC_OP_METHOD(OPERATOR) \
-	OPERATOR(+)\
-	OPERATOR(-)\
-	OPERATOR(*)\
-	OPERATOR(/)
-
-#define DEFINE_BASIC_OP0(op) \
-	const Vector3<T> operator op(const Vector3<T>& v) \
-	{ \
-		Vector3 r; \
-		r.data[0] = v.data[0] op data[0]; \
-		r.data[1] = v.data[1] op data[1]; \
-		r.data[2] = v.data[2] op data[2]; \
-		return r; \
+#define BASIC_METHOD0(op) \
+	Vector3<T>	operator op (const Vector3<T>& v) const\
+	{\
+		return Vector3<T>(x op v.x, y op v.y, z op v.z); \
 	}
 
-#define DEFINE_BASIC_OP1(op) \
-	const Vector3<T> operator op(const T& d) \
-	{ \
-		Vector3 r; \
-		data[0] = data[0] op d; \
-		data[1] = data[1] op d; \
-		data[2] = data[2] op d; \
-		return r; \
+#define BASIC_METHOD1(op) \
+	const Vector3<T>& operator ##op= (const Vector3<T>& v) \
+	{\
+		x = x op v.x; \
+		y = y op v.y; \
+		z = z op v.z; \
+		return *this; \
 	}
 
-#define DEFINE_BASIC_OP2(op) \
-	const Vector3<T> operator ##op= (const Vector3<T>& v) \
-	{ \
-		Vector3 r; \
-		data[0] ##op= v.data[0]; \
-		data[1] ##op= v.data[1]; \
-		data[2] ##op= v.data[2]; \
-		return r; \
+#define BASIC_METHOD2(op)	\
+	Vector3<T>	operator op (T s) const \
+	{\
+		return Vector3<T>(x op s, y op s, z op s); \
 	}
 
-#define DEFINE_BASIC_OP3(op) \
-	const Vector3<T> operator ##op= (const T& d) \
-	{ \
-		Vector3 r; \
-		data[0] ##op= d; \
-		data[1] ##op= d; \
-		data[2] ##op= d; \
-		return r; \
-	}
+	DEFINE_ALL_BASIC_METHODS
 
-	DEFINE_BASIC_OP_METHOD(DEFINE_BASIC_OP0)
-	DEFINE_BASIC_OP_METHOD(DEFINE_BASIC_OP1)
-	DEFINE_BASIC_OP_METHOD(DEFINE_BASIC_OP2)
-	DEFINE_BASIC_OP_METHOD(DEFINE_BASIC_OP3)
+#undef BASIC_METHOD0
+#undef BASIC_METHOD1
+#undef BASIC_METHOD2
+
+	friend Vector3<T> operator * (T s, const Vector3<T>& v)
+	{
+		return v * s;
+	}
 
 	friend T Dot(const Vector3& v0, const Vector3& v1)
 	{
@@ -115,8 +98,6 @@ public:
 	};
 };
 
-typedef Vector3<float>		Vector3f;
-typedef Vector3<int>		Vector3i;
-typedef Vector3<double>		Vector3d;
+VECTOR_TYPE(Vector3)
 
 #endif
