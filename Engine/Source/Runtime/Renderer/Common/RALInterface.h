@@ -1,29 +1,18 @@
 #ifndef CARBON_RALINTERFACE
 #define CARBON_RALINTERFACE
 
-#include "utility/Singleton.h"
+class RALViewport;
 
 // Rendering Abstraction Layer Interface
-class RALInterface : public Singleton<RALInterface>
+class RALInterface
 {
 public:
-	~RALInterface(){}
-
-protected:
-	// the interface should be a singleton
 	RALInterface(){}
+	virtual ~RALInterface(){}
 
-	friend class Singleton<RALInterface>;
+#define RAL_METHOD(ReturnType,FuncName,FuncParaDecl,FuncPara) virtual ReturnType FuncName FuncParaDecl = 0;
+	#include "RALMethods.h"
+#undef RAL_METHOD
 };
-
-// some use full global functions
-RALInterface*	GGetRALInterfacePtr()
-{
-	return RALInterface::GetSingletonPtr();
-}
-RALInterface&	GGetRALInterfaceRef()
-{
-	return RALInterface::GetSingleton();
-}
 
 #endif

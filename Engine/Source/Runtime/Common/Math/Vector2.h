@@ -39,47 +39,47 @@ public:
 #undef BASIC_METHOD1
 #undef BASIC_METHOD2
 
-	friend T Dot(const Vector2& v0, const Vector2& v1)
+	FORCE_INLINE friend T Dot(const Vector2& v0, const Vector2& v1)
 	{
 		return v0.x * v1.x + v0.y * v1.y;
 	}
 
-	T SquaredLength() const
+	FORCE_INLINE T SquaredLength() const
 	{
 		return x * x + y * y;
 	}
 
-	T Length() const
+	FORCE_INLINE T Length() const
 	{
 		return sqrt(SquaredLength());
 	}
 
-	Vector2<T>& Normalize()
+	FORCE_INLINE Vector2<T>& Normalize()
 	{
 		return (*this) / Length();
 	}
 
-	float	operator[] (unsigned id) const
+	FORCE_INLINE float	operator[] (unsigned id) const
 	{
 		return data[id];
 	}
 
-	float&	operator[] (unsigned id)
+	FORCE_INLINE float&	operator[] (unsigned id)
 	{
 		return data[id];
 	}
 
-	Vector2<T>  operator- () const
+	FORCE_INLINE Vector2<T>  operator- () const
 	{
 		return Vector2<T>(-x, -y);
 	}
 
-	bool	operator == (const Vector2<T>& v) const
+	FORCE_INLINE bool	operator == (const Vector2<T>& v) const
 	{
 		return x == v.x && y == v.y && z == v.z;
 	}
 
-	bool	operator != (const Vector2<T>& v) const
+	FORCE_INLINE bool	operator != (const Vector2<T>& v) const
 	{
 		return !(*this == v);
 	}
@@ -93,5 +93,8 @@ public:
 };
 
 VECTOR_TYPE(Vector2)
+
+// rename vector2d as point
+typedef Vector2i Point2D;
 
 #endif

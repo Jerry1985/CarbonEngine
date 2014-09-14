@@ -40,52 +40,52 @@ public:
 #undef BASIC_METHOD1
 #undef BASIC_METHOD2
 
-	friend Vector3<T> operator * (T s, const Vector3<T>& v)
+	FORCE_INLINE friend Vector3<T> operator * (T s, const Vector3<T>& v)
 	{
 		return v * s;
 	}
 
-	friend T Dot(const Vector3& v0, const Vector3& v1)
+	FORCE_INLINE friend T Dot(const Vector3& v0, const Vector3& v1)
 	{
 		return v0.x * v1.x + v0.y * v1.y + v0.z * v1.z;
 	}
 
-	T SquaredLength() const
+	FORCE_INLINE T SquaredLength() const
 	{
 		return x * x + y * y + z * z;
 	}
 
-	T Length() const
+	FORCE_INLINE T Length() const
 	{
 		return sqrt(SquaredLength());
 	}
 
-	Vector3<T>& Normalize()
+	FORCE_INLINE Vector3<T>& Normalize()
 	{
 		return (*this) / Length();
 	}
 
-	float	operator[] (unsigned id) const
+	FORCE_INLINE float	operator[] (unsigned id) const
 	{
 		return data[id];
 	}
 
-	float&	operator[] (unsigned id)
+	FORCE_INLINE float&	operator[] (unsigned id)
 	{
 		return data[id];
 	}
 
-	Vector3<T>  operator- () const
+	FORCE_INLINE Vector3<T>  operator- () const
 	{
 		return Vector3<T>(-x, -y, -z);
 	}
 
-	bool	operator == (const Vector3<T>& v) const
+	FORCE_INLINE bool	operator == (const Vector3<T>& v) const
 	{
 		return x == v.x && y == v.y && z == v.z;
 	}
 
-	bool	operator != (const Vector3<T>& v) const
+	FORCE_INLINE bool	operator != (const Vector3<T>& v) const
 	{
 		return !(*this == v);
 	}
@@ -99,5 +99,8 @@ public:
 };
 
 VECTOR_TYPE(Vector3)
+
+// rename vector3d as point
+typedef Vector3f Point3D;
 
 #endif
