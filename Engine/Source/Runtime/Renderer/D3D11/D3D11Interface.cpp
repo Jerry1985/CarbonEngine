@@ -1,11 +1,11 @@
 #include "D3D11Interface.h"
 #include "D3D11Viewport.h"
 
-D3D11Interface*	D3D11Interface::m_D3D11Interface = 0;
+D3D11Interface* gD3D11Interface = 0;
 
 D3D11Interface::D3D11Interface()
 {
-	m_D3D11Interface = this;
+	gD3D11Interface = this;
 
 	_initDevice();
 }

@@ -1,8 +1,10 @@
 #include "D3D11Viewport.h"
 #include "D3D11Interface.h"
 
+extern D3D11Interface* gD3D11Interface;
+
 D3D11Viewport::D3D11Viewport(void* windowHandle, unsigned width, unsigned height, bool bIsFullscreen) :
-RALViewport(windowHandle, width, height, bIsFullscreen), m_D3D11DeviceContext(D3D11Interface::GetD3D11DeviceContext())
+RALViewport(windowHandle, width, height, bIsFullscreen)
 {
 	DXGI_SWAP_CHAIN_DESC scDesc;
 	memset(&scDesc, 0, sizeof(scDesc));
@@ -16,20 +18,13 @@ RALViewport(windowHandle, width, height, bIsFullscreen), m_D3D11DeviceContext(D3
 	scDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 	scDesc.Windowed = !bIsFullscreen;
 
-	IDXGIFactory*	DXGIFactory = D3D11Interface::GetDXGIFactory();
-	HRESULT hr = DXGIFactory->CreateSwapChain(D3D11Interface::GetD3D11Device(), &scDesc, &m_pSwapChain);
+	gD3D11Interface->m_DXGIFactory->CreateSwapChain(gD3D11Interface->m_D3D11Device, &scDesc, &m_pSwapChain);
 
 	// get the address of the back buffer
 	ID3D11Texture2D *pBackBuffer;
 	m_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
-
-	ID3D11RenderTargetView *backbuffer;
-	// use the back buffer address to create the render target
-	D3D11Interface::GetD3D11Device()->CreateRenderTargetView(pBackBuffer, NULL, &backbuffer);
+	gD3D11Interface->m_D3D11Device->CreateRenderTargetView(pBackBuffer, NULL, &m_pRenderTargetView);
 	pBackBuffer->Release();
-
-	// set the render target as the back buffer
-	m_D3D11DeviceContext->OMSetRenderTargets(1, &backbuffer, NULL);
 }
 
 D3D11Viewport::~D3D11Viewport()
@@ -40,4 +35,10 @@ D3D11Viewport::~D3D11Viewport()
 void D3D11Viewport::Present()
 {
 	m_pSwapChain->Present(0, 0);
+}
+
+void D3D11Viewport::BeginRender()
+{
+	// set the render target as the back buffer
+	gD3D11Interface->m_D3D11DeviceContext->OMSetRenderTargets(1, &m_pRenderTargetView, NULL);
 }

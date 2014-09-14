@@ -7,6 +7,7 @@ public:
 	RALViewport(void* WindowHandle, unsigned width, unsigned height, bool bIsFullscreen);
 	virtual ~RALViewport();
 
+	virtual void	BeginRender() = 0;
 	virtual void	Present() = 0;
 
 protected:

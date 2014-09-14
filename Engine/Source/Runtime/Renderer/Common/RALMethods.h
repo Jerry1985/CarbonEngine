@@ -1,8 +1,8 @@
 RAL_METHOD(
 	void ,
 	Clear,
-	( float depth ),
-	( depth )
+	( Color cColor , float depth ),
+	( cColor , depth )
 )
 
 RAL_METHOD(
@@ -10,4 +10,11 @@ RAL_METHOD(
 	CreateViewport,
 	(void* WindowHandle, unsigned width, unsigned height, bool bIsFullscreen),
 	(WindowHandle, width, height, bIsFullscreen )
+)
+
+RAL_METHOD(
+	void,
+	SetRenderTarget,
+	(unsigned index, RALRenderTarget* rt),
+	(index,rt)
 )

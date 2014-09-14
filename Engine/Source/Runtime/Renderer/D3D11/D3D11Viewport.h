@@ -6,6 +6,7 @@
 class D3D11Interface;
 struct IDXGISwapChain;
 struct ID3D11DeviceContext;
+struct ID3D11RenderTargetView;
 
 class D3D11Viewport : public RALViewport
 {
@@ -13,13 +14,12 @@ public:
 	D3D11Viewport(void* WindowHandle, unsigned width, unsigned height, bool bIsFullscreen);
 	~D3D11Viewport();
 
-	void Present();
+	void	BeginRender();
+	void	Present();
+
 private:
-
-	D3D11Interface*			m_pD3D11Interface;
-
-	ID3D11DeviceContext*	m_D3D11DeviceContext;
 	IDXGISwapChain*			m_pSwapChain;
+	ID3D11RenderTargetView*	m_pRenderTargetView;
 };
 
 #endif

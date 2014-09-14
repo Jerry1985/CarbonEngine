@@ -1,17 +1,17 @@
 #include "RALGlobalMethods.h"
 #include "Renderer\D3D11\D3D11Interface.h"
 
-static RALInterface* g_RALInterface = 0;
+RALInterface*	gRALInterface = 0;
 
 void RALCreateInterface(RAL_TYPE raltype)
 {
-	if (g_RALInterface != 0)
+	if (gRALInterface != 0)
 		return;
 
 	switch (raltype)
 	{
 	case RAL_D3D11:
-		g_RALInterface = new D3D11Interface();
+		gRALInterface = new D3D11Interface();
 		break;
 	case RAL_OPENGL:
 		break;
@@ -20,7 +20,7 @@ void RALCreateInterface(RAL_TYPE raltype)
 
 #define RAL_METHOD(ReturnType,FuncName,FuncParaDecl,FuncPara) ReturnType RAL##FuncName FuncParaDecl \
 {\
-	return g_RALInterface->FuncName FuncPara; \
+	return gRALInterface->FuncName FuncPara; \
 }
 
 #include "RALMethods.h"

@@ -5,7 +5,8 @@
 #endif
 
 #include "Renderer\Common\RALGlobalMethods.h"
-#include "Renderer\Common\\RALViewport.h"
+#include "Renderer\Common\RALViewport.h"
+#include "Common\Math\Color.h"
 
 RALViewport* viewport = 0;
 
@@ -15,7 +16,10 @@ class MyFrame : public wxFrame
 	// Public method
 public:
 	// Constructor
-	MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size);
+	MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size, MyFrame** ppFrame);
+
+	RALViewport*	vp;
+	MyFrame**		ppFrame;
 };
 
 // The app
@@ -24,6 +28,10 @@ class MyApp : public wxApp
 public:
 	virtual bool OnInit();
 	void onIdle(wxIdleEvent& evt);
+
+private:
+	MyFrame* frame0;
+	MyFrame* frame1;
 };
 
 wxIMPLEMENT_APP_NO_THEMES(MyApp);
@@ -34,9 +42,9 @@ bool MyApp::OnInit()
 	// create D3D11RAL
 	RALCreateInterface(RAL_D3D11);
 
-	MyFrame *frame = new MyFrame("Carbon Engine", wxPoint(50, 50), wxSize(1280, 720));
-	frame->Show(true);
-	
+	frame0 = new MyFrame("Carbon Engine", wxPoint(50, 50), wxSize(1280, 720), &frame0);
+	frame0->Show(true);
+
 	Connect(wxID_ANY, wxEVT_IDLE, wxIdleEventHandler(MyApp::onIdle));
 
 	return true;
@@ -44,16 +52,18 @@ bool MyApp::OnInit()
 
 void MyApp::onIdle(wxIdleEvent& evt)
 {
-	RALClear(1.0f);
-
-	viewport->Present();
+	frame0->vp->BeginRender();
+	RALClear(Color::YELLOW,1.0f);
+	frame0->vp->Present();
 
 	evt.RequestMore();
 }
 
-MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
+MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size, MyFrame** _ppFrame)
 : wxFrame(NULL, wxID_ANY, title, pos, size)
 {
 	// Create viewport for this frame
-	viewport = RALCreateViewport((void*)GetHWND(), GetSize().x, GetSize().y, false);
+	vp = RALCreateViewport((void*)GetHWND(), GetSize().x, GetSize().y, false);
+
+	ppFrame = _ppFrame;
 }

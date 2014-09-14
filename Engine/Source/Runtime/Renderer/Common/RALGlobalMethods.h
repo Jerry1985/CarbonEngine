@@ -2,6 +2,7 @@
 #define CARBON_RALGLOBELMETHODS
 
 #include "RALInterface.h"
+#include "Common\Math\Color.h"
 
 enum RAL_TYPE
 {
