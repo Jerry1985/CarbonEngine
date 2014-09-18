@@ -4,7 +4,9 @@
 class RALRenderTarget
 {
 public:
-	RALRenderTarget( unsigned width , unsigned height );
+	RALRenderTarget();
+
+	virtual void Release() = 0;
 
 protected:
 	unsigned	m_width;

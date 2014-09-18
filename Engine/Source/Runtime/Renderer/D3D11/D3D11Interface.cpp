@@ -1,5 +1,6 @@
 #include "D3D11Interface.h"
 #include "D3D11Viewport.h"
+#include "D3D11RenderTarget.h"
 
 D3D11Interface* gD3D11Interface = 0;
 
@@ -53,8 +54,22 @@ void D3D11Interface::_releaseDevice()
 	SAFE_RELEASE(m_D3D11Device);
 }
 
-// create viewport
-RALViewport* D3D11Interface::CreateViewport(void* WindowHandle, unsigned width, unsigned height, bool bIsFullscreen)
+// flush render target if neccessary
+void D3D11Interface::_flushRT()
 {
-	return new D3D11Viewport( WindowHandle, width, height, bIsFullscreen );
+	if (m_RTChanged)
+	{
+		ID3D11RenderTargetView* rt[MAX_RT_COUNT];
+
+		unsigned valid_rt_count = 0;
+		for (int i = 0; i < MAX_RT_COUNT; ++i)
+		{
+			if (m_PendingRT[i] != 0)
+				valid_rt_count = i+1;
+
+			D3D11RenderTarget* d11rt = (D3D11RenderTarget*)(m_PendingRT[i]);
+			rt[i] = (d11rt) ? d11rt->m_RTV : 0;
+		}
+		m_D3D11DeviceContext->OMSetRenderTargets(valid_rt_count, rt, 0);
+	}
 }

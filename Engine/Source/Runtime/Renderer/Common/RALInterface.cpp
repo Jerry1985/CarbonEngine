@@ -10,12 +10,6 @@ RALInterface::RALInterface()
 	m_RTChanged = 0;
 }
 
-// flush render target if neccessary
-void RALInterface::_flushRT()
-{
-	
-}
-
 // check if the RT is changed
 void RALInterface::_checkRTChanged()
 {

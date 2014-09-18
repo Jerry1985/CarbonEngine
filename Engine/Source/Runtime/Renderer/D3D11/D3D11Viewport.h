@@ -3,23 +3,25 @@
 
 #include "Renderer\Common\RALViewport.h"
 
+class RALRenderTarget;
 class D3D11Interface;
+class D3D11RenderTarget;
 struct IDXGISwapChain;
-struct ID3D11DeviceContext;
-struct ID3D11RenderTargetView;
+enum RAL_FORMAT;
 
 class D3D11Viewport : public RALViewport
 {
 public:
-	D3D11Viewport(void* WindowHandle, unsigned width, unsigned height, bool bIsFullscreen);
+	D3D11Viewport(void* WindowHandle, unsigned width, unsigned height, bool bIsFullscreen, RAL_FORMAT format);
 	~D3D11Viewport();
 
-	void	BeginRender();
 	void	Present();
+
+	RALRenderTarget* GetRenderTarget() const;
 
 private:
 	IDXGISwapChain*			m_pSwapChain;
-	ID3D11RenderTargetView*	m_pRenderTargetView;
+	D3D11RenderTarget*		m_RenderTarget;
 };
 
 #endif

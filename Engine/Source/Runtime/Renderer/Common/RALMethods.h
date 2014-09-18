@@ -8,8 +8,15 @@ RAL_METHOD(
 RAL_METHOD(
 	RALViewport*,
 	CreateViewport,
-	(void* WindowHandle, unsigned width, unsigned height, bool bIsFullscreen),
-	(WindowHandle, width, height, bIsFullscreen )
+	(void* WindowHandle, unsigned width, unsigned height, bool bIsFullscreen, RAL_FORMAT format),
+	(WindowHandle, width, height, bIsFullscreen, format)
+)
+
+RAL_METHOD(
+	RALRenderTarget*,
+	CreateRenderTarget,
+	(unsigned w, unsigned h, RAL_FORMAT format),
+	(w, h, format)
 )
 
 RAL_METHOD(

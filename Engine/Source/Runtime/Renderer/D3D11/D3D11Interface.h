@@ -5,6 +5,7 @@
 #include <d3d11.h>
 
 #define SAFE_RELEASE(p) {if(p) {(p)->Release(); (p)=NULL;}}
+#define SAFE_DELETE(p) {if(p) {delete (p); (p)=NULL;}}
 
 class D3D11Interface : public RALInterface
 {
@@ -27,7 +28,11 @@ private:
 	// release device
 	void _releaseDevice();
 
+	// flush render target if neccessary
+	void _flushRT();
+
 	friend class D3D11Viewport;
+	friend class D3D11RenderTarget;
 };
 
 #endif
