@@ -4,7 +4,9 @@
 #include "Renderer\Common\RALDefine.h"
 
 enum DXGI_FORMAT;
+enum D3D11_USAGE;
 
 DXGI_FORMAT DXGIFORMAT_FROM_RALFORMAT(RAL_FORMAT ral_format);
+D3D11_USAGE D3D11USAGE_FROM_RALUSAGE(RAL_USAGE ral_usage);
 
 #endif

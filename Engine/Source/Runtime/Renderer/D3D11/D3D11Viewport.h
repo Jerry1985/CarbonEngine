@@ -15,13 +15,19 @@ public:
 	D3D11Viewport(void* WindowHandle, unsigned width, unsigned height, bool bIsFullscreen, RAL_FORMAT format);
 	~D3D11Viewport();
 
+	// Resize viewport
+	void	Resize(unsigned w, unsigned h);
+	// Present
 	void	Present();
+	// Release resources
+	void	Release();
 
+	// Get Render Target
 	RALRenderTarget* GetRenderTarget() const;
 
 private:
-	IDXGISwapChain*			m_pSwapChain;
-	D3D11RenderTarget*		m_RenderTarget;
+	IDXGISwapChain*			m_swapChain;
+	D3D11RenderTarget*		m_renderTarget;
 };
 
 #endif

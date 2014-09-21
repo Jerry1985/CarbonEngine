@@ -1,16 +1,23 @@
 #ifndef CARBON_RALRENDERTARGET
 #define	CARBON_RALRENDERTARGET
 
-class RALRenderTarget
+#include "RALResource.h"
+
+enum RAL_FORMAT;
+
+class RALRenderTarget : public RALResource
 {
 public:
 	RALRenderTarget();
+	virtual ~RALRenderTarget();
 
-	virtual void Release() = 0;
-
+	RAL_FORMAT	GetFormat() const { return m_format; }
+	
 protected:
 	unsigned	m_width;
 	unsigned	m_height;
+
+	RAL_FORMAT	m_format;
 };
 
 #endif

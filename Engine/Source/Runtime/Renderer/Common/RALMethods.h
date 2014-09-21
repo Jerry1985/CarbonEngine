@@ -1,8 +1,8 @@
 RAL_METHOD(
 	void ,
 	Clear,
-	( Color cColor , float depth ),
-	( cColor , depth )
+	( unsigned index, Color cColor , float depth ),
+	(index, cColor, depth)
 )
 
 RAL_METHOD(
@@ -17,6 +17,20 @@ RAL_METHOD(
 	CreateRenderTarget,
 	(unsigned w, unsigned h, RAL_FORMAT format),
 	(w, h, format)
+)
+
+RAL_METHOD(
+	RALVertexBuffer*,
+	CreateVertexBuffer,
+	(unsigned size, RAL_USAGE usage),
+	(size, usage)
+)
+
+RAL_METHOD(
+	RALIndexBuffer*,
+	CreateIndexBuffer,
+	(unsigned size, RAL_USAGE usage),
+	(size, usage)
 )
 
 RAL_METHOD(

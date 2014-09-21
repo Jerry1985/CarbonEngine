@@ -14,7 +14,7 @@ public:
 	~D3D11RenderTarget();
 
 	// Release resource
-	void Release();
+	virtual void Release();
 
 	// get render target view
 	ID3D11RenderTargetView*	GetRenderTargetView() const;

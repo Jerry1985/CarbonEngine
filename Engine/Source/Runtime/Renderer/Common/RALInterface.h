@@ -6,8 +6,8 @@
 
 class RALViewport;
 class RALRenderTarget;
-
-#define	MAX_RT_COUNT	8
+class RALVertexBuffer;
+class RALIndexBuffer;
 
 // Rendering Abstraction Layer Interface
 class RALInterface
@@ -22,11 +22,13 @@ public:
 
 protected:
 	// Pending Render target
-	RALRenderTarget*	m_PendingRT[MAX_RT_COUNT];
+	RALRenderTarget*	m_pendingRT[MAX_RT_COUNT];
 	// Current Render target
-	RALRenderTarget*	m_CurrentRT[MAX_RT_COUNT];
+	RALRenderTarget*	m_currentRT[MAX_RT_COUNT];
 	// If the render target is changed
-	bool				m_RTChanged;
+	bool				m_rtChanged;
+	// Valie render target number
+	unsigned			m_validRTNum;
 
 	// flush render target if neccessary
 	virtual void _flushRT() = 0;

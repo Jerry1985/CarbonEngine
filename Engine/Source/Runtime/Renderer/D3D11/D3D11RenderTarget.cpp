@@ -14,7 +14,7 @@ void D3D11Interface::SetRenderTarget( unsigned index , RALRenderTarget* rt )
 	if (index >= MAX_RT_COUNT)
 		return;
 
-	m_PendingRT[index] = rt;
+	m_pendingRT[index] = rt;
 
 	// check if render target is changed
 	_checkRTChanged();

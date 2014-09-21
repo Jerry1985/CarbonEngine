@@ -6,7 +6,10 @@
 
 #include "Renderer\Common\RALGlobalMethods.h"
 #include "Renderer\Common\RALViewport.h"
+#include "Renderer\Common\RALRenderTarget.h"
+#include "Renderer\Common\RALVertexBuffer.h"
 #include "Common\Math\Color.h"
+#include "Renderer\Common\RALIndexBuffer.h"
 
 RALViewport* viewport = 0;
 
@@ -17,8 +20,14 @@ class MyFrame : public wxFrame
 public:
 	// Constructor
 	MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size);
+	void OnSize(wxSizeEvent& evt)
+	{
+		vp->Resize(evt.GetSize().x, evt.GetSize().y);
+	}
 
 	RALViewport*	vp;
+
+	DECLARE_EVENT_TABLE()
 };
 
 // The app
@@ -34,6 +43,10 @@ private:
 	RALRenderTarget* m_rt;
 };
 
+BEGIN_EVENT_TABLE(MyFrame, wxFrame)
+	EVT_SIZE(MyFrame::OnSize)
+END_EVENT_TABLE()
+
 wxIMPLEMENT_APP_NO_THEMES(MyApp);
 
 // Initialization
@@ -47,7 +60,15 @@ bool MyApp::OnInit()
 
 	Connect(wxID_ANY, wxEVT_IDLE, wxIdleEventHandler(MyApp::onIdle));
 
-	m_rt = RALCreateRenderTarget(1280, 720, RAL_FORMAT_R16G16_UNORM);
+	m_rt = RALCreateRenderTarget(frame0->GetSize().GetWidth(), frame0->GetSize().GetHeight(), RAL_FORMAT_R16G16_UNORM);
+
+	RALVertexBuffer* vb = RALCreateVertexBuffer(1024, RAL_USAGE_DYNAMIC);
+	vb->Map();
+	vb->Unmap();
+
+	RALIndexBuffer* ib = RALCreateIndexBuffer(1024, RAL_USAGE_DYNAMIC);
+	ib->Map();
+	ib->Unmap();
 
 	return true;
 }
@@ -55,11 +76,11 @@ bool MyApp::OnInit()
 void MyApp::onIdle(wxIdleEvent& evt)
 {
 	RALSetRenderTarget(0, m_rt);
-	RALClear(Color::WHITE,1.0f);
+	RALClear(1,Color::RED,1.0f);
 
 	//frame0->vp->BeginRender();
 	RALSetRenderTarget(0, frame0->vp->GetRenderTarget());
-	RALClear(Color::YELLOW,1.0f);
+	RALClear(1,Color::YELLOW,1.0f);
 	frame0->vp->Present();
 
 	evt.RequestMore();

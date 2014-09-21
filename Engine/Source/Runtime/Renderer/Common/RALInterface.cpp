@@ -4,10 +4,11 @@ RALInterface::RALInterface()
 {
 	for (int i = 0; i < MAX_RT_COUNT; ++i)
 	{
-		m_PendingRT[i] = 0;
-		m_CurrentRT[i] = 0;
+		m_pendingRT[i] = 0;
+		m_currentRT[i] = 0;
 	}
-	m_RTChanged = 0;
+	m_rtChanged = 0;
+	m_validRTNum = 0;
 }
 
 // check if the RT is changed
@@ -15,11 +16,11 @@ void RALInterface::_checkRTChanged()
 {
 	for (int i = 0; i < MAX_RT_COUNT; ++i)
 	{
-		if (m_PendingRT[i] != m_CurrentRT[i])
+		if (m_pendingRT[i] != m_currentRT[i])
 		{
-			m_RTChanged = true;
+			m_rtChanged = true;
 			return;
 		}
 	}
-	m_RTChanged = false;
+	m_rtChanged = false;
 }

@@ -57,19 +57,22 @@ void D3D11Interface::_releaseDevice()
 // flush render target if neccessary
 void D3D11Interface::_flushRT()
 {
-	if (m_RTChanged)
+	if (m_rtChanged)
 	{
 		ID3D11RenderTargetView* rt[MAX_RT_COUNT];
 
-		unsigned valid_rt_count = 0;
+		m_validRTNum = 0;
 		for (int i = 0; i < MAX_RT_COUNT; ++i)
 		{
-			if (m_PendingRT[i] != 0)
-				valid_rt_count = i+1;
+			if (m_pendingRT[i] != 0)
+				m_validRTNum = i + 1;
 
-			D3D11RenderTarget* d11rt = (D3D11RenderTarget*)(m_PendingRT[i]);
+			D3D11RenderTarget* d11rt = (D3D11RenderTarget*)(m_pendingRT[i]);
 			rt[i] = (d11rt) ? d11rt->m_RTV : 0;
 		}
-		m_D3D11DeviceContext->OMSetRenderTargets(valid_rt_count, rt, 0);
+		m_D3D11DeviceContext->OMSetRenderTargets(m_validRTNum, rt, 0);
+
+		for (int i = 0; i < MAX_RT_COUNT; ++i)
+			m_currentRT[i] = m_pendingRT[i];
 	}
 }
