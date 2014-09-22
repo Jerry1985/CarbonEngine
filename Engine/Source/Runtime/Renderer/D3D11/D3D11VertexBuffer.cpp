@@ -5,13 +5,33 @@
 
 extern D3D11Interface* gD3D11Interface;
 
-RALVertexBuffer* D3D11Interface::CreateVertexBuffer(unsigned size, RAL_USAGE usage)
+RALVertexBuffer* D3D11Interface::CreateVertexBuffer(unsigned size, unsigned stride, RAL_USAGE usage)
 {
-	return new D3D11VertexBuffer(size, usage);
+	return new D3D11VertexBuffer(size, stride, usage);
 }
 
-D3D11VertexBuffer::D3D11VertexBuffer(unsigned size, RAL_USAGE usage):
-RALVertexBuffer(size, usage )
+// set vertex buffers
+void D3D11Interface::SetVertexBuffers(unsigned startSlot, unsigned numBuffurs, RALVertexBuffer* vbs)
+{
+	D3D11VertexBuffer* d3d_vbs = (D3D11VertexBuffer*)vbs;
+
+	ID3D11Buffer*	buffers[MAX_VB_SLOT_COUNT];
+	unsigned		strides[MAX_VB_SLOT_COUNT];
+	unsigned		offsets[MAX_VB_SLOT_COUNT];
+
+	unsigned endSlot = startSlot + numBuffurs;
+	for (unsigned i = startSlot; i < endSlot; ++i)
+	{
+		buffers[i] = d3d_vbs[i].m_buffer;
+		strides[i] = d3d_vbs[i].GetBufferStride();
+		offsets[i] = 0;
+	}
+
+	m_D3D11DeviceContext->IASetVertexBuffers(startSlot, numBuffurs, buffers, strides, offsets);
+}
+
+D3D11VertexBuffer::D3D11VertexBuffer(unsigned size, unsigned stride, RAL_USAGE usage):
+RALVertexBuffer(size, stride, usage )
 {
 	// Fill in a buffer description.
 	D3D11_BUFFER_DESC bufferDesc;
@@ -44,7 +64,14 @@ RALBufferDesc D3D11VertexBuffer::Map()
 	D3D11_MAPPED_SUBRESOURCE res;
 	memset(&res, 0, sizeof(res));
 	gD3D11Interface->m_D3D11DeviceContext->Map(m_buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &res);
-	return RALBufferDesc(res.pData, m_size);
+
+	RALBufferDesc desc;
+	desc.bufferSize = m_size;
+	desc.stride = m_stride;
+	desc.pData = res.pData;
+	desc.usage = m_usage;
+
+	return desc;
 }
 
 // unlock the buffer

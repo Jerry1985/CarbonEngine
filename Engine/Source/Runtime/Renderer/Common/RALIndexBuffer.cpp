@@ -1,7 +1,7 @@
 #include "RALIndexBuffer.h"
 
-RALIndexBuffer::RALIndexBuffer( unsigned size, RAL_USAGE usage):
-RALBuffer( size, usage )
+RALIndexBuffer::RALIndexBuffer( unsigned size, unsigned stride, RAL_USAGE usage):
+RALBuffer(size, stride, usage)
 {
 
 }

@@ -22,15 +22,15 @@ RAL_METHOD(
 RAL_METHOD(
 	RALVertexBuffer*,
 	CreateVertexBuffer,
-	(unsigned size, RAL_USAGE usage),
-	(size, usage)
+	(unsigned size, unsigned stride , RAL_USAGE usage),
+	(size, stride, usage)
 )
 
 RAL_METHOD(
 	RALIndexBuffer*,
 	CreateIndexBuffer,
-	(unsigned size, RAL_USAGE usage),
-	(size, usage)
+	(unsigned size, unsigned stride, RAL_USAGE usage),
+	(size, stride, usage)
 )
 
 RAL_METHOD(
@@ -38,4 +38,18 @@ RAL_METHOD(
 	SetRenderTarget,
 	(unsigned index, RALRenderTarget* rt),
 	(index,rt)
+)
+
+RAL_METHOD(
+	void,
+	SetVertexBuffers,
+	(unsigned startSlot, unsigned numBuffurs, RALVertexBuffer* vbs),
+	(startSlot, numBuffurs, vbs)
+)
+
+RAL_METHOD(
+	void,
+	SetPrimitiveType,
+	(RAL_PRIMITIVE type),
+	(type)
 )

@@ -4,13 +4,13 @@
 
 extern D3D11Interface* gD3D11Interface;
 
-RALIndexBuffer* D3D11Interface::CreateIndexBuffer(unsigned size, RAL_USAGE usage)
+RALIndexBuffer* D3D11Interface::CreateIndexBuffer(unsigned size, unsigned stride, RAL_USAGE usage)
 {
-	return new D3D11IndexBuffer(size, usage);
+	return new D3D11IndexBuffer(size, stride, usage);
 }
 
-D3D11IndexBuffer::D3D11IndexBuffer( unsigned size , RAL_USAGE usage ):
-	RALIndexBuffer(size,usage)
+D3D11IndexBuffer::D3D11IndexBuffer(unsigned size, unsigned stride, RAL_USAGE usage) :
+RALIndexBuffer(size, stride, usage)
 {
 	// Fill in a buffer description.
 	D3D11_BUFFER_DESC bufferDesc;
@@ -36,7 +36,13 @@ RALBufferDesc D3D11IndexBuffer::Map()
 	D3D11_MAPPED_SUBRESOURCE res;
 	memset(&res, 0, sizeof(res));
 	gD3D11Interface->m_D3D11DeviceContext->Map(m_buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &res);
-	return RALBufferDesc(res.pData, m_size);
+
+	RALBufferDesc desc;
+	desc.bufferSize = m_size;
+	desc.stride = m_stride;
+	desc.pData = res.pData;
+	desc.usage = m_usage;
+	return desc;
 }
 
 // unlock the buffer

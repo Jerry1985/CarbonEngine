@@ -8,7 +8,7 @@ struct ID3D11Buffer;
 class D3D11IndexBuffer : public RALIndexBuffer
 {
 public:
-	D3D11IndexBuffer(unsigned size, RAL_USAGE usage);
+	D3D11IndexBuffer(unsigned size, unsigned stride, RAL_USAGE usage);
 	~D3D11IndexBuffer();
 
 	// lock the buffer

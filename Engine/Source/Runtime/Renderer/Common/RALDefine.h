@@ -1,7 +1,8 @@
 #ifndef CARBON_RALDEFINE
 #define CARBON_RALDEFINE
 
-#define	MAX_RT_COUNT	8
+#define	MAX_RT_COUNT		8		// maximum number of render target set
+#define MAX_VB_SLOT_COUNT	8		// maximum number of vertex buffer bound
 
 enum RAL_FORMAT
 {
@@ -63,6 +64,17 @@ enum RAL_USAGE
 	RAL_USAGE_IMMUTABLE,
 
 	RAL_USAGE_COUNT
+};
+
+enum RAL_PRIMITIVE
+{
+	RAL_PRIMITIVE_POINT = 0,
+	RAL_PRIMITIVE_LINELIST,
+	RAL_PRIMITIVE_LINESTRIP,
+	RAL_PRIMITIVE_TRIANGLELIST,
+	RAL_PRIMITIVE_TRIANGLESTRIP,
+
+	RAL_PRIMITIVE_COUNT
 };
 
 #endif

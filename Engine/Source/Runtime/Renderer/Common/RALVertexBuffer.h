@@ -6,7 +6,7 @@
 class RALVertexBuffer : public RALBuffer
 {
 public:
-	RALVertexBuffer( unsigned size , RAL_USAGE usage );
+	RALVertexBuffer( unsigned size , unsigned stride , RAL_USAGE usage );
 	virtual ~RALVertexBuffer();
 };
 

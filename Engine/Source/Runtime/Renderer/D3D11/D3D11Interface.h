@@ -35,6 +35,9 @@ private:
 	friend class D3D11RenderTarget;
 	friend class D3D11VertexBuffer;
 	friend class D3D11IndexBuffer;
+
+	// temporary
+	friend class MyApp;
 };
 
 #endif

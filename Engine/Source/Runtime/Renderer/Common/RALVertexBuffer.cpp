@@ -1,7 +1,7 @@
 #include "RALVertexBuffer.h"
 
-RALVertexBuffer::RALVertexBuffer(unsigned size, RAL_USAGE usage):
-	RALBuffer(size,usage)
+RALVertexBuffer::RALVertexBuffer(unsigned size, unsigned stride, RAL_USAGE usage) :
+	RALBuffer(size, stride, usage)
 {
 }
 
