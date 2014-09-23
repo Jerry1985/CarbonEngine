@@ -4,7 +4,8 @@
 #include "Common\Math\Color.h"
 #include "RALDefine.h"
 
-class RALViewport;
+struct RALViewport;
+class RALView;
 class RALRenderTarget;
 class RALVertexBuffer;
 class RALIndexBuffer;
@@ -16,7 +17,7 @@ public:
 	RALInterface();
 	virtual ~RALInterface(){}
 
-#define RAL_METHOD(ReturnType,FuncName,FuncParaDecl,FuncPara) virtual ReturnType FuncName FuncParaDecl = 0;
+#define RAL_METHOD(ReturnType,FuncName,FuncParaDecl,FuncParaDef,FuncPara) virtual ReturnType FuncName FuncParaDecl = 0;
 	#include "RALMethods.h"
 #undef RAL_METHOD
 

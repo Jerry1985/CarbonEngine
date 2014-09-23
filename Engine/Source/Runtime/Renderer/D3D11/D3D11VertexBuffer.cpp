@@ -5,13 +5,13 @@
 
 extern D3D11Interface* gD3D11Interface;
 
-RALVertexBuffer* D3D11Interface::CreateVertexBuffer(unsigned size, unsigned stride, RAL_USAGE usage)
+RALVertexBuffer* D3D11Interface::CreateVertexBuffer(unsigned size, unsigned stride, RAL_USAGE usage, void* data )
 {
-	return new D3D11VertexBuffer(size, stride, usage);
+	return new D3D11VertexBuffer(size, stride, usage, data);
 }
 
 // set vertex buffers
-void D3D11Interface::SetVertexBuffers(unsigned startSlot, unsigned numBuffurs, RALVertexBuffer* vbs)
+void D3D11Interface::SetVertexBuffers(unsigned startSlot, unsigned numBuffers, RALVertexBuffer* vbs)
 {
 	D3D11VertexBuffer* d3d_vbs = (D3D11VertexBuffer*)vbs;
 
@@ -19,7 +19,7 @@ void D3D11Interface::SetVertexBuffers(unsigned startSlot, unsigned numBuffurs, R
 	unsigned		strides[MAX_VB_SLOT_COUNT];
 	unsigned		offsets[MAX_VB_SLOT_COUNT];
 
-	unsigned endSlot = startSlot + numBuffurs;
+	unsigned endSlot = startSlot + numBuffers;
 	for (unsigned i = startSlot; i < endSlot; ++i)
 	{
 		buffers[i] = d3d_vbs[i].m_buffer;
@@ -27,10 +27,10 @@ void D3D11Interface::SetVertexBuffers(unsigned startSlot, unsigned numBuffurs, R
 		offsets[i] = 0;
 	}
 
-	m_D3D11DeviceContext->IASetVertexBuffers(startSlot, numBuffurs, buffers, strides, offsets);
+	m_D3D11DeviceContext->IASetVertexBuffers(startSlot, numBuffers, buffers, strides, offsets);
 }
 
-D3D11VertexBuffer::D3D11VertexBuffer(unsigned size, unsigned stride, RAL_USAGE usage):
+D3D11VertexBuffer::D3D11VertexBuffer(unsigned size, unsigned stride, RAL_USAGE usage, void* data) :
 RALVertexBuffer(size, stride, usage )
 {
 	// Fill in a buffer description.
@@ -43,8 +43,17 @@ RALVertexBuffer(size, stride, usage )
 	bufferDesc.CPUAccessFlags = (usage == RAL_USAGE_DYNAMIC) ? D3D11_CPU_ACCESS_WRITE : 0;
 	bufferDesc.MiscFlags = 0;
 
-	// Create the vertex buffer.
-	gD3D11Interface->m_D3D11Device->CreateBuffer(&bufferDesc, 0, &m_buffer);
+	if (data)
+	{
+		// Fill in the subresource data. 
+		D3D11_SUBRESOURCE_DATA InitData;
+		InitData.pSysMem = data;
+		InitData.SysMemPitch = 0;
+		InitData.SysMemSlicePitch = 0;
+
+		gD3D11Interface->m_D3D11Device->CreateBuffer(&bufferDesc, &InitData, &m_buffer);
+	}else
+		gD3D11Interface->m_D3D11Device->CreateBuffer(&bufferDesc, 0, &m_buffer);
 }
 
 D3D11VertexBuffer::~D3D11VertexBuffer()

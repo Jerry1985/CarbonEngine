@@ -6,34 +6,34 @@
 extern D3D11Interface* gD3D11Interface;
 
 // create viewport
-RALViewport* D3D11Interface::CreateViewport(void* WindowHandle, unsigned width, unsigned height, bool bIsFullscreen, RAL_FORMAT format)
+RALView* D3D11Interface::CreateView(void* WindowHandle, unsigned width, unsigned height, bool bIsFullscreen, RAL_FORMAT format)
 {
-	return new D3D11Viewport(WindowHandle, width, height, bIsFullscreen, format);
+	return new D3D11View(WindowHandle, width, height, bIsFullscreen, format);
 }
 
-D3D11Viewport::D3D11Viewport(void* windowHandle, unsigned width, unsigned height, bool bIsFullscreen, RAL_FORMAT format) :
-RALViewport(windowHandle, width, height, bIsFullscreen, format)
+D3D11View::D3D11View(void* windowHandle, unsigned width, unsigned height, bool bIsFullscreen, RAL_FORMAT format) :
+RALView(windowHandle, width, height, bIsFullscreen, format)
 {
 	m_swapChain = 0;
 	m_renderTarget = 0;
 }
 
-D3D11Viewport::~D3D11Viewport()
+D3D11View::~D3D11View()
 {
 	Release();
 }
 
-void D3D11Viewport::Present()
+void D3D11View::Present()
 {
 	m_swapChain->Present(0, 0);
 }
 
-RALRenderTarget* D3D11Viewport::GetRenderTarget() const
+RALRenderTarget* D3D11View::GetRenderTarget() const
 {
 	return m_renderTarget;
 }
 
-void D3D11Viewport::Resize(unsigned w, unsigned h)
+void D3D11View::Resize(unsigned w, unsigned h)
 {
 	// release resource first
 	Release();
@@ -61,7 +61,7 @@ void D3D11Viewport::Resize(unsigned w, unsigned h)
 }
 
 // Release resources
-void D3D11Viewport::Release()
+void D3D11View::Release()
 {
 	SAFE_DELETE(m_renderTarget);
 	SAFE_RELEASE(m_swapChain);

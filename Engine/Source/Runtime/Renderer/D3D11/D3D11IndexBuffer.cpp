@@ -4,12 +4,19 @@
 
 extern D3D11Interface* gD3D11Interface;
 
-RALIndexBuffer* D3D11Interface::CreateIndexBuffer(unsigned size, unsigned stride, RAL_USAGE usage)
+RALIndexBuffer* D3D11Interface::CreateIndexBuffer(unsigned size, unsigned stride, RAL_USAGE usage, void* data)
 {
-	return new D3D11IndexBuffer(size, stride, usage);
+	return new D3D11IndexBuffer(size, stride, usage, data);
 }
 
-D3D11IndexBuffer::D3D11IndexBuffer(unsigned size, unsigned stride, RAL_USAGE usage) :
+void D3D11Interface::SetIndexBuffer(RALIndexBuffer* ibs)
+{
+	D3D11IndexBuffer* d3d_ibs = (D3D11IndexBuffer*)ibs;
+	DXGI_FORMAT format = (d3d_ibs->GetBufferStride() == 4) ? DXGI_FORMAT_R32_UINT : DXGI_FORMAT_R16_UINT;
+	m_D3D11DeviceContext->IASetIndexBuffer(d3d_ibs->m_buffer, format, 0);
+}
+
+D3D11IndexBuffer::D3D11IndexBuffer(unsigned size, unsigned stride, RAL_USAGE usage, void* data) :
 RALIndexBuffer(size, stride, usage)
 {
 	// Fill in a buffer description.
@@ -22,17 +29,29 @@ RALIndexBuffer(size, stride, usage)
 	bufferDesc.CPUAccessFlags = (usage == RAL_USAGE_DYNAMIC) ? D3D11_CPU_ACCESS_WRITE : 0;
 	bufferDesc.MiscFlags = 0;
 
-	// Create the vertex buffer.
-	gD3D11Interface->m_D3D11Device->CreateBuffer(&bufferDesc, 0, &m_buffer);
+	if (data != 0)
+	{
+		// Fill in the subresource data. 
+		D3D11_SUBRESOURCE_DATA InitData;
+		InitData.pSysMem = data;
+		InitData.SysMemPitch = 0;
+		InitData.SysMemSlicePitch = 0;
+
+		gD3D11Interface->m_D3D11Device->CreateBuffer(&bufferDesc, &InitData, &m_buffer);
+	}else
+		gD3D11Interface->m_D3D11Device->CreateBuffer(&bufferDesc, 0, &m_buffer);
 }
 D3D11IndexBuffer::~D3D11IndexBuffer()
 {
-
+	Release();
 }
 
 // lock the buffer
 RALBufferDesc D3D11IndexBuffer::Map()
 {
+	if (m_buffer == 0)
+		return RALBufferDesc();
+
 	D3D11_MAPPED_SUBRESOURCE res;
 	memset(&res, 0, sizeof(res));
 	gD3D11Interface->m_D3D11DeviceContext->Map(m_buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &res);
@@ -48,9 +67,12 @@ RALBufferDesc D3D11IndexBuffer::Map()
 // unlock the buffer
 void D3D11IndexBuffer::Unmap()
 {
+	if (m_buffer)
+		gD3D11Interface->m_D3D11DeviceContext->Unmap(m_buffer, 0);
 }
 
 // Release resource
 void D3D11IndexBuffer::Release()
 {
+	SAFE_RELEASE(m_buffer);
 }

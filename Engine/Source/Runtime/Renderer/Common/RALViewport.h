@@ -1,27 +1,17 @@
 #ifndef CARBON_RALVIEWPORT
 #define CARBON_RALVIEWPORT
 
-#include "RALResource.h"
-
-class	RALRenderTarget;
-enum	RAL_FORMAT;
-
-class RALViewport : public RALResource
+struct RALViewport
 {
-public:
-	RALViewport(void* WindowHandle, unsigned width, unsigned height, bool bIsFullscreen, RAL_FORMAT format);
-	virtual ~RALViewport();
+	float	x, y;			// top left corner of the viewport
+	float	w, h;			// size for the viewport
+	float	minZ, maxZ;		// depth range for the viewport
 
-	virtual void	Resize(unsigned w, unsigned h) = 0;
-	virtual void	Present() = 0;
-	virtual RALRenderTarget* GetRenderTarget() const = 0;
-
-protected:
-	void*		m_wnd;
-	unsigned	m_width;
-	unsigned	m_height;
-	bool		m_isFullScreen;
-	RAL_FORMAT	m_format;
+	RALViewport() :x(0.0f), y(0.0f), w(0.0f), h(0.0f), minZ(0.0f), maxZ(1.0f)
+	{
+	}
+	RALViewport(float _w, float _h) :x(0.0f), y(0.0f), w(_w), h(_h), minZ(0.0f), maxZ(1.0f)
+	{
+	}
 };
-
 #endif

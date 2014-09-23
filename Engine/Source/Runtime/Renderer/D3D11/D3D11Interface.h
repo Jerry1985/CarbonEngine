@@ -13,7 +13,7 @@ public:
 	D3D11Interface();
 	virtual ~D3D11Interface();
 
-#define RAL_METHOD(ReturnType,FuncName,FuncParaDecl,FuncPara) virtual ReturnType FuncName FuncParaDecl;
+#define RAL_METHOD(ReturnType,FuncName,FuncParaDecl,FuncParaDef,FuncPara) virtual ReturnType FuncName FuncParaDecl;
 #include "Renderer/Common/RALMethods.h"
 #undef RAL_METHOD
 
@@ -31,7 +31,7 @@ private:
 	// flush render target if neccessary
 	void _flushRT();
 
-	friend class D3D11Viewport;
+	friend class D3D11View;
 	friend class D3D11RenderTarget;
 	friend class D3D11VertexBuffer;
 	friend class D3D11IndexBuffer;

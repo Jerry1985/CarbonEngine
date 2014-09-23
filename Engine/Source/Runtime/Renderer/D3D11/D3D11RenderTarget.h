@@ -25,7 +25,7 @@ private:
 
 	D3D11RenderTarget(ID3D11Texture2D* tex);
 
-	friend class D3D11Viewport;
+	friend class D3D11View;
 	friend class D3D11Interface;
 };
 

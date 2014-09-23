@@ -8,7 +8,7 @@ struct ID3D11Buffer;
 class D3D11VertexBuffer : public RALVertexBuffer
 {
 public:
-	D3D11VertexBuffer(unsigned size, unsigned stride, RAL_USAGE usage);
+	D3D11VertexBuffer(unsigned size, unsigned stride, RAL_USAGE usage, void* data);
 	~D3D11VertexBuffer();
 
 	// lock the buffer
