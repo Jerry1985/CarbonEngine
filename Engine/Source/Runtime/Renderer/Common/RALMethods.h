@@ -93,3 +93,35 @@ RAL_METHOD(
 	(unsigned vpCount, RALViewport* vps),
 	(vpCount,vps)
 )
+
+RAL_METHOD(
+	RALShader*,
+	CreateVertexShader,
+	(),
+	(),
+	()
+)
+
+RAL_METHOD(
+	RALShader*,
+	CreatePixelShader,
+	(),
+	(),
+	()
+)
+
+RAL_METHOD(
+	void,
+	SetVertexShader,
+	(RALShader* vs),
+	(RALShader* vs),
+	(vs)
+)
+
+RAL_METHOD(
+	void,
+	SetPixelShader,
+	(RALShader* ps),
+	(RALShader* ps),
+	(ps)
+)

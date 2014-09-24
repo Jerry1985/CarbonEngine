@@ -35,6 +35,12 @@ private:
 	friend class D3D11RenderTarget;
 	friend class D3D11VertexBuffer;
 	friend class D3D11IndexBuffer;
+	friend class D3D11VertexShader;
+	friend class D3D11PixelShader;
+	friend class D3D11HullShader;
+	friend class D3D11DomainShader;
+	friend class D3D11GeometryShader;
+	friend class D3D11ComputeShader;
 
 	// temporary
 	friend class MyApp;

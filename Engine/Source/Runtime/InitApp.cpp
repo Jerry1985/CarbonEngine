@@ -11,6 +11,7 @@
 #include "Renderer\Common\RALRenderTarget.h"
 #include "Renderer\Common\RALVertexBuffer.h"
 #include "Renderer\Common\RALIndexBuffer.h"
+#include "Renderer\Common\RALShader.h"
 
 #include "../Temp/vs.h"
 #include "../Temp/ps.h"
@@ -50,11 +51,12 @@ private:
 
 	RALRenderTarget* m_rt;
 
-	ID3D11VertexShader*		vs = 0;
-	ID3D11PixelShader*		ps = 0;
 	ID3D11InputLayout*      pVertexLayout = NULL;
 	RALVertexBuffer*		vb = 0;
 	RALIndexBuffer*			ib = 0;
+
+	RALShader*				pVS;
+	RALShader*				pPS;
 };
 
 BEGIN_EVENT_TABLE(MyFrame, wxFrame)
@@ -99,9 +101,6 @@ bool MyApp::OnInit()
 		memcpy(desc.pData, indices, sizeof(indices));
 	ib->Unmap();
 
-	gD3D11Interface->m_D3D11Device->CreateVertexShader(g_vs, sizeof(g_vs), 0, &vs);
-	gD3D11Interface->m_D3D11Device->CreatePixelShader(g_ps, sizeof(g_ps), 0, &ps);
-
 	// Define the input layout
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
@@ -111,6 +110,12 @@ bool MyApp::OnInit()
 
 	// Create the input layout
 	gD3D11Interface->m_D3D11Device->CreateInputLayout(layout, numElements, g_vs, sizeof(g_vs), &pVertexLayout);
+
+	pVS = RALCreateVertexShader();
+	pPS = RALCreatePixelShader();
+
+	pVS->CreateShader((void*)g_vs, sizeof(g_vs));
+	pPS->CreateShader((void*)g_ps, sizeof(g_ps));
 
 	return true;
 }
@@ -148,8 +153,9 @@ void MyApp::onIdle(wxIdleEvent& evt)
 	RALSetVertexBuffers(0, 1, vb);
 	RALSetIndexBuffer(ib);
 
-	gD3D11Interface->m_D3D11DeviceContext->VSSetShader(vs, NULL, 0);
-	gD3D11Interface->m_D3D11DeviceContext->PSSetShader(ps, NULL, 0);
+	RALSetVertexShader(pVS);
+	RALSetPixelShader(pPS);
+
 	RALDrawIndexed(6);
 
 	frame0->view->Present();

@@ -9,6 +9,7 @@ class RALView;
 class RALRenderTarget;
 class RALVertexBuffer;
 class RALIndexBuffer;
+class RALShader;
 
 // Rendering Abstraction Layer Interface
 class RALInterface
