@@ -13,16 +13,16 @@ RALShader*	D3D11Interface::CreatePixelShader()
 	return new D3D11PixelShader();
 }
 
-void D3D11Interface::SetVertexShader(RALShader* shader)
+void D3D11Interface::SetVertexShader(const RALShader* shader)
 {
-	D3D11VertexShader* vs = dynamic_cast<D3D11VertexShader*>(shader);
+	const D3D11VertexShader* vs = dynamic_cast<const D3D11VertexShader*>(shader);
 	if (vs)
 		gD3D11Interface->m_D3D11DeviceContext->VSSetShader(vs->m_shader, 0, 0);
 }
 
-void D3D11Interface::SetPixelShader(RALShader* shader)
+void D3D11Interface::SetPixelShader(const RALShader* shader)
 {
-	D3D11PixelShader* ps = dynamic_cast<D3D11PixelShader*>(shader);
+	const D3D11PixelShader* ps = dynamic_cast<const D3D11PixelShader*>(shader);
 	if (ps)
 		gD3D11Interface->m_D3D11DeviceContext->PSSetShader(ps->m_shader, 0, 0);
 }

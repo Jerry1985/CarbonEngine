@@ -5,11 +5,13 @@
 #include "RALDefine.h"
 
 struct RALViewport;
+struct RALVertexElementDesc;
 class RALView;
 class RALRenderTarget;
 class RALVertexBuffer;
 class RALIndexBuffer;
 class RALShader;
+class RALVertexLayout;
 
 // Rendering Abstraction Layer Interface
 class RALInterface
@@ -24,9 +26,9 @@ public:
 
 protected:
 	// Pending Render target
-	RALRenderTarget*	m_pendingRT[MAX_RT_COUNT];
+	const RALRenderTarget*	m_pendingRT[MAX_RT_COUNT];
 	// Current Render target
-	RALRenderTarget*	m_currentRT[MAX_RT_COUNT];
+	const RALRenderTarget*	m_currentRT[MAX_RT_COUNT];
 	// If the render target is changed
 	bool				m_rtChanged;
 	// Valie render target number

@@ -1,5 +1,4 @@
 #include "D3D11Interface.h"
-#include "D3D11Viewport.h"
 #include "D3D11RenderTarget.h"
 
 D3D11Interface* gD3D11Interface = 0;

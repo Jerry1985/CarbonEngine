@@ -11,7 +11,7 @@ RALVertexBuffer* D3D11Interface::CreateVertexBuffer(unsigned size, unsigned stri
 }
 
 // set vertex buffers
-void D3D11Interface::SetVertexBuffers(unsigned startSlot, unsigned numBuffers, RALVertexBuffer* vbs)
+void D3D11Interface::SetVertexBuffers(unsigned startSlot, unsigned numBuffers, const RALVertexBuffer* vbs)
 {
 	D3D11VertexBuffer* d3d_vbs = (D3D11VertexBuffer*)vbs;
 
@@ -31,7 +31,7 @@ void D3D11Interface::SetVertexBuffers(unsigned startSlot, unsigned numBuffers, R
 }
 
 D3D11VertexBuffer::D3D11VertexBuffer(unsigned size, unsigned stride, RAL_USAGE usage, void* data) :
-RALVertexBuffer(size, stride, usage )
+RALVertexBuffer(size, stride, usage), m_buffer(0)
 {
 	// Fill in a buffer description.
 	D3D11_BUFFER_DESC bufferDesc;

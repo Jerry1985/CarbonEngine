@@ -4,7 +4,6 @@
 #include <wx/wx.h>
 #endif
 
-#include "Renderer\D3D11\D3D11Interface.h"
 #include "Renderer\Common\RALGlobalMethods.h"
 #include "Renderer\Common\RALView.h"
 #include "Renderer\Common\RALViewport.h"
@@ -12,14 +11,12 @@
 #include "Renderer\Common\RALVertexBuffer.h"
 #include "Renderer\Common\RALIndexBuffer.h"
 #include "Renderer\Common\RALShader.h"
+#include "Renderer\Common\RALVertexLayout.h"
 
 #include "../Temp/vs.h"
 #include "../Temp/ps.h"
 
 RALViewport* viewport = 0;
-
-// temporary
-extern D3D11Interface* gD3D11Interface;
 
 // The main frame for rendering
 class MyFrame : public wxFrame
@@ -51,9 +48,9 @@ private:
 
 	RALRenderTarget* m_rt;
 
-	ID3D11InputLayout*      pVertexLayout = NULL;
 	RALVertexBuffer*		vb = 0;
 	RALIndexBuffer*			ib = 0;
+	RALVertexLayout*		vl = 0;
 
 	RALShader*				pVS;
 	RALShader*				pPS;
@@ -101,15 +98,14 @@ bool MyApp::OnInit()
 		memcpy(desc.pData, indices, sizeof(indices));
 	ib->Unmap();
 
-	// Define the input layout
-	D3D11_INPUT_ELEMENT_DESC layout[] =
-	{
-		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	};
-	UINT numElements = ARRAYSIZE(layout);
+	RALVertexElementDesc layoutDesc;
+	layoutDesc.attributeIndex = 0;
+	layoutDesc.offset = 0;
+	layoutDesc.streamIndex = 0;
+	layoutDesc.type = RAL_VERTEXELEMENTTYPE_FLOAT3;
+	layoutDesc.useInstanceIndex = false;
 
-	// Create the input layout
-	gD3D11Interface->m_D3D11Device->CreateInputLayout(layout, numElements, g_vs, sizeof(g_vs), &pVertexLayout);
+	vl = RALCreateVertexLayout(1, &layoutDesc, (void*)g_vs, sizeof(g_vs));
 
 	pVS = RALCreateVertexShader();
 	pPS = RALCreatePixelShader();
@@ -117,37 +113,21 @@ bool MyApp::OnInit()
 	pVS->CreateShader((void*)g_vs, sizeof(g_vs));
 	pPS->CreateShader((void*)g_ps, sizeof(g_ps));
 
+	// Setup the viewport
+	RALViewport vp(frame0->GetSize().x, frame0->GetSize().y);
+	RALSetViewport(1, &vp);
+
 	return true;
 }
 
 void MyApp::onIdle(wxIdleEvent& evt)
 {
-	// Setup the viewport
-	RALViewport vp(frame0->GetSize().x, frame0->GetSize().y);
-	RALSetViewport(1, &vp);
-	/*
-	RALSetRenderTarget(0, frame1->view->GetRenderTarget());
-	RALClear(1,Color::RED,1.0f);
-
-	// Set the input layout
-	gD3D11Interface->m_D3D11DeviceContext->IASetInputLayout(pVertexLayout);
-
-	RALSetPrimitiveType(RAL_PRIMITIVE_TRIANGLELIST);
-	RALSetVertexBuffers(0, 1, vb);
-	RALSetIndexBuffer(ib);
-
-	gD3D11Interface->m_D3D11DeviceContext->VSSetShader(vs, NULL, 0);
-	gD3D11Interface->m_D3D11DeviceContext->PSSetShader(ps, NULL, 0);
-	RALDraw(3);
-
-	frame1->view->Present();
-	*/
 	//frame0->vp->BeginRender();
 	RALSetRenderTarget(0, frame0->view->GetRenderTarget());
 	RALClear(1,Color::BLACK,1.0f);
 
 	// Set the input layout
-	gD3D11Interface->m_D3D11DeviceContext->IASetInputLayout(pVertexLayout);
+	RALSetVertexLayout(vl);
 
 	RALSetPrimitiveType(RAL_PRIMITIVE_TRIANGLELIST);
 	RALSetVertexBuffers(0, 1, vb);
@@ -155,10 +135,9 @@ void MyApp::onIdle(wxIdleEvent& evt)
 
 	RALSetVertexShader(pVS);
 	RALSetPixelShader(pPS);
-
 	RALDrawIndexed(6);
 
-	frame0->view->Present();
+	RALPresent(frame0->view);
 
 	evt.RequestMore();
 }

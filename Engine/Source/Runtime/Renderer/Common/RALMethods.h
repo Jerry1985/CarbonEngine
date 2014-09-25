@@ -41,24 +41,24 @@ RAL_METHOD(
 RAL_METHOD(
 	void,
 	SetRenderTarget,
-	(unsigned index, RALRenderTarget* rt),
-	(unsigned index, RALRenderTarget* rt),
+	(unsigned index, const RALRenderTarget* rt),
+	(unsigned index, const RALRenderTarget* rt),
 	(index, rt)
 )
 
 RAL_METHOD(
 	void,
 	SetVertexBuffers,
-	(unsigned startSlot, unsigned numBuffurs, RALVertexBuffer* vbs),
-	(unsigned startSlot, unsigned numBuffurs, RALVertexBuffer* vbs),
+	(unsigned startSlot, unsigned numBuffurs, const RALVertexBuffer* vbs),
+	(unsigned startSlot, unsigned numBuffurs, const RALVertexBuffer* vbs),
 	(startSlot, numBuffurs, vbs)
 )
 
 RAL_METHOD(
 	void,
 	SetIndexBuffer,
-	(RALIndexBuffer* ibs),
-	(RALIndexBuffer* ibs),
+	(const RALIndexBuffer* ibs),
+	(const RALIndexBuffer* ibs),
 	(ibs)
 )
 
@@ -113,15 +113,39 @@ RAL_METHOD(
 RAL_METHOD(
 	void,
 	SetVertexShader,
-	(RALShader* vs),
-	(RALShader* vs),
+	(const RALShader* vs),
+	(const RALShader* vs),
 	(vs)
 )
 
 RAL_METHOD(
 	void,
 	SetPixelShader,
-	(RALShader* ps),
-	(RALShader* ps),
+	(const RALShader* ps),
+	(const RALShader* ps),
 	(ps)
+)
+
+RAL_METHOD(
+	RALVertexLayout*,
+	CreateVertexLayout,
+	(unsigned elementCount, const RALVertexElementDesc* descs, const void* bcode, unsigned bcodelen),
+	(unsigned elementCount, const RALVertexElementDesc* descs, const void* bcode, unsigned bcodelen),
+	(elementCount, descs, bcode, bcodelen)
+)
+
+RAL_METHOD(
+	void,
+	SetVertexLayout,
+	(const RALVertexLayout* layout),
+	(const RALVertexLayout* layout),
+	(layout)
+)
+
+RAL_METHOD(
+	void,
+	Present,
+	(const RALView* view),
+	(const RALView* view),
+	(view)
 )

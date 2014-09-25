@@ -9,7 +9,7 @@ RALRenderTarget* D3D11Interface::CreateRenderTarget(unsigned w, unsigned h, RAL_
 	return new D3D11RenderTarget(w, h, format);
 }
 
-void D3D11Interface::SetRenderTarget( unsigned index , RALRenderTarget* rt )
+void D3D11Interface::SetRenderTarget( unsigned index , const RALRenderTarget* rt )
 {
 	if (index >= MAX_RT_COUNT)
 		return;

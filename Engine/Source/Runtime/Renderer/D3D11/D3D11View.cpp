@@ -1,4 +1,4 @@
-#include "D3D11Viewport.h"
+#include "D3D11View.h"
 #include "D3D11Interface.h"
 #include "D3D11RenderTarget.h"
 #include "D3D11Define.h"
@@ -21,11 +21,6 @@ RALView(windowHandle, width, height, bIsFullscreen, format)
 D3D11View::~D3D11View()
 {
 	Release();
-}
-
-void D3D11View::Present()
-{
-	m_swapChain->Present(0, 0);
 }
 
 RALRenderTarget* D3D11View::GetRenderTarget() const

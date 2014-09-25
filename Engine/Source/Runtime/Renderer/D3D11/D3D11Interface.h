@@ -41,9 +41,7 @@ private:
 	friend class D3D11DomainShader;
 	friend class D3D11GeometryShader;
 	friend class D3D11ComputeShader;
-
-	// temporary
-	friend class MyApp;
+	friend class D3D11VertexLayout;
 };
 
 #endif

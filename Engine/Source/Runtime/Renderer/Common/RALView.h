@@ -13,7 +13,6 @@ public:
 	virtual ~RALView();
 
 	virtual void	Resize(unsigned w, unsigned h) = 0;
-	virtual void	Present() = 0;
 	virtual RALRenderTarget* GetRenderTarget() const = 0;
 
 protected:

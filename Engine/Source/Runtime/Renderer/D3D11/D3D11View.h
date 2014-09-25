@@ -17,8 +17,6 @@ public:
 
 	// Resize viewport
 	void	Resize(unsigned w, unsigned h);
-	// Present
-	void	Present();
 	// Release resources
 	void	Release();
 
@@ -28,6 +26,8 @@ public:
 private:
 	IDXGISwapChain*			m_swapChain;
 	D3D11RenderTarget*		m_renderTarget;
+
+	friend class D3D11Interface;
 };
 
 #endif

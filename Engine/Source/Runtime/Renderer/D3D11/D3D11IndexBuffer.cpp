@@ -9,7 +9,7 @@ RALIndexBuffer* D3D11Interface::CreateIndexBuffer(unsigned size, unsigned stride
 	return new D3D11IndexBuffer(size, stride, usage, data);
 }
 
-void D3D11Interface::SetIndexBuffer(RALIndexBuffer* ibs)
+void D3D11Interface::SetIndexBuffer(const RALIndexBuffer* ibs)
 {
 	D3D11IndexBuffer* d3d_ibs = (D3D11IndexBuffer*)ibs;
 	DXGI_FORMAT format = (d3d_ibs->GetBufferStride() == 4) ? DXGI_FORMAT_R32_UINT : DXGI_FORMAT_R16_UINT;
@@ -17,7 +17,7 @@ void D3D11Interface::SetIndexBuffer(RALIndexBuffer* ibs)
 }
 
 D3D11IndexBuffer::D3D11IndexBuffer(unsigned size, unsigned stride, RAL_USAGE usage, void* data) :
-RALIndexBuffer(size, stride, usage)
+RALIndexBuffer(size, stride, usage), m_buffer(0)
 {
 	// Fill in a buffer description.
 	D3D11_BUFFER_DESC bufferDesc;
