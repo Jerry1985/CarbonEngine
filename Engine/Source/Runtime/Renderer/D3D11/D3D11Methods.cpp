@@ -5,6 +5,8 @@
 #include "D3D11Define.h"
 #include "D3D11View.h"
 
+extern D3D11Interface* gD3D11Interface;
+
 // clear render target
 void D3D11Interface::Clear( unsigned index , Color color , float depth )
 {
@@ -19,8 +21,15 @@ void D3D11Interface::Clear( unsigned index , Color color , float depth )
 	m_D3D11DeviceContext->ClearRenderTargetView(rtView, (float*)&color);
 }
 
+// begin render
+void D3D11Interface::BeginRender(RALView const * view)
+{
+	// Set render target
+	gD3D11Interface->SetRenderTarget(0, view->GetRenderTarget());
+}
+
 // present the buffer
-void D3D11Interface::Present(const RALView* view)
+void D3D11Interface::EndRender(const RALView* view)
 {
 	const D3D11View* d3d11view = dynamic_cast<const D3D11View*>(view);
 	d3d11view->m_swapChain->Present(0, 0);

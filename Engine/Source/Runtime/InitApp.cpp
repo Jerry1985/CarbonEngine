@@ -27,7 +27,13 @@ public:
 	MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size);
 	void OnSize(wxSizeEvent& evt)
 	{
-		view->Resize(evt.GetSize().x, evt.GetSize().y);
+		if (view)
+			view->Resize(evt.GetSize().x, evt.GetSize().y);
+	}
+
+	void OnCloseWindow(wxCloseEvent& evt)
+	{
+		wxFrame::OnCloseWindow(evt);
 	}
 
 	RALView*	view;
@@ -44,7 +50,7 @@ public:
 
 private:
 	MyFrame* frame0;
-//	MyFrame* frame1;
+	MyFrame* frame1;
 
 	RALRenderTarget* m_rt;
 
@@ -58,6 +64,7 @@ private:
 
 BEGIN_EVENT_TABLE(MyFrame, wxFrame)
 	EVT_SIZE(MyFrame::OnSize)
+	EVT_CLOSE(MyFrame::OnCloseWindow)
 END_EVENT_TABLE()
 
 wxIMPLEMENT_APP_NO_THEMES(MyApp);
@@ -66,13 +73,13 @@ wxIMPLEMENT_APP_NO_THEMES(MyApp);
 bool MyApp::OnInit()
 {
 	// create D3D11RAL
-	RALCreateInterface(RAL_RENDERER_D3D11);
+	RALCreateInterface(RAL_RENDERER_OPENGL);
 
-	frame0 = new MyFrame("Carbon Engine", wxPoint(50, 50), wxSize(1280, 720));
+	frame0 = new MyFrame("Carbon Engine", wxPoint(50, 50), wxSize(640, 720));
 	frame0->Show(true);
 
-//	frame1 = new MyFrame("Carbon Engine", wxPoint(690, 50), wxSize(640, 720));
-//	frame1->Show(true);
+	frame1 = new MyFrame("Carbon Engine", wxPoint(690, 50), wxSize(640, 720));
+	frame1->Show(true);
 
 	Connect(wxID_ANY, wxEVT_IDLE, wxIdleEventHandler(MyApp::onIdle));
 
@@ -93,10 +100,13 @@ bool MyApp::OnInit()
 		1 , 3 , 2,
 	};
 	ib = RALCreateIndexBuffer(sizeof(indices), sizeof(unsigned), RAL_USAGE_DYNAMIC);
-	RALBufferDesc desc = ib->Map();
-	if (desc.pData)
-		memcpy(desc.pData, indices, sizeof(indices));
-	ib->Unmap();
+	if (ib)
+	{
+		RALBufferDesc desc = ib->Map();
+		if (desc.pData)
+			memcpy(desc.pData, indices, sizeof(indices));
+		ib->Unmap();
+	}
 
 	RALVertexElementDesc layoutDesc;
 	layoutDesc.attributeIndex = 0;
@@ -110,8 +120,10 @@ bool MyApp::OnInit()
 	pVS = RALCreateVertexShader();
 	pPS = RALCreatePixelShader();
 
-	pVS->CreateShader((void*)g_vs, sizeof(g_vs));
-	pPS->CreateShader((void*)g_ps, sizeof(g_ps));
+	if (pVS)
+		pVS->CreateShader((void*)g_vs, sizeof(g_vs));
+	if (pPS)
+		pPS->CreateShader((void*)g_ps, sizeof(g_ps));
 
 	// Setup the viewport
 	RALViewport vp(frame0->GetSize().x, frame0->GetSize().y);
@@ -122,8 +134,8 @@ bool MyApp::OnInit()
 
 void MyApp::onIdle(wxIdleEvent& evt)
 {
-	//frame0->vp->BeginRender();
-	RALSetRenderTarget(0, frame0->view->GetRenderTarget());
+	RALBeginRender(frame0->view);
+	
 	RALClear(1,Color::BLACK,1.0f);
 
 	// Set the input layout
@@ -137,8 +149,25 @@ void MyApp::onIdle(wxIdleEvent& evt)
 	RALSetPixelShader(pPS);
 	RALDrawIndexed(6);
 
-	RALPresent(frame0->view);
+	RALEndRender(frame0->view);
+	
+	RALBeginRender(frame1->view);
 
+	RALClear(1, Color::RED, 1.0f);
+
+	// Set the input layout
+	RALSetVertexLayout(vl);
+
+	RALSetPrimitiveType(RAL_PRIMITIVE_TRIANGLELIST);
+	RALSetVertexBuffers(0, 1, vb);
+	RALSetIndexBuffer(ib);
+
+	RALSetVertexShader(pVS);
+	RALSetPixelShader(pPS);
+	RALDrawIndexed(6);
+
+	RALEndRender(frame1->view);
+	
 	evt.RequestMore();
 }
 

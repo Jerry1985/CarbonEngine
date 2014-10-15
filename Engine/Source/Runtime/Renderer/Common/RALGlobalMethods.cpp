@@ -1,5 +1,6 @@
 #include "RALGlobalMethods.h"
 #include "Renderer\D3D11\D3D11Interface.h"
+#include "Renderer\OpenGL\OGLInterface.h"
 
 RALInterface*	gRALInterface = 0;
 
@@ -14,6 +15,7 @@ void RALCreateInterface(RAL_RENDERER raltype)
 		gRALInterface = new D3D11Interface();
 		break;
 	case RAL_RENDERER_OPENGL:
+		gRALInterface = new OGLInterface();
 		break;
 	}
 }

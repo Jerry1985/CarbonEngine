@@ -144,7 +144,15 @@ RAL_METHOD(
 
 RAL_METHOD(
 	void,
-	Present,
+	BeginRender,
+	(const RALView* view),
+	(const RALView* view),
+	(view)
+)
+
+RAL_METHOD(
+	void,
+	EndRender,
 	(const RALView* view),
 	(const RALView* view),
 	(view)

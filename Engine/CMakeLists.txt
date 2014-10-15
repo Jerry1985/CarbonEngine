@@ -12,6 +12,7 @@ include_directories( "$ENV{WXWIDGET_DIR}include")
 include_directories( "$ENV{WXWIDGET_DIR}lib/vc_lib/mswud")
 
 link_directories( $ENV{WXWIDGET_DIR}lib/vc_lib )
+link_directories( ${Carbon_SOURCE_DIR}/Source/ThirdParty/Regal/Lib )
 
 macro(source_group_by_dir source_files)
     if(MSVC)
@@ -40,8 +41,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../Binary")
 
 add_executable(Carbon ${all_files})
 
-target_link_libraries( Carbon debug wxmsw30ud_core.lib debug wxbase30ud.lib debug wxtiffd.lib debug wxjpegd.lib debug wxpngd.lib debug wxzlibd.lib debug comctl32.lib debug uuid.lib debug rpcrt4.lib)
-target_link_libraries( Carbon optimized wxmsw30u_core.lib optimized wxbase30u.lib optimized wxtiff.lib optimized wxjpeg.lib optimized wxpng.lib optimized wxzlib.lib optimized comctl32.lib optimized uuid.lib optimized rpcrt4.lib)
+target_link_libraries( Carbon debug regal32_d.lib wxmsw30ud_core.lib debug wxbase30ud.lib debug wxtiffd.lib debug wxjpegd.lib debug wxpngd.lib debug wxzlibd.lib debug comctl32.lib debug uuid.lib debug rpcrt4.lib)
+target_link_libraries( Carbon optimized regal32.lib wxmsw30u_core.lib optimized wxbase30u.lib optimized wxtiff.lib optimized wxjpeg.lib optimized wxpng.lib optimized wxzlib.lib optimized comctl32.lib optimized uuid.lib optimized rpcrt4.lib)
 
 target_link_libraries( Carbon d3d11.lib dxgi.lib )
 
