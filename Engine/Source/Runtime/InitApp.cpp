@@ -15,8 +15,13 @@
 
 #include "../Temp/vs.h"
 #include "../Temp/ps.h"
+#include "../ThirdParty/Regal/Include/Regal.h"
+#include "shader.hpp"
 
 RALViewport* viewport = 0;
+
+#define TWO_VIEWS 0
+#define D3D11_RAL 0
 
 // The main frame for rendering
 class MyFrame : public wxFrame
@@ -60,6 +65,8 @@ private:
 
 	RALShader*				pVS;
 	RALShader*				pPS;
+
+	GLuint		programID;
 };
 
 BEGIN_EVENT_TABLE(MyFrame, wxFrame)
@@ -73,13 +80,19 @@ wxIMPLEMENT_APP_NO_THEMES(MyApp);
 bool MyApp::OnInit()
 {
 	// create D3D11RAL
+#if D3D11_RAL
+	RALCreateInterface(RAL_RENDERER_D3D11);
+#else
 	RALCreateInterface(RAL_RENDERER_OPENGL);
+#endif
 
-	frame0 = new MyFrame("Carbon Engine", wxPoint(50, 50), wxSize(640, 720));
+	frame0 = new MyFrame("Carbon Engine", wxPoint(50, 50), wxSize(1280, 720));
 	frame0->Show(true);
 
+#if TWO_VIEWS
 	frame1 = new MyFrame("Carbon Engine", wxPoint(690, 50), wxSize(640, 720));
 	frame1->Show(true);
+#endif
 
 	Connect(wxID_ANY, wxEVT_IDLE, wxIdleEventHandler(MyApp::onIdle));
 
@@ -99,14 +112,14 @@ bool MyApp::OnInit()
 		0 , 1 , 2,
 		1 , 3 , 2,
 	};
-	ib = RALCreateIndexBuffer(sizeof(indices), sizeof(unsigned), RAL_USAGE_DYNAMIC);
-	if (ib)
+	ib = RALCreateIndexBuffer(sizeof(indices), sizeof(unsigned), RAL_USAGE_IMMUTABLE, indices);
+	/*if (ib)
 	{
 		RALBufferDesc desc = ib->Map();
 		if (desc.pData)
 			memcpy(desc.pData, indices, sizeof(indices));
 		ib->Unmap();
-	}
+	}*/
 
 	RALVertexElementDesc layoutDesc;
 	layoutDesc.attributeIndex = 0;
@@ -129,6 +142,11 @@ bool MyApp::OnInit()
 	RALViewport vp(frame0->GetSize().x, frame0->GetSize().y);
 	RALSetViewport(1, &vp);
 
+	// Create and compile our GLSL program from the shaders
+#if D3D11_RAL == 0
+	 programID = LoadShaders("E:\\CarbonEngine\\Engine\\Source\\Temp\\SimpleVertexShader.vertexshader", "E:\\CarbonEngine\\Engine\\Source\\Temp\\SimpleFragmentShader.fragmentshader");
+#endif
+
 	return true;
 }
 
@@ -137,7 +155,7 @@ void MyApp::onIdle(wxIdleEvent& evt)
 	RALBeginRender(frame0->view);
 	
 	RALClear(1,Color::BLACK,1.0f);
-
+	
 	// Set the input layout
 	RALSetVertexLayout(vl);
 
@@ -147,10 +165,39 @@ void MyApp::onIdle(wxIdleEvent& evt)
 
 	RALSetVertexShader(pVS);
 	RALSetPixelShader(pPS);
-	RALDrawIndexed(6);
+//	RALDrawIndexed(6);
+	
+#if D3D11_RAL == 0
+	glUseProgram(programID);
+	// 1rst attribute buffer : vertices
+	glEnableVertexAttribArray(0);
+#endif
+	RALSetVertexBuffers(0, 1, vb);
+	//glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+	
+#if D3D11_RAL == 0
+	glVertexAttribPointer(
+		0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+		3,                  // size
+		GL_FLOAT,           // type
+		GL_FALSE,           // normalized?
+		0,                  // stride
+		(void*)0            // array buffer offset
+		);
+	RALSetIndexBuffer(ib);
+
+	glDisable(GL_CULL_FACE);
+
+#endif
+	// Draw the triangle !
+	//RALDraw(3,1);
+	RALDrawIndexed(3, 3, 0);
+
+//	glDisableVertexAttribArray(0);
 
 	RALEndRender(frame0->view);
-	
+
+#if TWO_VIEWS
 	RALBeginRender(frame1->view);
 
 	RALClear(1, Color::RED, 1.0f);
@@ -167,7 +214,8 @@ void MyApp::onIdle(wxIdleEvent& evt)
 	RALDrawIndexed(6);
 
 	RALEndRender(frame1->view);
-	
+#endif
+
 	evt.RequestMore();
 }
 

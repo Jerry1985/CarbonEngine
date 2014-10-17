@@ -2,6 +2,7 @@
 #define CARBON_OGLINTERFACE
 
 #include "Renderer\Common\RALInterface.h"
+#include "../ThirdParty/Regal/Include/Regal.h"
 
 struct PlatformOGLDevice;
 
@@ -16,8 +17,10 @@ public:
 #undef RAL_METHOD
 
 private:
-	// Opengl Platform information
-	PlatformOGLDevice*	m_PlatformOGLDevice;
+	// Primitive type
+	GLuint				m_primitiveType;
+	// Element array buffer type
+	GLuint				m_elementArrayType;
 
 	// flush render target if neccessary
 	virtual void _flushRT();

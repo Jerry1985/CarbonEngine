@@ -32,41 +32,7 @@ RALRenderTarget* OGLInterface::CreateRenderTarget(unsigned int, unsigned int, RA
 	return 0;
 }
 
-RALVertexBuffer* OGLInterface::CreateVertexBuffer(unsigned int, unsigned int, RAL_USAGE, void*)
-{
-	return 0;
-}
-
-RALIndexBuffer* OGLInterface::CreateIndexBuffer(unsigned int, unsigned int, RAL_USAGE, void*)
-{
-	return 0;
-}
-
 void OGLInterface::SetRenderTarget(unsigned int, RALRenderTarget const *)
-{
-
-}
-
-void OGLInterface::SetVertexBuffers(unsigned startSlot, unsigned numBuffurs, const RALVertexBuffer* vbs)
-{
-
-}
-
-void OGLInterface::SetIndexBuffer(const RALIndexBuffer* ibs)
-{
-
-}
-
-void OGLInterface::SetPrimitiveType(RAL_PRIMITIVE)
-{
-}
-
-void __thiscall OGLInterface::Draw(unsigned int, unsigned int)
-{
-
-}
-
-void __thiscall OGLInterface::DrawIndexed(unsigned int, unsigned int, unsigned int)
 {
 
 }
@@ -102,4 +68,3 @@ RALVertexLayout* OGLInterface::CreateVertexLayout(unsigned int, struct RALVertex
 void OGLInterface::SetVertexLayout(RALVertexLayout const *)
 {
 }
-
