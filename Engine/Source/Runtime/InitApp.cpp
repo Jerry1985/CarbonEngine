@@ -140,7 +140,7 @@ bool MyApp::OnInit()
 
 	// Setup the viewport
 	RALViewport vp(frame0->GetSize().x, frame0->GetSize().y);
-	RALSetViewport(1, &vp);
+	RALSetViewport(vp);
 
 	// Create and compile our GLSL program from the shaders
 #if D3D11_RAL == 0
@@ -152,6 +152,10 @@ bool MyApp::OnInit()
 
 void MyApp::onIdle(wxIdleEvent& evt)
 {
+#if D3D11_RAL == 0
+	glUseProgram(programID);
+#endif
+
 	RALBeginRender(frame0->view);
 	
 	RALClear(1,Color::BLACK,1.0f);
@@ -165,35 +169,7 @@ void MyApp::onIdle(wxIdleEvent& evt)
 
 	RALSetVertexShader(pVS);
 	RALSetPixelShader(pPS);
-//	RALDrawIndexed(6);
-	
-#if D3D11_RAL == 0
-	glUseProgram(programID);
-	// 1rst attribute buffer : vertices
-	glEnableVertexAttribArray(0);
-#endif
-	RALSetVertexBuffers(0, 1, vb);
-	//glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-	
-#if D3D11_RAL == 0
-	glVertexAttribPointer(
-		0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-		3,                  // size
-		GL_FLOAT,           // type
-		GL_FALSE,           // normalized?
-		0,                  // stride
-		(void*)0            // array buffer offset
-		);
-	RALSetIndexBuffer(ib);
-
-	glDisable(GL_CULL_FACE);
-
-#endif
-	// Draw the triangle !
-	//RALDraw(3,1);
-	RALDrawIndexed(3, 3, 0);
-
-//	glDisableVertexAttribArray(0);
+	RALDrawIndexed(6);
 
 	RALEndRender(frame0->view);
 

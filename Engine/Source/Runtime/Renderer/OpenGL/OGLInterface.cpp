@@ -37,11 +37,6 @@ void OGLInterface::SetRenderTarget(unsigned int, RALRenderTarget const *)
 
 }
 
-void __thiscall OGLInterface::SetViewport(unsigned int, struct RALViewport *)
-{
-
-}
-
 RALShader* OGLInterface::CreateVertexShader(void)
 {
 	return 0;
@@ -57,14 +52,5 @@ void OGLInterface::SetVertexShader(class RALShader const *)
 }
 
 void OGLInterface::SetPixelShader(class RALShader const *)
-{
-}
-
-RALVertexLayout* OGLInterface::CreateVertexLayout(unsigned int, struct RALVertexElementDesc const *, void const *, unsigned int)
-{
-	return 0;
-}
-
-void OGLInterface::SetVertexLayout(RALVertexLayout const *)
 {
 }

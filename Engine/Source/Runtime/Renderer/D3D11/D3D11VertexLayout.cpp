@@ -17,7 +17,7 @@ void D3D11Interface::SetVertexLayout(const RALVertexLayout* layout)
 
 D3D11VertexLayout::D3D11VertexLayout(unsigned count, const RALVertexElementDesc* layouts, const void* bcode, unsigned bcodelen ) : m_inputLayout(0)
 {
-	if (count <= 0)
+	if (count <= 0 || count >= MAX_VERTEX_ELEMENT_COUNT)
 		return;
 
 	D3D11_INPUT_ELEMENT_DESC* descs = new D3D11_INPUT_ELEMENT_DESC[count];

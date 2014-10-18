@@ -2,6 +2,7 @@
 #include "PlatformOGL\PlatformOGL.h"
 #include "OGLView.h"
 #include "OGLDefine.h"
+#include "Renderer\Common\RALViewport.h"
 
 extern OGLInterface* gOGLInterface;
 
@@ -33,4 +34,9 @@ void OGLInterface::DrawIndexed(unsigned indexCount, unsigned startIndexLoc, unsi
 {
 	unsigned int dataSize = (m_elementArrayType == GL_UNSIGNED_INT) ? 4 : 2;
 	glDrawElementsBaseVertex(m_primitiveType, indexCount, m_elementArrayType, (void*)(startIndexLoc*dataSize), baseVertLoc);
+}
+
+void OGLInterface::SetViewport(const RALViewport& vp)
+{
+	glViewport(vp.x, vp.y, (GLsizei)vp.w, (GLsizei)vp.h);
 }

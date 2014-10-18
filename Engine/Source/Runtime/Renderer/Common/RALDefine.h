@@ -4,6 +4,7 @@
 #define	MAX_RT_COUNT		8		// maximum number of render target set
 #define MAX_VB_SLOT_COUNT	8		// maximum number of vertex buffer bound
 #define MAX_VP_COUNT		8		// maximum number of viewport
+#define	MAX_VERTEX_ELEMENT_COUNT	8	// maximum number of elements in vertex
 
 enum RAL_RENDERER
 {

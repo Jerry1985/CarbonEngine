@@ -89,9 +89,9 @@ RAL_METHOD(
 RAL_METHOD(
 	void,
 	SetViewport,
-	(unsigned vpCount, RALViewport* vps),
-	(unsigned vpCount, RALViewport* vps),
-	(vpCount,vps)
+	(const RALViewport& vp),
+	(const RALViewport& vp),
+	(vp)
 )
 
 RAL_METHOD(

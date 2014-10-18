@@ -36,23 +36,18 @@ void D3D11Interface::EndRender(const RALView* view)
 }
 
 // set view port
-void D3D11Interface::SetViewport(unsigned vpCount, RALViewport* vps)
+void D3D11Interface::SetViewport(const RALViewport& vp)
 {
-	D3D11_VIEWPORT viewports[MAX_VP_COUNT];
+	D3D11_VIEWPORT viewport;
 
-	vpCount = min(vpCount, MAX_VP_COUNT);
-
-	for (unsigned i = 0; i < vpCount; ++i)
-	{
-		viewports[i].Width = vps[i].w;
-		viewports[i].Height = vps[i].h;
-		viewports[i].MinDepth = vps[i].minZ;
-		viewports[i].MaxDepth = vps[i].maxZ;
-		viewports[i].TopLeftX = vps[i].x;
-		viewports[i].TopLeftY = vps[i].y;
-	}
+	viewport.Width = vp.w;
+	viewport.Height = vp.h;
+	viewport.MinDepth = vp.minZ;
+	viewport.MaxDepth = vp.maxZ;
+	viewport.TopLeftX = vp.x;
+	viewport.TopLeftY = vp.y;
 	
-	m_D3D11DeviceContext->RSSetViewports(vpCount, viewports);
+	m_D3D11DeviceContext->RSSetViewports(1, &viewport);
 }
 
 // set primitive type
