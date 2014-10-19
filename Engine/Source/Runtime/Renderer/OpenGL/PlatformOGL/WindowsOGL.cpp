@@ -57,12 +57,7 @@ bool InitOGL(PlatformOGLDevice* device, const PlatformOGLDevice* parent)
 	if (parent)
 		wglShareLists(parent->context, device->context);
 	
-	if(!wglMakeCurrent(device->hdc, device->context)) // Only make context current if it is parent context
-	{
-		//KillGLWindow((HWND)device->hwnd);			// Reset The Display
-		MessageBox(NULL, "Can't Activate The GL Rendering Context.", "ERROR", MB_OK | MB_ICONEXCLAMATION);
-		return FALSE;								// Return FALSE
-	}
+	wglMakeCurrent(device->hdc, device->context);
 
 	return true;
 }

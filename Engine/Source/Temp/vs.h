@@ -29,7 +29,7 @@ ret
 // Approximately 2 instruction slots used
 #endif
 
-const BYTE g_vs[] =
+const char g_vs[] =
 {
      68,  88,  66,  67,  84, 130, 
      21, 245,  27, 204, 205,  21, 
