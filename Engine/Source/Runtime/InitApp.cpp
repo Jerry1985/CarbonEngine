@@ -15,13 +15,30 @@
 
 #include "../Temp/vs.h"
 #include "../Temp/ps.h"
-#include "../ThirdParty/Regal/Include/Regal.h"
-#include "shader.hpp"
 
 RALViewport* viewport = 0;
 
 #define TWO_VIEWS 0
 #define D3D11_RAL 0
+
+const char g_ogl_vs[] = {
+	"#version 330 core\n"
+	"layout(location = 0) in vec3 vertexPosition_modelspace;\n"
+	"void main(){\n"
+	"gl_Position.xyz = vertexPosition_modelspace;\n"
+	"gl_Position.y *= -1.0;\n"
+	"gl_Position.w = 1.0;\n"
+	"}"
+};
+
+const char g_ogl_fs[] = {
+	"#version 330 core\n"
+	"out vec4 color;\n"
+	"void main()\n"
+	"{\n"
+		"color = vec4(1.0 , 1.0 , 0.0 , 1.0);\n"
+	"}"
+};
 
 // The main frame for rendering
 class MyFrame : public wxFrame
@@ -65,8 +82,7 @@ private:
 
 	RALShader*				pVS;
 	RALShader*				pPS;
-
-	GLuint		programID;
+	RALShaderBoundState*	pShaders;
 };
 
 BEGIN_EVENT_TABLE(MyFrame, wxFrame)
@@ -133,42 +149,39 @@ bool MyApp::OnInit()
 	pVS = RALCreateVertexShader();
 	pPS = RALCreatePixelShader();
 
+#if D3D11_RAL
 	if (pVS)
 		pVS->CreateShader((void*)g_vs, sizeof(g_vs));
 	if (pPS)
 		pPS->CreateShader((void*)g_ps, sizeof(g_ps));
+#else
+	if (pVS)
+		pVS->CreateShader((void*)g_ogl_vs, sizeof(g_ogl_vs));
+	if (pPS)
+		pPS->CreateShader((void*)g_ogl_fs, sizeof(g_ogl_fs));
+#endif
+
+	pShaders = RALCreateShaderBoundState(vl, pVS, pPS);
 
 	// Setup the viewport
 	RALViewport vp(frame0->GetSize().x, frame0->GetSize().y);
 	RALSetViewport(vp);
-
-	// Create and compile our GLSL program from the shaders
-#if D3D11_RAL == 0
-	 programID = LoadShaders("E:\\CarbonEngine\\Engine\\Source\\Temp\\SimpleVertexShader.vertexshader", "E:\\CarbonEngine\\Engine\\Source\\Temp\\SimpleFragmentShader.fragmentshader");
-#endif
 
 	return true;
 }
 
 void MyApp::onIdle(wxIdleEvent& evt)
 {
-#if D3D11_RAL == 0
-	glUseProgram(programID);
-#endif
-
 	RALBeginRender(frame0->view);
 	
 	RALClear(1,Color::BLACK,1.0f);
-	
-	// Set the input layout
-	RALSetVertexLayout(vl);
+
+	RALSetShaderBoundState(pShaders);
 
 	RALSetPrimitiveType(RAL_PRIMITIVE_TRIANGLELIST);
 	RALSetVertexBuffers(0, 1, vb);
 	RALSetIndexBuffer(ib);
 
-	RALSetVertexShader(pVS);
-	RALSetPixelShader(pPS);
 	RALDrawIndexed(6);
 
 	RALEndRender(frame0->view);

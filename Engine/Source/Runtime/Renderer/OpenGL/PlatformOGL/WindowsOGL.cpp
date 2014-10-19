@@ -4,7 +4,8 @@
 
 #include <Windows.h>
 
-bool InitOGL(PlatformOGLDevice* device);
+bool InitOGL(PlatformOGLDevice* device, const PlatformOGLDevice* parent);
+HWND createDummyWindow();
 
 struct PlatformOGLDevice
 {
@@ -12,16 +13,16 @@ struct PlatformOGLDevice
 	HGLRC	context;
 	HDC		hdc;
 
-	PlatformOGLDevice(void* _hwnd)
+	PlatformOGLDevice(void* _hwnd,const PlatformOGLDevice* parent)
 	{
-		hwnd = (HWND)_hwnd;
-		InitOGL(this);
+		hwnd = (HWND)((_hwnd == 0) ? createDummyWindow():_hwnd);
+		InitOGL(this, parent);
 	}
 };
 
-bool InitOGL(PlatformOGLDevice* device)
+bool InitOGL(PlatformOGLDevice* device, const PlatformOGLDevice* parent)
 {
-	unsigned int		PixelFormat;	// Holds The Results After Searching For A Match
+	unsigned int		PixelFormat;				// Holds The Results After Searching For A Match
 
 	static	PIXELFORMATDESCRIPTOR pfd =				// pfd Tells Windows How We Want Things To Be
 	{
@@ -52,7 +53,11 @@ bool InitOGL(PlatformOGLDevice* device)
 
 	device->context = wglCreateContext(device->hdc);
 
-	if (!wglMakeCurrent(device->hdc, device->context))		// Try To Activate The Rendering Context
+	bool result = false;
+	if (parent)
+		wglShareLists(parent->context, device->context);
+	
+	if(!wglMakeCurrent(device->hdc, device->context)) // Only make context current if it is parent context
 	{
 		//KillGLWindow((HWND)device->hwnd);			// Reset The Display
 		MessageBox(NULL, "Can't Activate The GL Rendering Context.", "ERROR", MB_OK | MB_ICONEXCLAMATION);
@@ -63,9 +68,9 @@ bool InitOGL(PlatformOGLDevice* device)
 }
 
 // create opengl platform device
-PlatformOGLDevice*	CreatePlatformOGLDevice(void* hwnd)
+PlatformOGLDevice*	CreatePlatformOGLDevice(const PlatformOGLDevice* parent ,void* hwnd)
 {
-	return new PlatformOGLDevice(hwnd);
+	return new PlatformOGLDevice(hwnd,parent);
 }
 
 // swap OGL buffer
@@ -80,6 +85,33 @@ void MakeOGLCurrent(PlatformOGLDevice* device)
 {
 	// make current
 	wglMakeCurrent(device->hdc, device->context);
+}
+
+//Processes messages for the main window.
+LRESULT CALLBACK WndDummyProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	return DefWindowProc(hWnd, message, wParam, lParam);
+}
+
+HWND createDummyWindow()
+{
+	//the window class
+	WNDCLASS wcl;
+
+	//clear the memory
+	memset(&wcl, 0, sizeof(wcl));
+
+	wcl.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
+	wcl.hInstance = 0;
+	wcl.lpfnWndProc = WndDummyProc;
+	wcl.lpszClassName = "DummyWindow";
+
+	//register the window class
+	RegisterClass(&wcl);
+
+	//Create the main window
+	return CreateWindowW(L"DummyWindow", L"DummyWindow", WS_SYSMENU | WS_MINIMIZEBOX,
+		CW_USEDEFAULT, 0, 1, 1, NULL, NULL, NULL, NULL);
 }
 
 #endif

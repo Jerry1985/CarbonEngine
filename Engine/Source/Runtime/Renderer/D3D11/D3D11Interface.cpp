@@ -1,5 +1,7 @@
 #include "D3D11Interface.h"
 #include "D3D11RenderTarget.h"
+#include "D3D11Shader.h"
+#include "D3D11VertexLayout.h"
 
 D3D11Interface* gD3D11Interface = 0;
 
@@ -74,4 +76,24 @@ void D3D11Interface::_flushRT()
 		for (int i = 0; i < MAX_RT_COUNT; ++i)
 			m_currentRT[i] = m_pendingRT[i];
 	}
+}
+
+void D3D11Interface::_setVertexLayout(const RALVertexLayout* vl)
+{
+	const D3D11VertexLayout* d3d11_layout = dynamic_cast<const D3D11VertexLayout*>(vl);
+	gD3D11Interface->m_D3D11DeviceContext->IASetInputLayout(d3d11_layout->m_inputLayout);
+}
+
+void D3D11Interface::_setVertexShader(const RALShader* vs)
+{
+	const D3D11VertexShader* shader = dynamic_cast<const D3D11VertexShader*>(vs);
+	if (shader)
+		m_D3D11DeviceContext->VSSetShader(shader->m_shader, 0, 0);
+}
+
+void D3D11Interface::_setPixelShader(const RALShader* ps)
+{
+	const D3D11PixelShader* shader = dynamic_cast<const D3D11PixelShader*>(ps);
+	if (shader)
+		m_D3D11DeviceContext->PSSetShader(shader->m_shader, 0, 0);
 }

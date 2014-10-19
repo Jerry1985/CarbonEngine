@@ -38,5 +38,5 @@ void OGLInterface::DrawIndexed(unsigned indexCount, unsigned startIndexLoc, unsi
 
 void OGLInterface::SetViewport(const RALViewport& vp)
 {
-	glViewport(vp.x, vp.y, (GLsizei)vp.w, (GLsizei)vp.h);
+	glViewport((GLint)vp.x, (GLint)vp.y, (GLsizei)vp.w, (GLsizei)vp.h);
 }

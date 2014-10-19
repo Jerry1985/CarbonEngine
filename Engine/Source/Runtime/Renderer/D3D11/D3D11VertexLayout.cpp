@@ -9,12 +9,6 @@ RALVertexLayout* D3D11Interface::CreateVertexLayout(unsigned elementCount, const
 	return new D3D11VertexLayout(elementCount, descs, bcode, bcodelen);
 }
 
-void D3D11Interface::SetVertexLayout(const RALVertexLayout* layout)
-{
-	const D3D11VertexLayout* d3d11_layout = dynamic_cast<const D3D11VertexLayout*>(layout);
-	gD3D11Interface->m_D3D11DeviceContext->IASetInputLayout(d3d11_layout->m_inputLayout);
-}
-
 D3D11VertexLayout::D3D11VertexLayout(unsigned count, const RALVertexElementDesc* layouts, const void* bcode, unsigned bcodelen ) : m_inputLayout(0)
 {
 	if (count <= 0 || count >= MAX_VERTEX_ELEMENT_COUNT)

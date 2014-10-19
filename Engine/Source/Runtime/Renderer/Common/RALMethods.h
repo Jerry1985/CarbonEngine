@@ -111,35 +111,11 @@ RAL_METHOD(
 )
 
 RAL_METHOD(
-	void,
-	SetVertexShader,
-	(const RALShader* vs),
-	(const RALShader* vs),
-	(vs)
-)
-
-RAL_METHOD(
-	void,
-	SetPixelShader,
-	(const RALShader* ps),
-	(const RALShader* ps),
-	(ps)
-)
-
-RAL_METHOD(
 	RALVertexLayout*,
 	CreateVertexLayout,
 	(unsigned elementCount, const RALVertexElementDesc* descs, const void* bcode, unsigned bcodelen),
 	(unsigned elementCount, const RALVertexElementDesc* descs, const void* bcode, unsigned bcodelen),
 	(elementCount, descs, bcode, bcodelen)
-)
-
-RAL_METHOD(
-	void,
-	SetVertexLayout,
-	(const RALVertexLayout* layout),
-	(const RALVertexLayout* layout),
-	(layout)
 )
 
 RAL_METHOD(
@@ -156,4 +132,20 @@ RAL_METHOD(
 	(const RALView* view),
 	(const RALView* view),
 	(view)
+)
+
+RAL_METHOD(
+	RALShaderBoundState*,
+	CreateShaderBoundState,
+	(RALVertexLayout* vl,RALShader* vs, RALShader* ps),
+	(RALVertexLayout* vl,RALShader* vs, RALShader* ps),
+	(vl,vs,ps)
+)
+
+RAL_METHOD(
+	void,
+	SetShaderBoundState,
+	(const RALShaderBoundState* state),
+	(const RALShaderBoundState* state),
+	(state)
 )

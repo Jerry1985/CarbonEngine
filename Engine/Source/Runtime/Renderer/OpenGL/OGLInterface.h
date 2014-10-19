@@ -18,12 +18,17 @@ public:
 
 private:
 	// Primitive type
-	GLuint				m_primitiveType;
+	GLuint		m_primitiveType;
 	// Element array buffer type
-	GLuint				m_elementArrayType;
+	GLuint		m_elementArrayType;
+
+	// Parent Opengl device
+	PlatformOGLDevice*	m_OglDevice;
 
 	// flush render target if neccessary
 	virtual void _flushRT();
+
+	void _setVertexLayout(const RALVertexLayout* vl);
 };
 
 #endif

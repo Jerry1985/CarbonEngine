@@ -2,9 +2,7 @@
 
 RALShader::RALShader()
 {
-
 }
 RALShader::~RALShader()
 {
-
 }

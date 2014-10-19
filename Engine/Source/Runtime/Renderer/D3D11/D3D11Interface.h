@@ -31,6 +31,10 @@ private:
 	// flush render target if neccessary
 	void _flushRT();
 
+	void _setVertexLayout(const RALVertexLayout* vl);
+	void _setVertexShader(const RALShader* vs);
+	void _setPixelShader(const RALShader* ps);
+
 	friend class D3D11View;
 	friend class D3D11RenderTarget;
 	friend class D3D11VertexBuffer;

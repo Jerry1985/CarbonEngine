@@ -7,7 +7,7 @@
 class OGLView : public RALView
 {
 public:
-	OGLView(void* WindowHandle, unsigned width, unsigned height, bool bIsFullscreen, RAL_FORMAT format);
+	OGLView(const PlatformOGLDevice* parent, void* WindowHandle, unsigned width, unsigned height, bool bIsFullscreen, RAL_FORMAT format);
 	~OGLView();
 
 	// Resize viewport
