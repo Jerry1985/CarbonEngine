@@ -9,11 +9,12 @@ include_directories( "${Carbon_SOURCE_DIR}/Source/Runtime/Common" )
 include_directories( "${Carbon_SOURCE_DIR}/Source/Runtime/" )
 include_directories( "${Carbon_SOURCE_DIR}/Source/UI/Base/GeneratedFiles")
 include_directories( "$ENV{DXSDK_DIR}")
-include_directories( "$ENV{QTDIR}include")
-include_directories( "$ENV{QTDIR}include/QtCore")
-include_directories( "$ENV{QTDIR}include/QtGui")
+include_directories( "$ENV{QTDIR}/include")
+include_directories( "$ENV{QTDIR}/include/QtCore")
+include_directories( "$ENV{QTDIR}/include/QtGui")
+include_directories( "$ENV{QTDIR}/include/QtWidgets")
 
-link_directories( $ENV{QTDIR}lib)
+link_directories( $ENV{QTDIR}/lib)
 link_directories( ${Carbon_SOURCE_DIR}/Source/ThirdParty/Regal/Lib )
 
 macro(source_group_by_dir source_files)
@@ -43,7 +44,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../Binary")
 
 add_executable(Carbon ${all_files})
 
-target_link_libraries( Carbon qtmaind.lib QtCored4.lib QtGuid4.lib debug regal32_d.lib)
+target_link_libraries( Carbon debug qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5Widgetsd.lib regal32_d.lib)
 target_link_libraries( Carbon optimized regal32.lib)
 
 target_link_libraries( Carbon d3d11.lib dxgi.lib )

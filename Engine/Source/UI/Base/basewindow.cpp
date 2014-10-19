@@ -1,4 +1,4 @@
-#include "qtproject.h"
+#include "basewindow.h"
 #include <qtimer.h>
 #include <qevent.h>
 
@@ -47,8 +47,8 @@ RALShader*				pPS;
 RALShaderBoundState*	pShaders;
 RALView*				pView;
 
-QTProject::QTProject(QWidget *parent, Qt::WFlags flags)
-	: QMainWindow(parent, flags)
+BaseWindow::BaseWindow(QWidget *parent)
+: QMainWindow(parent)
 {
 	ui.setupUi(this);
 
@@ -57,6 +57,7 @@ QTProject::QTProject(QWidget *parent, Qt::WFlags flags)
 
 	QTimer* timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), this, SLOT(update()));
+	timer->start(20);
 
 	pView = RALCreateView((void*)winId(), size().width(), size().height(), false, RAL_FORMAT_R8G8B8A8_UNORM);
 
@@ -65,7 +66,7 @@ QTProject::QTProject(QWidget *parent, Qt::WFlags flags)
 	frame1->Show(true);
 #endif
 
-//	m_rt = RALCreateRenderTarget(size().width(), size().height(), RAL_FORMAT_R16G16_UNORM);
+	//	m_rt = RALCreateRenderTarget(size().width(), size().height(), RAL_FORMAT_R16G16_UNORM);
 
 	float vertices[] =
 	{
@@ -84,10 +85,10 @@ QTProject::QTProject(QWidget *parent, Qt::WFlags flags)
 	ib = RALCreateIndexBuffer(sizeof(indices), sizeof(unsigned), RAL_USAGE_IMMUTABLE, indices);
 	if (ib)
 	{
-	RALBufferDesc desc = ib->Map();
-	if (desc.pData)
-	memcpy(desc.pData, indices, sizeof(indices));
-	ib->Unmap();
+		RALBufferDesc desc = ib->Map();
+		if (desc.pData)
+			memcpy(desc.pData, indices, sizeof(indices));
+		ib->Unmap();
 	}
 
 	RALVertexElementDesc layoutDesc;
@@ -121,28 +122,28 @@ QTProject::QTProject(QWidget *parent, Qt::WFlags flags)
 	RALSetViewport(vp);
 }
 
-QTProject::~QTProject()
+BaseWindow::~BaseWindow()
 {
 
 }
 
-void QTProject::resizeEvent(QResizeEvent *e)
+void BaseWindow::resizeEvent(QResizeEvent *e)
 {
 	if (pView)
-		pView->Resize(e->size().width(),e->size().height());
+		pView->Resize(e->size().width(), e->size().height());
 }
 
-void QTProject::paintEvent(QPaintEvent *e)
+void BaseWindow::paintEvent(QPaintEvent *e)
 {
 	RALBeginRender(pView);
 
 	static float a = 0.0f;
-	if (a > 1.0f)
+	if (a > 0.3f)
 		a = 0.0f;
 	a += 0.1f;
 	Color c(a, a, a);
 	RALClear(1, c, 1.0f);
-	
+
 	RALSetShaderBoundState(pShaders);
 
 	RALSetPrimitiveType(RAL_PRIMITIVE_TRIANGLELIST);
@@ -150,9 +151,9 @@ void QTProject::paintEvent(QPaintEvent *e)
 	RALSetIndexBuffer(ib);
 
 	RALDrawIndexed(6);
-	
+
 	RALEndRender(pView);
-	
+
 #if TWO_VIEWS
 	RALBeginRender(frame1->view);
 

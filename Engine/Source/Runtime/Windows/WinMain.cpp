@@ -1,8 +1,8 @@
 // Win32Project1.cpp : Defines the entry point for the application.
 //
 #include <windows.h>
-#include <QtGui/QApplication>
-#include "../UI/Base/qtproject.h"
+#include <QtWidgets/QApplication>
+#include "../UI/Base/basewindow.h"
 #include "Renderer\Common\RALGlobalMethods.h"
 
 int APIENTRY WinMain(_In_ HINSTANCE hInstance,
@@ -11,9 +11,9 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 	_In_ int       nCmdShow)
 {
 	// No need to pass the real parameter to QT
-	int argc = 1;
-	char argv[] = "Carbon";
-	QApplication a(argc, (char**)argv);
+	int argc = 0;
+	char argv[] = "";
+	QApplication a(argc, (char**)&argv);
 
 // create D3D11RAL
 #if D3D11_RAL
@@ -22,7 +22,7 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 	RALCreateInterface(RAL_RENDERER_OPENGL);
 #endif
 
-	QTProject p;
+	BaseWindow p;
 	p.show();
 
 	return a.exec();

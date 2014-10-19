@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Resource object code
 **
-** Created by: The Resource Compiler for Qt version 4.8.6
+** Created by: The Resource Compiler for Qt version 5.3.2
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -13,17 +13,17 @@ QT_BEGIN_NAMESPACE
 QT_END_NAMESPACE
 
 
-int QT_MANGLE_NAMESPACE(qInitResources_qtproject)()
+int QT_MANGLE_NAMESPACE(qInitResources_basewindow)()
 {
     return 1;
 }
 
-Q_CONSTRUCTOR_FUNCTION(QT_MANGLE_NAMESPACE(qInitResources_qtproject))
+Q_CONSTRUCTOR_FUNCTION(QT_MANGLE_NAMESPACE(qInitResources_basewindow))
 
-int QT_MANGLE_NAMESPACE(qCleanupResources_qtproject)()
+int QT_MANGLE_NAMESPACE(qCleanupResources_basewindow)()
 {
     return 1;
 }
 
-Q_DESTRUCTOR_FUNCTION(QT_MANGLE_NAMESPACE(qCleanupResources_qtproject))
+Q_DESTRUCTOR_FUNCTION(QT_MANGLE_NAMESPACE(qCleanupResources_basewindow))
 
