@@ -44,8 +44,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../Binary")
 
 add_executable(Carbon ${all_files})
 
-target_link_libraries( Carbon debug qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5Widgetsd.lib regal32_d.lib)
-target_link_libraries( Carbon optimized regal32.lib)
+target_link_libraries( Carbon debug qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5Widgetsd.lib regal32.lib)
 
 target_link_libraries( Carbon d3d11.lib dxgi.lib )
 
