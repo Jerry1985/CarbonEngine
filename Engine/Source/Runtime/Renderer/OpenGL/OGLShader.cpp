@@ -11,7 +11,7 @@ RALShader*	OGLInterface::CreatePixelShader()
 	return new OGLPixelShader();
 }
 
-OGLShader::OGLShader() :m_shaderId(0), m_programId(0)
+OGLShader::OGLShader() :m_shaderId(0)
 {
 }
 
@@ -19,8 +19,6 @@ OGLShader::~OGLShader()
 {
 	if (m_shaderId)
 		glDeleteShader(m_shaderId);
-	if (m_programId)
-		glDeleteProgram(m_programId);
 }
 
 OGLVertexShader::OGLVertexShader()
@@ -51,14 +49,6 @@ bool OGLVertexShader::CreateShader(void* data, unsigned length)
 		
 		return false;
 	}
-
-	// use SSO in OpengGL
-	m_programId = glCreateProgram();
-	glProgramParameteri(m_programId, GL_PROGRAM_SEPARABLE, GL_TRUE);
-	glAttachShader(m_programId, m_shaderId);
-	glLinkProgram(m_programId);
-	glDetachShader(m_programId, m_programId);
-
 	return true;
 }
 
@@ -89,13 +79,5 @@ bool OGLPixelShader::CreateShader(void* data, unsigned length)
 
 		return false;
 	}
-
-	// use SSO in OpengGL
-	m_programId = glCreateProgram();
-	glProgramParameteri(m_programId, GL_PROGRAM_SEPARABLE, GL_TRUE);
-	glAttachShader(m_programId, m_shaderId);
-	glLinkProgram(m_programId);
-	glDetachShader(m_programId, m_programId);
-
 	return true;
 }

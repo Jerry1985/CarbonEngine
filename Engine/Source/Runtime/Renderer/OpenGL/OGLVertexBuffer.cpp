@@ -41,26 +41,45 @@ RALVertexBuffer(size, stride, usage), m_bufferId(0)
 		GLuint gl_usage = OGLUSAGE_FROM_RALUSAGE(usage);
 		glBufferData(GL_ARRAY_BUFFER, size, data, gl_usage);
 	}
+
+	// setup pending desc
+	m_pendingDesc.bufferSize = m_size;
+	m_pendingDesc.stride = m_stride;
+	m_pendingDesc.usage = m_usage;
+	m_pendingDesc.pData = new char[m_pendingDesc.bufferSize];
 }
 
 OGLVertexBuffer::~OGLVertexBuffer()
 {
-	if (m_bufferId)
-		glDeleteBuffers(1, &m_bufferId);
+	Release();
 }
 
 // lock the buffer
 RALBufferDesc OGLVertexBuffer::Map()
 {
-	return RALBufferDesc();
+	return m_pendingDesc;
 }
 
 // unlock the buffer
 void OGLVertexBuffer::Unmap()
 {
+	// bind element array buffer
+	glBindBuffer(GL_ARRAY_BUFFER, m_bufferId);
+
+	// submit data to the buffer
+	if (m_pendingDesc.pData)
+	{
+		GLuint gl_usage = OGLUSAGE_FROM_RALUSAGE(m_pendingDesc.usage);
+		glBufferData(GL_ARRAY_BUFFER, m_pendingDesc.bufferSize, m_pendingDesc.pData, gl_usage);
+	}
 }
 
 // Release resource
 void OGLVertexBuffer::Release()
 {
+	if (m_bufferId)
+		glDeleteBuffers(1, &m_bufferId);
+
+	if (m_pendingDesc.pData)
+		delete[] m_pendingDesc.pData;
 }

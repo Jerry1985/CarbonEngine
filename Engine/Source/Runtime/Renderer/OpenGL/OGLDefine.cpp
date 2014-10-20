@@ -3,9 +3,8 @@
 GLuint OGLUSAGE_FROM_RALUSAGE(RAL_USAGE ral_usage)
 {
 	static GLuint usages[RAL_USAGE_COUNT] = {
-		GL_DYNAMIC_DRAW,
-		GL_DYNAMIC_DRAW,
-		GL_STATIC_DRAW
+		GL_STATIC_DRAW,
+		GL_DYNAMIC_DRAW
 	};
 
 	return usages[ral_usage];

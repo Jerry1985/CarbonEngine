@@ -19,7 +19,8 @@ public:
 	void Release();
 
 private:
-	GLuint	m_bufferId;	// index buffer id
+	GLuint			m_bufferId;	// index buffer id
+	RALBufferDesc	m_pendingDesc;
 
 	friend class OGLInterface;
 };

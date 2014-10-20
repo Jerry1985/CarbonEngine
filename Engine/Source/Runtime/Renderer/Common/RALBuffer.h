@@ -19,7 +19,7 @@ struct RALBufferDesc
 		pData = 0;
 		bufferSize = 0;
 		stride = 0;
-		usage = RAL_USAGE_DEFAULT;
+		usage = RAL_USAGE_DYNAMIC;
 	}
 };
 

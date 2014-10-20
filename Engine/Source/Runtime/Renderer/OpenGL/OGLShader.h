@@ -12,7 +12,6 @@ public:
 
 protected:
 	GLuint	m_shaderId;
-	GLuint	m_programId;
 
 	friend class OGLShaderBoundState;
 };
