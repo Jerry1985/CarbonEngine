@@ -14,6 +14,8 @@ public:
 
 	void resizeEvent(QResizeEvent *e);
 	void paintEvent(QPaintEvent *e);
+	
+	virtual QPaintEngine* paintEngine() const { return NULL; }
 
 private:
 	Ui::BaseWindowClass ui;

@@ -15,7 +15,7 @@
 #include "../Temp/ps.h"
 
 #define TWO_VIEWS 0
-#define D3D11_RAL 1
+#define D3D11_RAL 0
 
 const char g_ogl_vs[] = {
 	"#version 330 core\n"
@@ -32,7 +32,7 @@ const char g_ogl_fs[] = {
 	"out vec4 color;\n"
 	"void main()\n"
 	"{\n"
-	"color = vec4(1.0 , 1.0 , 0.0 , 1.0);\n"
+	"color = vec4(1.0 , 1.0 , 1.0 , 1.0);\n"
 	"}"
 };
 
@@ -58,6 +58,13 @@ BaseWindow::BaseWindow(QWidget *parent)
 	QTimer* timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), this, SLOT(update()));
 	timer->start(20);
+
+	// create D3D11RAL
+#if D3D11_RAL
+	RALCreateInterface(RAL_RENDERER_D3D11);
+#else
+	RALCreateInterface(RAL_RENDERER_OPENGL);
+#endif
 
 	pView = RALCreateView((void*)winId(), size().width(), size().height(), false, RAL_FORMAT_R8G8B8A8_UNORM);
 
@@ -130,19 +137,18 @@ BaseWindow::~BaseWindow()
 void BaseWindow::resizeEvent(QResizeEvent *e)
 {
 	if (pView)
+	{
 		pView->Resize(e->size().width(), e->size().height());
+
+		RALViewport vp(size().width(), size().height());
+		RALSetViewport(vp);
+	}
 }
 
 void BaseWindow::paintEvent(QPaintEvent *e)
 {
 	RALBeginRender(pView);
-
-	static float a = 0.0f;
-	if (a > 0.3f)
-		a = 0.0f;
-	a += 0.1f;
-	Color c(a, a, a);
-	RALClear(1, c, 1.0f);
+	RALClear(1, Color::BLACK, 1.0f);
 
 	RALSetShaderBoundState(pShaders);
 
