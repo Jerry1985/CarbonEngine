@@ -82,14 +82,21 @@ BaseWindow::BaseWindow(QWidget *parent)
 		-0.5f, -0.5f, 0.5f,
 		0.0f, -1.5f, 0.5f,
 	};
-	vb = RALCreateVertexBuffer(sizeof(vertices), sizeof(float)* 3, RAL_USAGE_IMMUTABLE, vertices);
+	vb = RALCreateVertexBuffer(sizeof(vertices), sizeof(float)* 3, RAL_USAGE_DYNAMIC);
+	if (vb)
+	{
+		RALBufferDesc desc = vb->Map();
+		if (desc.pData)
+			memcpy(desc.pData, vertices, sizeof(vertices));
+		vb->Unmap();
+	}
 
 	unsigned indices[] =
 	{
 		0, 1, 2,
 		1, 3, 2,
 	};
-	ib = RALCreateIndexBuffer(sizeof(indices), sizeof(unsigned), RAL_USAGE_IMMUTABLE, indices);
+	ib = RALCreateIndexBuffer(sizeof(indices), sizeof(unsigned), RAL_USAGE_DYNAMIC);
 	if (ib)
 	{
 		RALBufferDesc desc = ib->Map();
