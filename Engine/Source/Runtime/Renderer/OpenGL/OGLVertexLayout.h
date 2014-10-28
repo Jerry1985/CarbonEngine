@@ -2,7 +2,7 @@
 #define CARBON_OGLVERTEXLAYOUT
 
 #include "Renderer\Common\RALVertexLayout.h"
-#include "Renderer\Common\RALDefine.h"
+#include "Common\Container\CArray.h"
 
 struct RALVertexElementLayout;
 
@@ -18,14 +18,14 @@ struct OGLVertexElementLayout
 class OGLVertexLayout : public RALVertexLayout
 {
 public:
-	OGLVertexLayout(unsigned count, const RALVertexElementDesc* layouts, const void* bcode, unsigned bcodelen);
+	OGLVertexLayout(const CArray<RALVertexElementDesc>& layouts, const void* bcode, unsigned bcodelen);
 	~OGLVertexLayout();
 
 	void Release();
 
 private:
 	OGLVertexElementLayout*	m_elements;
-	unsigned				m_elementCount;
+	int						m_elementCount;
 
 	friend class OGLInterface;
 };

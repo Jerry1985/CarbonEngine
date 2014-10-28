@@ -2,6 +2,7 @@
 #define CARBON_D3D11VERTEXLAYOUT
 
 #include "Renderer\Common\RALVertexLayout.h"
+#include "Common\Container\CArray.h"
 
 struct RALVertexElementLayout;
 struct ID3D11InputLayout;
@@ -9,7 +10,7 @@ struct ID3D11InputLayout;
 class D3D11VertexLayout : public RALVertexLayout
 {
 public:
-	D3D11VertexLayout(unsigned count, const RALVertexElementDesc* layouts, const void* bcode, unsigned bcodelen);
+	D3D11VertexLayout(const CArray<RALVertexElementDesc>& descs, const void* bcode, unsigned bcodelen);
 	~D3D11VertexLayout();
 
 	void Release();

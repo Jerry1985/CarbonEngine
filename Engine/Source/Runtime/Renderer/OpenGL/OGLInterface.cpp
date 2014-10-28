@@ -2,6 +2,7 @@
 #include "OGLView.h"
 #include "PlatformOGL\PlatformOGL.h"
 #include "OGLVertexLayout.h"
+#include "Renderer\Common\RAL.h"
 
 OGLInterface* gOGLInterface = 0;
 
@@ -10,6 +11,9 @@ OGLInterface::OGLInterface()
 	gOGLInterface = this;
 
 	m_OglDevice = CreatePlatformOGLDevice();
+
+	// RAL interface is initialize
+	gRALInitialized = true;
 }
 
 OGLInterface::~OGLInterface()
@@ -41,7 +45,7 @@ void OGLInterface::_setVertexLayout(const RALVertexLayout* vl)
 {
 	const OGLVertexLayout* ogl_layout = dynamic_cast<const OGLVertexLayout*>(vl);
 
-	unsigned i = 0;
+	int i = 0;
 	for (; i < ogl_layout->m_elementCount; ++i)
 	{
 		glEnableVertexAttribArray(i);

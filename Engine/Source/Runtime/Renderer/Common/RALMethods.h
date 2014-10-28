@@ -113,9 +113,9 @@ RAL_METHOD(
 RAL_METHOD(
 	RALVertexLayout*,
 	CreateVertexLayout,
-	(unsigned elementCount, const RALVertexElementDesc* descs, const void* bcode, unsigned bcodelen),
-	(unsigned elementCount, const RALVertexElementDesc* descs, const void* bcode, unsigned bcodelen),
-	(elementCount, descs, bcode, bcodelen)
+	(const CArray<RALVertexElementDesc>& descs, const void* bcode, unsigned bcodelen),
+	(const CArray<RALVertexElementDesc>& descs, const void* bcode, unsigned bcodelen),
+	(descs, bcode, bcodelen)
 )
 
 RAL_METHOD(

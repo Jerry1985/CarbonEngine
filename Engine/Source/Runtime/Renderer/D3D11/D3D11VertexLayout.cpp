@@ -4,18 +4,19 @@
 
 extern D3D11Interface* gD3D11Interface;
 
-RALVertexLayout* D3D11Interface::CreateVertexLayout(unsigned elementCount, const RALVertexElementDesc* descs, const void* bcode, unsigned bcodelen )
+RALVertexLayout* D3D11Interface::CreateVertexLayout(const CArray<RALVertexElementDesc>& descs, const void* bcode, unsigned bcodelen)
 {
-	return new D3D11VertexLayout(elementCount, descs, bcode, bcodelen);
+	return new D3D11VertexLayout(descs, bcode, bcodelen);
 }
 
-D3D11VertexLayout::D3D11VertexLayout(unsigned count, const RALVertexElementDesc* layouts, const void* bcode, unsigned bcodelen ) : m_inputLayout(0)
+D3D11VertexLayout::D3D11VertexLayout(const CArray<RALVertexElementDesc>& layouts, const void* bcode, unsigned bcodelen) : m_inputLayout(0)
 {
-	if (count <= 0 || count >= MAX_VERTEX_ELEMENT_COUNT)
+	int count = layouts.GetCount();
+	if (count == 0 || count >= MAX_VERTEX_ELEMENT_COUNT)
 		return;
 
 	D3D11_INPUT_ELEMENT_DESC* descs = new D3D11_INPUT_ELEMENT_DESC[count];
-	for (unsigned i = 0; i < count; ++i){
+	for (int i = 0; i < count; ++i){
 		descs[i].SemanticName = "ATTRIBUTE";
 		descs[i].SemanticIndex = i;
 		descs[i].InputSlot = layouts[i].streamIndex;

@@ -2,6 +2,7 @@
 #include "D3D11RenderTarget.h"
 #include "D3D11Shader.h"
 #include "D3D11VertexLayout.h"
+#include "Renderer\Common\RAL.h"
 
 D3D11Interface* gD3D11Interface = 0;
 
@@ -20,15 +21,29 @@ D3D11Interface::~D3D11Interface()
 // initialize direct3d 11 device
 bool D3D11Interface::_initDevice()
 {
+	// create dxgi factory
+	CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&m_DXGIFactory);
+
+	IDXGIAdapter*adapter = 0;
+	if (m_DXGIFactory->EnumAdapters(0, &adapter) != DXGI_ERROR_NOT_FOUND)
+	{
+		DXGI_ADAPTER_DESC AdapterDesc;
+		if( adapter->GetDesc(&AdapterDesc) == S_OK )
+		{
+			// adapter information
+
+		}
+	}
+
 	D3D_FEATURE_LEVEL RequestedFeatureLevels[] =
 	{
 		D3D_FEATURE_LEVEL_11_0,
 	};
 
-	HRESULT hr = D3D11CreateDevice(	NULL,							// Default adapter
-									D3D_DRIVER_TYPE_HARDWARE,		// hardware driver
+	HRESULT hr = D3D11CreateDevice(	adapter,						// Default adapter
+									D3D_DRIVER_TYPE_UNKNOWN,		// hardware driver
 									NULL,
-									NULL,							// No flag yet
+									0,								// No flag yet
 									RequestedFeatureLevels,			// deseried feature level
 									1,								// number of feature levels
 									D3D11_SDK_VERSION,
@@ -37,13 +52,8 @@ bool D3D11Interface::_initDevice()
 									&m_D3D11DeviceContext			// device context for d3d11
 									);
 
-	IDXGIDevice* DXGIDevice;
-	HRESULT Hr = m_D3D11Device->QueryInterface(__uuidof(IDXGIDevice), (void**)&DXGIDevice);
-
-	IDXGIAdapter* DXGIAdapter;
-	Hr = DXGIDevice->GetParent(__uuidof(IDXGIAdapter), (void **)&DXGIAdapter);
-
-	DXGIAdapter->GetParent(__uuidof(IDXGIFactory), (void **)&m_DXGIFactory);
+	// RAL interface is initialize
+	gRALInitialized = true;
 
 	return hr == S_OK;
 }

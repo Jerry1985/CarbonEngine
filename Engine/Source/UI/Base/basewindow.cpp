@@ -15,7 +15,7 @@
 #include "../Temp/ps.h"
 
 #define TWO_VIEWS 0
-#define D3D11_RAL 0
+#define D3D11_RAL 1
 
 const char g_ogl_vs[] = {
 	"#version 330 core\n"
@@ -112,7 +112,9 @@ BaseWindow::BaseWindow(QWidget *parent)
 	layoutDesc.type = RAL_VERTEXELEMENTTYPE_FLOAT3;
 	layoutDesc.useInstanceIndex = false;
 
-	vl = RALCreateVertexLayout(1, &layoutDesc, (void*)g_vs, sizeof(g_vs));
+	CArray<RALVertexElementDesc> layoutDescs;
+	layoutDescs.Add(layoutDesc);
+	vl = RALCreateVertexLayout(layoutDescs, (void*)g_vs, sizeof(g_vs));
 
 	pVS = RALCreateVertexShader();
 	pPS = RALCreatePixelShader();
