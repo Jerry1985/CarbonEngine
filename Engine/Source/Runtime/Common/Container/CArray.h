@@ -1,8 +1,7 @@
 #ifndef CARBON_CARRAY
 #define CARBON_CARRAY
 
-#include "CIterator.h"
-#include <string>
+#include "Common\Misc\Assertion.h"
 
 #define	ARRAY_BASECHUNK_SIZE	256
 
@@ -10,57 +9,82 @@ template< class T >
 class CArray;
 
 template< class T >
-class CArrayIterator : public CIterator<T>
+class CArrayIterator
 {
 public:
 	CArrayIterator(const CArray<T>& array)
 	{
+		CASSERT(array.m_data);
+
 		m_data = array.m_data;
 		m_elementCount = array.m_currentCount;
 	}
 	CArrayIterator(const CArray<T>* array)
 	{
-		if (array == 0)
-			return;
+		CASSERT(array);
 
 		m_data = array->m_data;
 		m_elementCount = array->m_currentCount;
+	}
+	CArrayIterator(const CArrayIterator<T>& iterator)
+	{
+		m_data = iterator.m_data;
+		m_elementCount = iterator.m_elementCount;
+		m_currentId = iterator.m_currentId;
 	}
 	~CArrayIterator()
 	{
 	}
 
-	virtual const T& operator*()
+	const T& operator*()
 	{
-		if (m_currentId < m_elementCount)
-		{
-			return m_data[m_currentId];
-		}
-
-		return T();
+		CASSERT(m_currentId < m_elementCount);
+		return m_data[m_currentId];
 	}
 
-	virtual const T& operator++()
+	const CArrayIterator& operator++()
 	{
 		++m_currentId;
 
 		if (m_currentId >= m_elementCount)
 			m_currentId = m_elementCount;
 
-		return *this;
+		return (*this);
 	}
 
-	virtual const T& operator--()
+	CArrayIterator operator++(int)
+	{
+		CArrayIterator it(*this);
+
+		++m_currentId;
+		if (m_currentId >= m_elementCount)
+			m_currentId = m_elementCount;
+
+		return it;
+	}
+
+	const CArrayIterator& operator--()
 	{
 		--m_currentId;
 
 		if (m_currentId < 0)
 			m_currentId = 0;
 
-		return *this;
+		return (*this);
 	}
 
-	virtual bool IsEnd()
+	CArrayIterator operator--(int)
+	{
+		CIterator it(*this);
+
+		--m_currentId;
+		if (m_currentId < 0)
+			m_currentId = 0;
+
+		return it;
+	}
+
+	bool IsEnd()
 	{
 		return m_currentId == m_elementCount;
 	}
@@ -81,6 +105,10 @@ public:
 	CArray()
 	{
 		Allocate(ARRAY_BASECHUNK_SIZE);
+	}
+	CArray(const CArray<T>& array)
+	{
+		Clone(array);
 	}
 	virtual ~CArray()
 	{
@@ -171,6 +199,28 @@ public:
 			m_data[m_currentCount++] = element[i];
 	}
 
+	// Remove at specific index
+	void	Remove(int index)
+	{
+		if (index >= m_currentCount || index < 0 )
+			return;
+
+		--m_currentCount;
+		for (int i = index; i < m_currentCount; ++i)
+			m_data[i] = m_data[i + 1];
+	}
+
+	// Remove at specific index with a count number
+	void	Remove(int index, int count)
+	{
+		if (index >= m_currentCount || index < 0 )
+			return;
+
+		m_currentCount = (m_currentCount - count < index) ? index : m_currentcount - count;
+		for (int i = index; i < m_currentCount; ++i)
+			m_data[i] = m_data[i + count];
+	}
+
 	// Find a specific element
 	int		Find(const T& element) const
 	{
@@ -197,6 +247,8 @@ public:
 	// [] operator
 	T const & __cdecl operator[](int index) const
 	{
+		CASSERT(index < m_currentCount);
+
 		return m_data[index];
 	}
 
@@ -220,12 +272,49 @@ public:
 		}
 	}
 
+	// clone array
+	const CArray<T>&	Clone(const CArray<T>& array)
+	{
+		Release();
+
+		m_currentCount = array.m_currentCount;
+		m_totalCount = array.m_totalCount;
+		m_data = new T[m_totalCount];
+
+		CASSERT((!m_totalCount&&!array.m_data) || (m_totalCount&&array.m_data));
+
+		if ( m_totalCount )
+			memcpy_s(m_data, m_totalCount * m_elementSize, array.m_data, m_totalCount);
+
+		return *this;
+	}
+
+	// = operator
+	const CArray<T>&	operator = (const CArray<T>& array)
+	{
+		return Clone(array);
+	}
+
+	// append array
+	void	Append(const CArray<T>& array)
+	{
+		CArrayIterator<T> iterator(array);
+		while (!iterator.IsEnd())
+		{
+			Add(*iterator);
+			++iterator;
+		}
+	}
+
+	// Get Data pointer
+	const T* const	GetData() const { return m_data; }
+
 private:
 	// base data
 	T*		m_data = 0;
 
 	// element size
-	int		m_elementSize = sizeof(T);
+	const static int	m_elementSize = sizeof(T);
 
 	// element count
 	int		m_totalCount = 0;

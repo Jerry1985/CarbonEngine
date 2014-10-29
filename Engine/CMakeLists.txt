@@ -17,6 +17,8 @@ include_directories( "$ENV{QTDIR}/include/QtWidgets")
 link_directories( $ENV{QTDIR}/lib)
 link_directories( ${Carbon_SOURCE_DIR}/Source/ThirdParty/Regal/Lib )
 
+add_definitions( -DCARBON_DEBUG_BUILD )
+
 macro(source_group_by_dir source_files)
     if(MSVC)
         set(sgbd_cur_dir ${CMAKE_CURRENT_SOURCE_DIR})
@@ -44,9 +46,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../Binary")
 
 add_executable(Carbon ${all_files})
 
-target_link_libraries( Carbon debug qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5Widgetsd.lib regal32.lib)
-
-target_link_libraries( Carbon d3d11.lib dxgi.lib )
+target_link_libraries( Carbon debug Qt5Cored.lib debug Qt5Widgetsd.lib debug Qt5Guid.lib )
+target_link_libraries( Carbon optimized Qt5Core.lib optimized Qt5Widgets.lib )
+target_link_libraries( Carbon d3d11.lib dxgi.lib regal32.lib)
 
 if(WIN32)
    set_target_properties(Carbon PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:WINDOWS")

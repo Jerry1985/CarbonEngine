@@ -1,6 +1,7 @@
 #include "OGLVertexLayout.h"
 #include "OGLInterface.h"
 #include "OGLDefine.h"
+#include "Common\Container\CArray.h"
 
 extern OGLInterface* gOGLInterface;
 

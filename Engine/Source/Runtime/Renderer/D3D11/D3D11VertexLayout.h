@@ -2,7 +2,9 @@
 #define CARBON_D3D11VERTEXLAYOUT
 
 #include "Renderer\Common\RALVertexLayout.h"
-#include "Common\Container\CArray.h"
+
+template<class T>
+class CArray;
 
 struct RALVertexElementLayout;
 struct ID3D11InputLayout;

@@ -3,7 +3,9 @@
 
 #include "Common\Math\Color.h"
 #include "RALDefine.h"
-#include "Common\Container\CArray.h"
+
+template< class T >
+class CArray;
 
 struct RALViewport;
 struct RALVertexElementDesc;

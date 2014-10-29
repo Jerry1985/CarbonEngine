@@ -2,7 +2,9 @@
 #define CARBON_OGLVERTEXLAYOUT
 
 #include "Renderer\Common\RALVertexLayout.h"
-#include "Common\Container\CArray.h"
+
+template<class T>
+class CArray;
 
 struct RALVertexElementLayout;
 

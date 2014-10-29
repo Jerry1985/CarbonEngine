@@ -10,6 +10,7 @@
 #include "Renderer\Common\RALIndexBuffer.h"
 #include "Renderer\Common\RALShader.h"
 #include "Renderer\Common\RALVertexLayout.h"
+#include "Common\Container\CArray.h"
 
 #include "../Temp/vs.h"
 #include "../Temp/ps.h"

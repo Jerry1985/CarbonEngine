@@ -4,6 +4,8 @@
 #include <QtWidgets/QApplication>
 #include "../UI/Base/basewindow.h"
 
+#include "../Common/Container/CString.h"
+
 int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
 	_In_ LPSTR     lpCmdLine,
@@ -16,6 +18,11 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 
 	BaseWindow p;
 	p.show();
+
+	CString str0("hello");
+	CString	str1("world");
+
+	CString str = str0 + " " + str1;
 
 	return a.exec();
 }

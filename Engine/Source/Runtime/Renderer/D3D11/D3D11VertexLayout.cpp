@@ -1,6 +1,7 @@
 #include "D3D11VertexLayout.h"
 #include "D3D11Interface.h"
 #include "D3D11Define.h"
+#include "Common\Container\CArray.h"
 
 extern D3D11Interface* gD3D11Interface;
 
