@@ -221,6 +221,23 @@ public:
 			m_data[i] = m_data[i + count];
 	}
 
+	// Replace elements at specific position
+	void	Replace(int index, int count, const T* elements)
+	{
+		CASSERT((count&&elements) || (!count&&!elements));
+		CASSERT(index >= 0 && index < m_currentCount);
+
+		int target_count = index + count;
+		target_count = (target_count<m_currentCount) ? m_currentCount : target_count;
+		if (target_count > m_totalCount)
+			_reAllocateMemory(target_count);
+
+		for (int id = index; id < target_count; ++id)
+			m_data[id] = elements[id - index];
+
+		m_currentCount = target_count;
+	}
+
 	// Find a specific element
 	int		Find(const T& element) const
 	{
@@ -325,8 +342,8 @@ private:
 	// recaculate size
 	void	_reAllocateMemory(int count)
 	{
-		int target_count = (int)m_currentCount;
-		if (count + target_count >= m_totalCount)
+		int target_count = (int)m_totalCount;
+		if (target_count < count)
 		{
 			do
 			{
@@ -335,7 +352,7 @@ private:
 				else
 					target_count <<= 1;
 
-			} while (target_count>count);
+			} while (target_count < count);
 		}
 
 		SafeAllocate(target_count);

@@ -17,7 +17,8 @@ include_directories( "$ENV{QTDIR}/include/QtWidgets")
 link_directories( $ENV{QTDIR}/lib)
 link_directories( ${Carbon_SOURCE_DIR}/Source/ThirdParty/Regal/Lib )
 
-add_definitions( -DCARBON_DEBUG_BUILD )
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCARBON_DEBUG_BUILD")
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_DEBUG} -DCARBON_RELEASE_BUILD")
 
 macro(source_group_by_dir source_files)
     if(MSVC)

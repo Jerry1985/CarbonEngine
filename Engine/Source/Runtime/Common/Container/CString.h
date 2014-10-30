@@ -41,7 +41,10 @@ public:
 	CString operator +(const CString& string)
 	{
 		CString ret(this);
-		ret.m_data.Append(string.m_data);
+
+		int len = ret.m_data.GetCount();
+		len = (len > 0) ? len - 1 : len;
+		ret.m_data.Replace(len, string.m_data.GetCount(), string.m_data.GetData());
 
 		return ret;
 	}
