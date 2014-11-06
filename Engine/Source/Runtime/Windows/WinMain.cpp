@@ -19,10 +19,5 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 	BaseWindow p;
 	p.show();
 
-	CString str0("hello");
-	CString	str1("world");
-
-	CString str = str0 + " " + str1;
-
 	return a.exec();
 }

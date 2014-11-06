@@ -186,7 +186,7 @@ public:
 			_reAllocateMemory(count + m_currentCount);
 
 		for (int i = 0; i < count; ++i)
-			m_data[m_currentCount++] = element[i];
+			m_data[m_currentCount++] = elements[i];
 	}
 
 	// Add elements from array
@@ -284,6 +284,7 @@ public:
 		if (m_data)
 		{
 			delete[] m_data;
+			m_data = 0;
 			m_totalCount = 0;
 			m_currentCount = 0;
 		}
@@ -325,6 +326,22 @@ public:
 
 	// Get Data pointer
 	const T* const	GetData() const { return m_data; }
+
+	// check if the two arrays are equal
+	bool operator == (const CArray<T>& array) const
+	{
+		if (array.m_currentCount != m_currentCount)
+			return false;
+		if (array.m_elementSize != m_elementSize)
+			return false;
+
+		for (int i = 0; i < m_currentCount; ++i)
+		{
+			if (m_data[i] != array.m_data[i])
+				return false;
+		}
+		return true;
+	}
 
 private:
 	// base data
