@@ -2,6 +2,8 @@
 #define	CARBON_CSTRING
 
 #include "CArray.h"
+#include "Platform\Platform.h"
+#include "Windows\WinString.h"
 
 class CString
 {
@@ -9,7 +11,7 @@ public:
 	CString()
 	{
 	}
-	CString(char* text)
+	CString(TCHAR* text)
 	{
 		int index = 0;
 		do
@@ -36,9 +38,9 @@ public:
 	}
 
 	// cast the data
-	operator const char* const() const
+	operator const TCHAR* const() const
 	{
-		return (const char* const)m_data.GetData();
+		return (const TCHAR* const)m_data.GetData();
 	}
 
 	// operator +
@@ -52,14 +54,14 @@ public:
 
 		return ret;
 	}
-	CString operator +(const char* str)
+	CString operator +(const TCHAR* str)
 	{
 		CASSERT(str);
 
 		CString ret(this);
 		if (str && *str)
 		{
-			int len = (int)strlen(str) + 1;
+			int len = PlatformString::Strlen(str) + 1;
 			m_data.Add(str, len);
 		}
 
@@ -73,13 +75,13 @@ public:
 	}
 
 	// isequal
-	bool IsEqual(char* str) const
+	bool IsEqual(TCHAR* str) const
 	{
 		if (str == 0)
 			return false;
 
 		int len = m_data.GetCount();
-		const char* data = m_data.GetData();
+		const TCHAR* data = m_data.GetData();
 
 		int i = 0;
 		do
@@ -102,33 +104,48 @@ public:
 	void FromInt(int data)
 	{
 		const int str_len = 1024;
-		char	str[str_len];
-		_itoa_s<str_len>(data, str, 10);
+		TCHAR	str[str_len];
+		PlatformString::ItoS(data, str, 10);
 		m_data.Release();
-		m_data.Add(str, (int)strlen(str)+1);
+		m_data.Add(str, PlatformString::Strlen(str)+1);
 	}
 	// to int
 	int	ToInt() const
 	{
-		return atoi(m_data.GetData());
+		return PlatformString::StoI(m_data.GetData());
 	}
 
 	// from bool
 	void FromBool(bool data)
 	{
 		m_data.Release();
-		m_data.Add(data ? "true" : "false", data ? 5 : 6);
+		m_data.Add(data ? S("true") : S("false"), data ? 5 : 6);
 	}
 	// to bool
 	bool ToBool() const
 	{
-		if (IsEqual( "true" ))
+		if (IsEqual( S("true") ))
 			return true;
 		return false;
 	}
 
+	// from float
+	void FromFloat(float data)
+	{
+		const int str_len = 1024;
+		TCHAR	str[str_len];
+		PlatformString::FtoS(data, str, str_len);
+		m_data.Release();
+
+		m_data.Add(str, PlatformString::Strlen(str) + 1);
+	}
+	float ToFloat() const
+	{
+		return PlatformString::StoF(m_data.GetData());
+	}
+
 private:
-	CArray<char>	m_data;
+	CArray<TCHAR>	m_data;
 };
 
 #endif

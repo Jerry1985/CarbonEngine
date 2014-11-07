@@ -1,7 +1,7 @@
 #ifndef CARBON_VECTORCOMMON
 #define CARBON_VECTORCOMMON
 
-#include "Platform.h"
+#include "Platform\Platform.h"
 
 #define DEFINE_ALL_OPS(DEFINE_METHOD) \
 	FORCE_INLINE DEFINE_METHOD(+)\

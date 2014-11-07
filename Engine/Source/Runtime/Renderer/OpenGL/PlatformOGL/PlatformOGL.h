@@ -1,7 +1,7 @@
 #ifndef CARBON_PLATFORMOGL
 #define CARBON_PLATFORMOGL
 
-#include "Common\Platform.h"
+#include "Platform\Platform.h"
 #include "../ThirdParty/Regal/Include/Regal.h"
 
 class RALView;

@@ -1,10 +1,11 @@
 // Win32Project1.cpp : Defines the entry point for the application.
 //
+
 #include <windows.h>
 #include <QtWidgets/QApplication>
 #include "../UI/Base/basewindow.h"
 
-#include "../Common/Container/CString.h"
+#include "Common\Container\CString.h"
 
 int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
@@ -18,6 +19,12 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 
 	BaseWindow p;
 	p.show();
+
+	CString str(S("123213"));
+	
+	float t = str.ToFloat();
+
+	str.FromFloat(23423.23423424f);
 
 	return a.exec();
 }

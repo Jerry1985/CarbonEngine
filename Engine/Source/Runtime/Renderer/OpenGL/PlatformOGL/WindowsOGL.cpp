@@ -99,7 +99,7 @@ HWND createDummyWindow()
 	wcl.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
 	wcl.hInstance = 0;
 	wcl.lpfnWndProc = WndDummyProc;
-	wcl.lpszClassName = "DummyWindow";
+	wcl.lpszClassName = S("DummyWindow");
 
 	//register the window class
 	RegisterClass(&wcl);
