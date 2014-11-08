@@ -1,6 +1,7 @@
 #ifndef CARBON_CARRAY
 #define CARBON_CARRAY
 
+#include "Platform\Platform.h"
 #include "Misc\Assertion.h"
 
 #define	ARRAY_BASECHUNK_SIZE	256
@@ -118,6 +119,8 @@ public:
 	// Allocate data
 	void	Allocate(int count)
 	{
+		CASSERT(count > 0);
+
 		// release data first
 		Release();
 

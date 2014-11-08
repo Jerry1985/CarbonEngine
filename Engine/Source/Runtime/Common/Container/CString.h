@@ -103,6 +103,17 @@ public:
 		} while (true);
 	}
 
+	// from bytes
+	void FromBytes(uint8* data, int32 size)
+	{
+		CASSERT(!!data && size != 0);
+
+		m_data.Release();
+		m_data.Allocate(size / sizeof(TCHAR) + 1);
+		m_data.Add((const TCHAR*)data, size / sizeof(TCHAR));
+		m_data.Add('\0');	// incase it doesn't have an end
+	}
+
 	// from int
 	void FromInt(int data)
 	{
@@ -145,6 +156,21 @@ public:
 	float ToFloat() const
 	{
 		return PlatformString::StoF(m_data.GetData());
+	}
+
+	bool IsEmpty() const
+	{
+		return m_data.IsEmpty();
+	}
+
+	uint32	Strlen() const
+	{
+		return m_data.GetCount();
+	}
+
+	uint32	StrSizeInBytes() const
+	{
+		return m_data.GetSize();
 	}
 
 private:

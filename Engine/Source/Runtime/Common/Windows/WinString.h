@@ -64,4 +64,6 @@ FORCE_INLINE void	WinString::FtoS(float data, PCHAR str, int32 strlen)
 	sprintf_s(str, strlen, "%f", data);
 }
 
+typedef	WinString	PlatformString;
+
 #endif

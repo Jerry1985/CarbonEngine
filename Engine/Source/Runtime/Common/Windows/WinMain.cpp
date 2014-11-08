@@ -28,7 +28,25 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 
 	str.FromFloat(23423.23423424f);
 
-	bool exist = PlatformFile::IsFileExist("d:\\data.txt");
+	bool exist = PlatformFile::IsFileExist(S("d:\\data.txt"));
+	int32 size = PlatformFile::FileSize(S("d:\\data.txt"));
+	bool readonly = PlatformFile::IsFileReadOnly(S("d:\\data.txt"));
+	exist = PlatformFile::IsDirExist(S("d:\\data.txt"));
+	readonly = PlatformFile::IsDirReadOnly(S("d:\\data.txt"));
+
+	PlatformFileHandle* handle = PlatformFile::OpenFile(S("data.txt"),false);
+	bool flag = handle->Write((uint8*)(const TCHAR*)str, str.StrSizeInBytes());
+	delete handle;
+
+	handle = PlatformFile::OpenFile(S("data.txt"));
+
+	uint8 data1[1024];
+	flag = handle->Read((uint8*)data1, handle->Size());
+	str.FromBytes((uint8*)data1, handle->Size());
+
+	delete handle;
+
+	//PlatformFile::DelFile("data.txt");
 
 	CArray<int> arry;
 	return a.exec();

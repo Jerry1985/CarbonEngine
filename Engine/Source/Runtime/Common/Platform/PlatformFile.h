@@ -7,6 +7,4 @@
 #include "Windows\WinFile.h"
 #endif
 
-typedef	WinFile PlatformFile;
-
 #endif // !CARBON_PLATFORMSTRING
