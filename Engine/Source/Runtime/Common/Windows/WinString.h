@@ -1,9 +1,6 @@
 #ifndef CARBON_WINSTRING
 #define	CARBON_WINSTRING
 
-#include "Platform\DataType.h"
-#include "Windows\WinPlatform.h"
-
 #include <string>
 
 class WinString

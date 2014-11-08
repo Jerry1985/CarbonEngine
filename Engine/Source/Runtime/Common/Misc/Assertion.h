@@ -1,7 +1,6 @@
 #ifndef CARBON_ASSERTION
 #define CARBON_ASSERTION
 
-#include "Build.h"
 #include <assert.h>
 
 #if CARBON_BUILD_DEBUG

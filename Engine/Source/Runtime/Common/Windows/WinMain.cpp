@@ -5,7 +5,9 @@
 #include <QtWidgets/QApplication>
 #include "../UI/Base/basewindow.h"
 
-#include "Common\Container\CString.h"
+#include "Container\CString.h"
+#include "Container\CArray.h"
+#include "Platform\PlatformFile.h"
 
 int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
@@ -26,5 +28,8 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 
 	str.FromFloat(23423.23423424f);
 
+	bool exist = PlatformFile::IsFileExist("d:\\data.txt");
+
+	CArray<int> arry;
 	return a.exec();
 }

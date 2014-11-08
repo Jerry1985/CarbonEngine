@@ -1,7 +1,7 @@
 #ifndef CARBON_CARRAY
 #define CARBON_CARRAY
 
-#include "Common\Misc\Assertion.h"
+#include "Misc\Assertion.h"
 
 #define	ARRAY_BASECHUNK_SIZE	256
 

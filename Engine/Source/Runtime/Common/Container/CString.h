@@ -1,9 +1,9 @@
 #ifndef CARBON_CSTRING
 #define	CARBON_CSTRING
 
-#include "CArray.h"
-#include "Platform\Platform.h"
-#include "Windows\WinString.h"
+#include "Platform\PlatformString.h"
+#include "Container\CArray.h"
+#include "Math\Math.h"
 
 class CString
 {
@@ -27,9 +27,13 @@ public:
 	{
 		FromInt(data);
 	}
+	CString(float data)
+	{
+		FromFloat(data);
+	}
 	CString(const CString* const pStr)
 	{
-		CASSERT(pStr);
+		CASSERT(!!pStr);
 
 		m_data = pStr->m_data;
 	}
@@ -49,14 +53,13 @@ public:
 		CString ret(this);
 
 		int len = ret.m_data.GetCount();
-		len = (len > 0) ? len - 1 : len;
-		ret.m_data.Replace(len, string.m_data.GetCount(), string.m_data.GetData());
+		ret.m_data.Replace(Math::Max(0, len - 1), string.m_data.GetCount(), string.m_data.GetData());
 
 		return ret;
 	}
 	CString operator +(const TCHAR* str)
 	{
-		CASSERT(str);
+		CASSERT(!!str);
 
 		CString ret(this);
 		if (str && *str)
