@@ -19,6 +19,17 @@ public:
 		return m_Ptr;
 	}
 
+	const PtrProxy& operator = (const PtrProxy& proxy)
+	{
+		// this function should never be invoked
+		CASSERT(false);
+	}
+
+	void Release()
+	{
+		SAFE_DELETE(m_Ptr);
+	}
+
 private:
 	T* m_Ptr;
 };
@@ -31,6 +42,6 @@ PtrProxy<T>::PtrProxy(T* p) :m_Ptr(p)
 template< class T >
 PtrProxy<T>::~PtrProxy()
 {
-	SAFE_DELETE(m_Ptr);
+	Release();
 }
 

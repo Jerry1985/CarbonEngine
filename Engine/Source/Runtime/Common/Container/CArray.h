@@ -36,7 +36,13 @@ public:
 	{
 	}
 
-	const T& operator*()
+	const T& operator*() const
+	{
+		CASSERT(m_currentId < m_elementCount);
+		return m_data[m_currentId];
+	}
+
+	T& operator*()
 	{
 		CASSERT(m_currentId < m_elementCount);
 		return m_data[m_currentId];
@@ -92,7 +98,7 @@ public:
 private:
 	int	m_currentId = 0;
 
-	const T* m_data = 0;
+	T* m_data = 0;
 
 	int m_elementCount = 0;
 };

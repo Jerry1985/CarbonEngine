@@ -10,6 +10,7 @@
 #include "Platform\PlatformFile.h"
 
 #include "Utility\PtrProxy.h"
+#include "Log\Log.h"
 
 int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
@@ -46,6 +47,15 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 		flag = read_handle->Read((uint8*)data1, read_handle->Size());
 		str.FromBytes((uint8*)data1, read_handle->Size());
 	}
+
+	EnableLog();
+	AddPlatformLogContext();
+	DisbleLogCatagory(LOG_GENERAL);
+
+	CARBON_LOG(LOG_NORMAL, LOG_GENERAL, "First Log comes out.");
+	CARBON_LOG(LOG_WARNING, (LOG_GENERAL | LOG_RENDERER), "Second Log comes out.");
+
+	LogManager::DeleteSingleton();
 	
 	return a.exec();
 }

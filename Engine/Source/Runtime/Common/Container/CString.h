@@ -10,7 +10,7 @@ public:
 	CString()
 	{
 	}
-	CString(TCHAR* text)
+	CString(const TCHAR* text)
 	{
 		int index = 0;
 		do
@@ -61,13 +61,25 @@ public:
 		CASSERT(!!str);
 
 		CString ret(this);
+
 		if (str && *str)
 		{
 			int len = PlatformString::Strlen(str) + 1;
-			m_data.Add(str, len);
+			ret.m_data.Replace((ret.Strlen() > 0) ? ret.Strlen() - 1 : 0, len, str);
 		}
 
 		return ret;
+	}
+
+	const CString& operator +=(const TCHAR* str)
+	{
+		if (str && *str)
+		{
+			int len = PlatformString::Strlen(str) + 1;
+			this->m_data.Replace((Strlen() > 0) ? Strlen() - 1 : 0, len, str);
+		}
+
+		return *this;
 	}
 
 	// operator
@@ -174,4 +186,17 @@ public:
 
 private:
 	CArray<TCHAR>	m_data;
+
+	friend CString operator + (const TCHAR* str0, const CString& str1);
 };
+
+FORCE_INLINE
+CString operator + (const TCHAR* str0, const CString& str1)
+{
+	CASSERT(!!str0);
+
+	CString ret(str0);
+	ret.m_data.Replace((ret.Strlen() > 0) ? ret.Strlen() - 1 : 0, str1.Strlen(), str1);
+	
+	return ret;
+}
