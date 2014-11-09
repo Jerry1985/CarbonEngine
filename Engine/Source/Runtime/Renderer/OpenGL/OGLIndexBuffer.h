@@ -1,5 +1,4 @@
-#ifndef CARBON_OGLINDEXBUFFER
-#define	CARBON_OGLINDEXBUFFER
+#pragma once
 
 #include "Renderer\Common\RALIndexBuffer.h"
 #include "../ThirdParty/Regal/Include/Regal.h"
@@ -24,5 +23,3 @@ private:
 
 	friend class OGLInterface;
 };
-
-#endif

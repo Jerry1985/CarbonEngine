@@ -1,5 +1,4 @@
-#ifndef CARBON_MATRIX
-#define	CARBON_MATRIX
+#pragma once
 
 #include "Vector4.h"
 #include "Vector3.h"
@@ -142,5 +141,3 @@ inline bool	Matrix::HasScale() const
 	return !(IS_ONE(l0) && IS_ONE(l1) && IS_ONE(l2));
 #undef IS_ONE
 }
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef CARBON_D3D11SHADERBOUNDSTATE
-#define CARBON_D3D11SHADERBOUNDSTATE
+#pragma once
 
 #include "Renderer\Common\RALShaderBoundState.h"
 
@@ -11,5 +10,3 @@ public:
 
 	friend class D3D11Interface;
 };
-
-#endif

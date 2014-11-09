@@ -1,5 +1,4 @@
-#ifndef CARBON_RALVERTEXBUFFER
-#define	CARBON_RALVERTEXBUFFER
+#pragma once
 
 #include "RALBuffer.h"
 
@@ -9,5 +8,3 @@ public:
 	RALVertexBuffer( unsigned size , unsigned stride , RAL_USAGE usage );
 	virtual ~RALVertexBuffer();
 };
-
-#endif

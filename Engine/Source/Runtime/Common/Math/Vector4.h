@@ -1,5 +1,4 @@
-#ifndef CARBON_VECTOR4
-#define CARBON_VECTOR4
+#pragma once
 
 #include "VectorCommon.h"
 
@@ -115,5 +114,3 @@ public:
 };
 
 VECTOR_TYPE(Vector4)
-
-#endif

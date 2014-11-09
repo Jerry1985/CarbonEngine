@@ -1,5 +1,4 @@
-#ifndef CARBON_D3D11VIEWPORT
-#define CARBON_D3D11VIEWPORT
+#pragma once
 
 #include "Renderer\Common\RALView.h"
 
@@ -29,5 +28,3 @@ private:
 
 	friend class D3D11Interface;
 };
-
-#endif

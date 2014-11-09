@@ -1,5 +1,4 @@
-#ifndef CARBON_OGLSHADERBOUNDSTATE
-#define CARBON_OGLSHADERBOUNDSTATE
+#pragma once
 
 #include "Renderer\Common\RALShaderBoundState.h"
 #include "../ThirdParty/Regal/Include/Regal.h"
@@ -15,5 +14,3 @@ private:
 
 	friend class OGLInterface;
 };
-
-#endif

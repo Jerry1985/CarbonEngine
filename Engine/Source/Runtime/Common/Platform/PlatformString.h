@@ -1,12 +1,9 @@
-#ifndef CARBON_PLATFORMSTRING
-#define CARBON_PLATFORMSTRING
+#pragma once
 
 #include "Platform\Platform.h"
 
 #ifdef CARBON_IN_WINDOWS
 #include "Windows\WinString.h"
 
-
-#endif
 
 #endif

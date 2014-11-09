@@ -1,5 +1,4 @@
-#ifndef CARBON_RALBUFFER
-#define CARBON_RALBUFFER
+#pragma once
 
 #include "RALResource.h"
 #include "RALDefine.h"
@@ -43,5 +42,3 @@ protected:
 	unsigned	m_stride;	// per element size
 	RAL_USAGE	m_usage;
 };
-
-#endif

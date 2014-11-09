@@ -1,6 +1,3 @@
-#ifndef CARBON_RAL
-#define	CARBON_RAL
+#pragma once
 
 extern bool gRALInitialized;
-
-#endif

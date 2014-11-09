@@ -1,10 +1,7 @@
-#ifndef CARBON_PLATFORMFILE
-#define CARBON_PLATFORMFILE
+#pragma once
 
 #include "Platform\Platform.h"
 
 #ifdef CARBON_IN_WINDOWS
 #include "Windows\WinFile.h"
 #endif
-
-#endif // !CARBON_PLATFORMSTRING

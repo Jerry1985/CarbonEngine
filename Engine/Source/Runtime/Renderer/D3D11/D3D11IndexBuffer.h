@@ -1,5 +1,4 @@
-#ifndef CARBON_D3D11INDEXBUFFER
-#define	CARBON_D3D11INDEXBUFFER
+#pragma once
 
 #include "Renderer\Common\RALIndexBuffer.h"
 
@@ -24,5 +23,3 @@ private:
 
 	friend class D3D11Interface;
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef CARBON_OGLINTERFACE
-#define CARBON_OGLINTERFACE
+#pragma once
 
 #include "Renderer\Common\RALInterface.h"
 #include "../ThirdParty/Regal/Include/Regal.h"
@@ -30,5 +29,3 @@ private:
 
 	void _setVertexLayout(const RALVertexLayout* vl);
 };
-
-#endif

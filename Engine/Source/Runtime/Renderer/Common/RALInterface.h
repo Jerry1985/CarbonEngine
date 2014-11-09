@@ -1,5 +1,4 @@
-#ifndef CARBON_RALINTERFACE
-#define CARBON_RALINTERFACE
+#pragma once
 
 #include "Common\Math\Color.h"
 #include "RALDefine.h"
@@ -43,5 +42,3 @@ protected:
 	// check if the RT is changed
 	void _checkRTChanged();
 };
-
-#endif

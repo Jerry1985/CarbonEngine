@@ -1,11 +1,9 @@
-#ifndef CARBON_D3D11INTERFACE
-#define CARBON_D3D11INTERFACE
+#pragma once
 
 #include "Renderer\Common\RALInterface.h"
 #include <d3d11.h>
 
-#define SAFE_RELEASE(p) {if(p) {(p)->Release(); (p)=NULL;}}
-#define SAFE_DELETE(p) {if(p) {delete (p); (p)=NULL;}}
+#include "Utility\UtilityMacro.h"
 
 class D3D11Interface : public RALInterface
 {
@@ -47,5 +45,3 @@ private:
 	friend class D3D11ComputeShader;
 	friend class D3D11VertexLayout;
 };
-
-#endif

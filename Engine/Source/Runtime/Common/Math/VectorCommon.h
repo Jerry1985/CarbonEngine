@@ -1,5 +1,4 @@
-#ifndef CARBON_VECTORCOMMON
-#define CARBON_VECTORCOMMON
+#pragma once
 
 #include "Platform\Platform.h"
 
@@ -22,5 +21,3 @@
 	typedef type<float>		type##f; \
 	typedef type<int>		type##i; \
 	typedef type<double>	type##d;
-
-#endif

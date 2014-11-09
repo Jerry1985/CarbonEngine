@@ -1,5 +1,4 @@
-#ifndef CARBON_DATATYPE
-#define	CARBON_DATATYPE
+#pragma once
 
 // Define platform types
 typedef unsigned char			uint8;
@@ -28,5 +27,3 @@ typedef const wchar_t*			CPWCHAR;
 #else
 #define S(str)		(str)
 #endif
-
-#endif // !CARBON_DATATYPE

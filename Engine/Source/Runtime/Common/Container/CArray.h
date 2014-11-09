@@ -1,5 +1,4 @@
-#ifndef CARBON_CARRAY
-#define CARBON_CARRAY
+#pragma once
 
 #include "Platform\Platform.h"
 #include "Misc\Assertion.h"
@@ -135,6 +134,8 @@ public:
 	// Safe Allocate, the original data won't be lost
 	void	SafeAllocate(int count)
 	{
+		CASSERT(count > 0);
+
 		// allocate new data
 		T* new_data = new T[count];
 
@@ -159,6 +160,8 @@ public:
 	// Allocate new zero data
 	void	ZeroAllocate(int count)
 	{
+		CASSERT(count > 0);
+
 		// release data
 		Release();
 
@@ -185,6 +188,8 @@ public:
 	// Add elements
 	void	Add(const T elements[], int count)
 	{
+		CASSERT(count > 0);
+
 		if (count + m_currentCount >= m_totalCount)
 			_reAllocateMemory(count + m_currentCount);
 
@@ -205,8 +210,7 @@ public:
 	// Remove at specific index
 	void	Remove(int index)
 	{
-		if (index >= m_currentCount || index < 0 )
-			return;
+		CASSERT(index >= m_currentCount || index < 0);
 
 		--m_currentCount;
 		for (int i = index; i < m_currentCount; ++i)
@@ -216,8 +220,7 @@ public:
 	// Remove at specific index with a count number
 	void	Remove(int index, int count)
 	{
-		if (index >= m_currentCount || index < 0 )
-			return;
+		CASSERT(index >= m_currentCount || index < 0);
 
 		m_currentCount = (m_currentCount - count < index) ? index : m_currentcount - count;
 		for (int i = index; i < m_currentCount; ++i)
@@ -381,5 +384,3 @@ private:
 	template<class T>
 	friend class CArrayIterator;
 };
-
-#endif

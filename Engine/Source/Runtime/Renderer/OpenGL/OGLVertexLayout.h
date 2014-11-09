@@ -1,5 +1,4 @@
-#ifndef CARBON_OGLVERTEXLAYOUT
-#define CARBON_OGLVERTEXLAYOUT
+#pragma once
 
 #include "Renderer\Common\RALVertexLayout.h"
 
@@ -31,5 +30,3 @@ private:
 
 	friend class OGLInterface;
 };
-
-#endif

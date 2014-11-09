@@ -9,6 +9,8 @@
 #include "Container\CArray.h"
 #include "Platform\PlatformFile.h"
 
+#include "Utility\PtrProxy.h"
+
 int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
 	_In_ LPSTR     lpCmdLine,
@@ -38,16 +40,12 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 	bool flag = handle->Write((uint8*)(const TCHAR*)str, str.StrSizeInBytes());
 	delete handle;
 
-	handle = PlatformFile::OpenFile(S("data.txt"));
-
-	uint8 data1[1024];
-	flag = handle->Read((uint8*)data1, handle->Size());
-	str.FromBytes((uint8*)data1, handle->Size());
-
-	delete handle;
-
-	//PlatformFile::DelFile("data.txt");
-
-	CArray<int> arry;
+	{
+		PtrProxy<PlatformFileHandle> read_handle(PlatformFile::OpenFile(S("data.txt")));
+		uint8 data1[1024];
+		flag = read_handle->Read((uint8*)data1, read_handle->Size());
+		str.FromBytes((uint8*)data1, read_handle->Size());
+	}
+	
 	return a.exec();
 }

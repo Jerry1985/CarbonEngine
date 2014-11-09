@@ -1,5 +1,4 @@
-#ifndef CARBON_D3D11VERTEXBUFFER
-#define	CARBON_D3D11VERTEXBUFFER
+#pragma once
 
 #include "Renderer\Common\RALVertexBuffer.h"
 
@@ -28,5 +27,3 @@ private:
 	friend class MyApp;
 	// TEMP_END
 };
-
-#endif

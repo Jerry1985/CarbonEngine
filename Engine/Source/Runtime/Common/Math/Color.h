@@ -1,5 +1,4 @@
-#ifndef CARBON_COLOR
-#define	CARBON_COLOR
+#pragma once
 
 struct Color
 {
@@ -28,5 +27,3 @@ public:
 	static const Color BLUE;
 	static const Color YELLOW;
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef CARBON_CSTRING
-#define	CARBON_CSTRING
+#pragma once
 
 #include "Platform\PlatformString.h"
 #include "Container\CArray.h"
@@ -176,5 +175,3 @@ public:
 private:
 	CArray<TCHAR>	m_data;
 };
-
-#endif

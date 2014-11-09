@@ -1,5 +1,4 @@
-#ifndef CARBON_ASSERTION
-#define CARBON_ASSERTION
+#pragma once
 
 #include <assert.h>
 
@@ -10,7 +9,5 @@
 #else
 
 #define	CASSERT(exp)	{}
-
-#endif
 
 #endif

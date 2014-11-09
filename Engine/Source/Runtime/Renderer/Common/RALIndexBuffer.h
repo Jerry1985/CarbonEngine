@@ -1,5 +1,4 @@
-#ifndef CARBON_RALINDEXBUFFER
-#define	CARBON_RALINDEXBUFFER
+#pragma once
 
 #include "RALBuffer.h"
 
@@ -9,4 +8,3 @@ public:
 	RALIndexBuffer(unsigned size, unsigned stride, RAL_USAGE usage);
 	~RALIndexBuffer();
 };
-#endif

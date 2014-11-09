@@ -1,5 +1,4 @@
-#ifndef CARBON_RALSHADER
-#define	CARBON_RALSHADER
+#pragma once
 
 #include "RALResource.h"
 
@@ -12,5 +11,3 @@ public:
 	// create shader from byte code
 	virtual bool CreateShader(void* data, unsigned length) = 0;
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef	RAL_RESOURCE
-#define	RAL_RESOURCE
+#pragma once
 
 class RALResource
 {
@@ -12,5 +11,3 @@ public:
 	// release the resource
 	virtual void Release() {}
 };
-
-#endif

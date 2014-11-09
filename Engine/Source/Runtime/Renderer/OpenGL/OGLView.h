@@ -1,5 +1,4 @@
-#ifndef CARBON_OGLVIEW
-#define CARBON_OGLVIEW
+#pragma once
 
 #include "Renderer\Common\RALView.h"
 #include "PlatformOGL\PlatformOGL.h"
@@ -24,5 +23,3 @@ private:
 
 	friend class OGLInterface;
 };
-
-#endif

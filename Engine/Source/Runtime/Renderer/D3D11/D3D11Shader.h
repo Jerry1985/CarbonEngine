@@ -1,5 +1,4 @@
-#ifndef CARBON_D3D11SHADER
-#define CARBON_D3D11SHADER
+#pragma once
 
 #include "Renderer\Common\RALShader.h"
 
@@ -42,5 +41,3 @@ private:
 
 	friend class D3D11Interface;
 };
-
-#endif

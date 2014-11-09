@@ -1,5 +1,4 @@
-#ifndef CARBON_RALVIEW
-#define CARBON_RALVIEW
+#pragma once
 
 #include "RALResource.h"
 
@@ -22,5 +21,3 @@ protected:
 	bool		m_isFullScreen;
 	RAL_FORMAT	m_format;
 };
-
-#endif

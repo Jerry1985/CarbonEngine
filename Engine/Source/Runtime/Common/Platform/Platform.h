@@ -1,5 +1,4 @@
-#ifndef CARBON_PLATFORM
-#define CARBON_PLATFORM
+#pragma once
 
 #include "DataType.h"
 
@@ -7,6 +6,4 @@
 	#include "Windows/WinPlatform.h"
 #elif defined(__linux__)
 #elif defined(__APPLE__)
-#endif
-
 #endif

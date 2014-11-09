@@ -1,5 +1,4 @@
-#ifndef CARBON_D3D11RENDERTARGET
-#define CARBON_D3D11RENDERTARGET
+#pragma once
 
 #include "Renderer\Common\RALRenderTarget.h"
 
@@ -28,5 +27,3 @@ private:
 	friend class D3D11View;
 	friend class D3D11Interface;
 };
-
-#endif

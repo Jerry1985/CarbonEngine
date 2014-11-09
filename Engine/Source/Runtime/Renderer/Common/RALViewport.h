@@ -1,5 +1,4 @@
-#ifndef CARBON_RALVIEWPORT
-#define CARBON_RALVIEWPORT
+#pragma once
 
 struct RALViewport
 {
@@ -14,4 +13,3 @@ struct RALViewport
 	{
 	}
 };
-#endif

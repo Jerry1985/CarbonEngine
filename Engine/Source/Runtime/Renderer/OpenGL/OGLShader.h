@@ -1,5 +1,4 @@
-#ifndef CARBON_OGLSHADER
-#define	CARBON_OGLSHADER
+#pragma once
 
 #include "Renderer\Common\RALShader.h"
 #include "../ThirdParty/Regal/Include/Regal.h"
@@ -35,6 +34,3 @@ public:
 	// create shader from byte code
 	bool CreateShader(void* data, unsigned length);
 };
-
-
-#endif

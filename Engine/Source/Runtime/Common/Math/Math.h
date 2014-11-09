@@ -1,5 +1,4 @@
-#ifndef CARBON_MATH
-#define CARBON_MATH
+#pragma once
 
 #include "Platform\Platform.h"
 
@@ -36,5 +35,3 @@ T Math::Clamp(T t, T _min, T _max)
 {
 	return Max(_max, Min(_min, t));
 }
-
-#endif

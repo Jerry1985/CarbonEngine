@@ -1,5 +1,6 @@
-#ifndef	CARBON_SINGLETON
-#define	CARBON_SINGLETON
+#pragma once
+
+#include "Utility\UtilityMacro.h"
 
 template<typename T>
 class	Singleton
@@ -43,4 +44,3 @@ protected:
 
 #define	DEFINE_SINGLETON(T)	template<> T* Singleton<T>::m_pSingleton = 0;
 
-#endif

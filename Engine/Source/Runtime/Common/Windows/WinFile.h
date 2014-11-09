@@ -1,5 +1,4 @@
-#ifndef CARBON_FILE
-#define CARBON_FILE
+#pragma once
 
 class CString;
 
@@ -80,5 +79,3 @@ public:
 
 typedef	WinFileHandle	PlatformFileHandle;
 typedef	WinFile			PlatformFile;
-
-#endif

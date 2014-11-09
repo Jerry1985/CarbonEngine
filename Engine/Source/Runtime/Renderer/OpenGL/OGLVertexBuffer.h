@@ -1,5 +1,4 @@
-#ifndef CARBON_OGLVERTEXBUFFER
-#define	CARBON_OGLVERTEXBUFFER
+#pragma once
 
 #include "Renderer\Common\RALVertexBuffer.h"
 #include "../ThirdParty/Regal/Include/Regal.h"
@@ -24,5 +23,3 @@ private:
 
 	friend class OGLInterface;
 };
-
-#endif

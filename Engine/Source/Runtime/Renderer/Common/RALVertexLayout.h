@@ -1,5 +1,4 @@
-#ifndef CARBON_RALVERTEXLAYOUT
-#define CARBON_RALVERTEXLAYOUT
+#pragma once
 
 #include "RALResource.h"
 
@@ -20,5 +19,3 @@ public:
 	RALVertexLayout();
 	~RALVertexLayout();
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef CARBON_RALDEFINE
-#define CARBON_RALDEFINE
+#pragma once
 
 #define	MAX_RT_COUNT		8		// maximum number of render target set
 #define MAX_VB_SLOT_COUNT	8		// maximum number of vertex buffer bound
@@ -95,4 +94,3 @@ enum RAL_VERTEXELEMENTTYPE
 	RAL_VERTEXELEMENTTYPE_COLOR,
 	RAL_VERTEXELEMENTTYPE_COUNT
 };
-#endif

@@ -1,5 +1,4 @@
-#ifndef CARBON_VECTOR2
-#define CARBON_VECTOR2
+#pragma once
 
 #include "VectorCommon.h"
 
@@ -96,5 +95,3 @@ VECTOR_TYPE(Vector2)
 
 // rename vector2d as point
 typedef Vector2i Point2D;
-
-#endif

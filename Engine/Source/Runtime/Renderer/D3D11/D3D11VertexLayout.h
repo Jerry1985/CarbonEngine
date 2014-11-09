@@ -1,5 +1,4 @@
-#ifndef CARBON_D3D11VERTEXLAYOUT
-#define CARBON_D3D11VERTEXLAYOUT
+#pragma once
 
 #include "Renderer\Common\RALVertexLayout.h"
 
@@ -22,5 +21,3 @@ private:
 
 	friend class D3D11Interface;
 };
-
-#endif

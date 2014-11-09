@@ -1,5 +1,4 @@
-#ifndef CARBON_RALSHADERBOUNDSTATE
-#define CARBON_RALSHADERBOUNDSTATE
+#pragma once
 
 #include "RALResource.h"
 
@@ -18,5 +17,3 @@ protected:
 
 	RALVertexLayout*	m_vl;
 };
-
-#endif

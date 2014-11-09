@@ -1,5 +1,4 @@
-#ifndef CARBON_WINSTRING
-#define	CARBON_WINSTRING
+#pragma once
 
 #include <string>
 
@@ -65,5 +64,3 @@ FORCE_INLINE void	WinString::FtoS(float data, PCHAR str, int32 strlen)
 }
 
 typedef	WinString	PlatformString;
-
-#endif

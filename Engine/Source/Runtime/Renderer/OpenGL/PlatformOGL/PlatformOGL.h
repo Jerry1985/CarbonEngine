@@ -1,5 +1,4 @@
-#ifndef CARBON_PLATFORMOGL
-#define CARBON_PLATFORMOGL
+#pragma once
 
 #include "Platform\Platform.h"
 #include "../ThirdParty/Regal/Include/Regal.h"
@@ -16,5 +15,3 @@ void MakeOGLCurrent(PlatformOGLDevice* device);
 
 // swap OGL buffer
 void SwapBuffer(PlatformOGLDevice* device);
-
-#endif

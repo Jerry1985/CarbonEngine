@@ -1,5 +1,4 @@
-#ifndef CARBON_RALRENDERTARGET
-#define	CARBON_RALRENDERTARGET
+#pragma once
 
 #include "RALResource.h"
 
@@ -19,5 +18,3 @@ protected:
 
 	RAL_FORMAT	m_format;
 };
-
-#endif
