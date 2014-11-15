@@ -73,7 +73,7 @@ bool WinFileHandle::Write(uint8* data, int32 size)
 
 bool WinFile::IsFileExist(const CString& filename)
 {
-	CASSERT(filename.IsEmpty());
+	CASSERT(!filename.IsEmpty());
 
 	WIN32_FIND_DATA FindFileData;
 	HANDLE hFind = FindFirstFile(filename, &FindFileData);
@@ -84,7 +84,7 @@ bool WinFile::IsFileExist(const CString& filename)
 
 int32 WinFile::FileSize(const CString& filename)
 {
-	CASSERT(filename.IsEmpty());
+	CASSERT(!filename.IsEmpty());
 
 	int size = 0;
 	HANDLE handle = CreateFile(filename, FILE_READ_EA, FILE_SHARE_READ, 0, OPEN_EXISTING, 0, 0);
@@ -98,7 +98,7 @@ int32 WinFile::FileSize(const CString& filename)
 
 bool WinFile::IsFileReadOnly(const CString& filename)
 {
-	CASSERT(filename.IsEmpty());
+	CASSERT(!filename.IsEmpty());
 
 	uint32 attr = GetFileAttributes(filename);
 	return !(attr & FILE_ATTRIBUTE_DIRECTORY) && (attr & FILE_ATTRIBUTE_READONLY);
@@ -107,7 +107,7 @@ bool WinFile::IsFileReadOnly(const CString& filename)
 // create file
 WinFileHandle*	WinFile::OpenFile(const CString& filename, bool read)
 {
-	CASSERT(filename.IsEmpty());
+	CASSERT(!filename.IsEmpty());
 
 	uint32 readFlag = read ? GENERIC_READ : GENERIC_WRITE;
 	uint32 openFlag = read ? OPEN_EXISTING : OPEN_ALWAYS;
@@ -120,7 +120,7 @@ WinFileHandle*	WinFile::OpenFile(const CString& filename, bool read)
 // check if the directory exist
 bool WinFile::IsDirExist(const CString& filename)
 {
-	CASSERT(filename.IsEmpty());
+	CASSERT(!filename.IsEmpty());
 
 	uint32 attr = GetFileAttributes(filename);
 	return !!(attr & FILE_ATTRIBUTE_DIRECTORY);
@@ -129,7 +129,7 @@ bool WinFile::IsDirExist(const CString& filename)
 // check if the directory is readonly
 bool WinFile::IsDirReadOnly(const CString& filename)
 {
-	CASSERT(filename.IsEmpty());
+	CASSERT(!filename.IsEmpty());
 
 	uint32 attr = GetFileAttributes(filename);
 	return (attr & FILE_ATTRIBUTE_DIRECTORY) && (attr & FILE_ATTRIBUTE_READONLY);
@@ -138,7 +138,7 @@ bool WinFile::IsDirReadOnly(const CString& filename)
 // delete the file
 void WinFile::DelFile(const CString& filename)
 {
-	CASSERT(filename.IsEmpty());
+	CASSERT(!filename.IsEmpty());
 
 	DeleteFile(filename);
 }

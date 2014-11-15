@@ -1,5 +1,6 @@
 #include "Log.h"
 #include "LogManager.h"
+#include "FileLogContext.h"
 
 bool	EnableLog()
 {
@@ -60,6 +61,11 @@ bool	IsLogCatagoryEnabled(uint32 catagory)
 void	AddPlatformLogContext()
 {
 	LogManager::GetSingleton().AddLogContext(LogContext::CreatePlatformContext());
+}
+
+void	AddFileLogContext(const TCHAR* filename)
+{
+	LogManager::GetSingleton().AddLogContext(new FileLogContext(filename));
 }
 
 void	EnableLogCatagory(uint32 catagory)

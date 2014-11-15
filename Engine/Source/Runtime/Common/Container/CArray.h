@@ -2,8 +2,9 @@
 
 #include "Platform\Platform.h"
 #include "Misc\Assertion.h"
+#include "Math\Math.h"
 
-#define	ARRAY_BASECHUNK_SIZE	256
+#define	ARRAY_BASECHUNK_SIZE		256
 
 template< class T >
 class CArray;
@@ -48,7 +49,7 @@ public:
 		return m_data[m_currentId];
 	}
 
-	const CArrayIterator& operator++()
+	FORCE_INLINE const CArrayIterator& operator++()
 	{
 		++m_currentId;
 
@@ -58,7 +59,7 @@ public:
 		return (*this);
 	}
 
-	CArrayIterator operator++(int)
+	FORCE_INLINE CArrayIterator operator++(int)
 	{
 		CArrayIterator it(*this);
 
@@ -69,7 +70,7 @@ public:
 		return it;
 	}
 
-	const CArrayIterator& operator--()
+	FORCE_INLINE const CArrayIterator& operator--()
 	{
 		--m_currentId;
 
@@ -79,7 +80,7 @@ public:
 		return (*this);
 	}
 
-	CArrayIterator operator--(int)
+	FORCE_INLINE CArrayIterator operator--(int)
 	{
 		CIterator it(*this);
 
@@ -90,9 +91,14 @@ public:
 		return it;
 	}
 
-	bool IsEnd()
+	FORCE_INLINE bool IsEnd() const
 	{
 		return m_currentId == m_elementCount;
+	}
+
+	FORCE_INLINE int Index() const
+	{
+		return m_currentId;
 	}
 
 private:
@@ -122,7 +128,7 @@ public:
 	}
 
 	// Allocate data
-	void	Allocate(int count)
+	FORCE_INLINE void	Allocate(int count)
 	{
 		CASSERT(count > 0);
 
@@ -130,7 +136,8 @@ public:
 		Release();
 
 		// allocate new data
-		m_data = new T[count];
+		m_data = (T*)::operator new(m_elementSize*count);
+		memset(m_data, 0, m_elementSize*count);
 
 		// update information
 		m_totalCount = count;
@@ -138,20 +145,22 @@ public:
 	}
 
 	// Safe Allocate, the original data won't be lost
-	void	SafeAllocate(int count)
+	FORCE_INLINE void	SafeAllocate(int count)
 	{
 		CASSERT(count > 0);
 
 		// allocate new data
-		T* new_data = new T[count];
-
+		T* new_data = (T*)::operator new(m_elementSize*count);
+		
 		unsigned copy_element = 0;
 		if (m_data)
 		{
 			copy_element = (count < m_currentCount) ? count : m_currentCount;
 			unsigned copy_size = copy_element * m_elementSize;
 			memcpy_s(new_data, copy_size, m_data, copy_size);
-		}
+			memset(new_data + copy_element, 0, m_elementSize* Math::Max(0, m_totalCount - (int)copy_element));
+		}else
+			memset(new_data, 0, m_elementSize*count);
 
 		// release data
 		Release();
@@ -164,7 +173,7 @@ public:
 		m_currentCount = copy_element;
 	}
 	// Allocate new zero data
-	void	ZeroAllocate(int count)
+	FORCE_INLINE void	ZeroAllocate(int count)
 	{
 		CASSERT(count > 0);
 
@@ -172,77 +181,128 @@ public:
 		Release();
 
 		// allocate new data
-		m_data = new T[count];
+		m_data = (T*)::operator new(m_elementSize*count);
+		memset(m_pData, 0, m_totalCount * m_elementSize);
 
 		// update information
 		m_totalCount = count;
 		m_currentCount = 0;
-
-		// zero the memory
-		memset(m_pData, 0, m_totalCount * m_elementSize);
 	}
 
 	// Add one element
-	void	Add(const T& element)
+	FORCE_INLINE void	Add(const T& element)
+	{
+		_reAllocateMemory(1 + m_currentCount);
+
+		new (&m_data[m_currentCount++]) T(element);
+	}
+	FORCE_INLINE void	Add(T&& element)
 	{
 		// total count
-		if (m_currentCount >= m_totalCount)
-			SafeAllocate(m_totalCount << 1);
+		_reAllocateMemory(1 + m_currentCount);
 
-		m_data[m_currentCount++] = element;
+		new (&m_data[m_currentCount++]) T(element);
 	}
 	// Add elements
-	void	Add(const T elements[], int count)
+	FORCE_INLINE void	Add(const T elements[], int count)
 	{
 		CASSERT(count > 0);
 
-		if (count + m_currentCount >= m_totalCount)
-			_reAllocateMemory(count + m_currentCount);
+		_reAllocateMemory(count + m_currentCount);
 
 		for (int i = 0; i < count; ++i)
 			m_data[m_currentCount++] = elements[i];
 	}
 
 	// Add elements from array
-	void	Add(const CArray<T>& elements)
+	FORCE_INLINE void	Add(const CArray<T>& elements)
 	{
-		if (elements.m_currentCount + m_currentCount >= m_totalCount)
+		_reAllocateMemory(elements.m_currentCount + m_currentCount);
+
+		int to_copy = elements.m_currentCount;
+		for (int i = 0; i < to_copy; ++i)
+			m_data[m_currentCount++] = elements[i];
+	}
+
+	// Add one element
+	FORCE_INLINE void	Add(int index, const T& element)
+	{
+		_reAllocateMemory(1 + m_currentCount);
+
+		_moveMem(index + 1, index);
+		new (&m_data[index]) T(element);
+		++m_currentCount;
+	}
+	FORCE_INLINE void	Add(int index, T&& element)
+	{
+		// total count
+		_reAllocateMemory(1 + m_currentCount);
+
+		_moveMem(index + 1, index);
+		new (&m_data[index]) T(element);
+		++m_currentCount;
+	}
+	// Add elements
+	FORCE_INLINE void	Add(int index, const T elements[], int count)
+	{
+		CASSERT(count > 0);
+		_reAllocateMemory(count + m_currentCount);
+
+		_moveMem(index + count, index);
+		for (int i = 0; i < count; ++i)
+			m_data[i + index] = elements[i];
+		m_currentCount += count;
+	}
+
+	// Add elements from array
+	FORCE_INLINE void	Add(int index, const CArray<T>& elements)
+	{
+		// special handling for self-add
+		if (&elements == this)
+		{
+			CArray<T> arr(elements);
+			Add(index, arr);
+		}
+		else
+		{
 			_reAllocateMemory(elements.m_currentCount + m_currentCount);
 
-		for (int i = 0; i < elements.m_currentCount; ++i)
-			m_data[m_currentCount++] = element[i];
+			int count = elements.m_currentCount;
+
+			_moveMem(index + count, index);
+			for (int i = 0; i < count; ++i)
+				m_data[i + index] = elements[i];
+			m_currentCount += count;
+		}
 	}
 
 	// Remove at specific index
-	void	Remove(int index)
+	FORCE_INLINE void	Remove(int index)
 	{
 		CASSERT(index >= m_currentCount || index < 0);
 
 		--m_currentCount;
-		for (int i = index; i < m_currentCount; ++i)
-			m_data[i] = m_data[i + 1];
+		_moveMem(index, index + 1);
 	}
 
 	// Remove at specific index with a count number
-	void	Remove(int index, int count)
+	FORCE_INLINE void	Remove(int index, int count)
 	{
 		CASSERT(index >= m_currentCount || index < 0);
-
-		m_currentCount = (m_currentCount - count < index) ? index : m_currentcount - count;
-		for (int i = index; i < m_currentCount; ++i)
-			m_data[i] = m_data[i + count];
+		
+		m_currentCount = Math::Max( 0 , m_currentCount - count );
+		_moveMem(index, index + count );
 	}
 
 	// Replace elements at specific position
-	void	Replace(int index, int count, const T* elements)
+	FORCE_INLINE void	Replace(int index, int count, const T* elements)
 	{
 		CASSERT((count&&elements) || (!count&&!elements));
 		CASSERT(index >= 0 && index < m_currentCount);
 
 		int target_count = index + count;
-		target_count = (target_count<m_currentCount) ? m_currentCount : target_count;
-		if (target_count > m_totalCount)
-			_reAllocateMemory(target_count);
+		target_count = Math::Max(target_count, m_currentCount);
+		_reAllocateMemory(target_count);
 
 		for (int id = index; id < target_count; ++id)
 			m_data[id] = elements[id - index];
@@ -251,30 +311,34 @@ public:
 	}
 
 	// Find a specific element
-	int		Find(const T& element) const
+	FORCE_INLINE int		Find(const T& element) const
 	{
 		CArrayIterator<T> iterator(*this);
 		int index = 0;
 		while (iterator.IsEnd() == false)
 		{
 			if (*iterator == element)
-				return index;
-
-			++index;
+				return iterator->Index();
 			iterator++;
 		}
 
 		return -1;
 	}
 
+	// Reset array
+	FORCE_INLINE void	Reset()
+	{
+		m_currentCount = 0;
+	}
+
 	// Whether the array is empty
-	bool	IsEmpty() const
+	FORCE_INLINE bool	IsEmpty() const
 	{
 		return m_currentCount == 0;
 	}
 
 	// [] operator
-	T const & __cdecl operator[](int index) const
+	FORCE_INLINE T const & __cdecl operator[](int index) const
 	{
 		CASSERT(index < m_currentCount);
 
@@ -282,20 +346,21 @@ public:
 	}
 
 	// Get Current count
-	int		GetCount() const { return m_currentCount; }
+	FORCE_INLINE int		GetCount() const { return m_currentCount; }
 	// Get Maximum size
-	int		GetSize() const { return m_currentCount * m_elementSize; }
+	FORCE_INLINE int		GetSize() const { return m_currentCount * m_elementSize; }
 	// Get Maximum count
-	int		GetMaxCount() const { return m_totalCount; }
+	FORCE_INLINE int		GetMaxCount() const { return m_totalCount; }
 	// Get Maximum size
-	int		GetMaxSize() const { return m_totalCount * m_elementSize; }
+	FORCE_INLINE int		GetMaxSize() const { return m_totalCount * m_elementSize; }
 
 	// Release Data
-	void	Release()
+	FORCE_INLINE void	Release()
 	{
 		if (m_data)
 		{
-			delete[] m_data;
+			::operator delete(m_data);
+			m_data = 0;
 			m_data = 0;
 			m_totalCount = 0;
 			m_currentCount = 0;
@@ -303,30 +368,31 @@ public:
 	}
 
 	// clone array
-	const CArray<T>&	Clone(const CArray<T>& array)
+	FORCE_INLINE const CArray<T>&	Clone(const CArray<T>& array)
 	{
 		Release();
 
 		m_currentCount = array.m_currentCount;
 		m_totalCount = array.m_totalCount;
-		m_data = new T[m_totalCount];
+		m_data = (T*)::operator new (m_totalCount*m_elementSize);
 
 		CASSERT((!m_totalCount&&!array.m_data) || (m_totalCount&&array.m_data));
 
-		if ( m_totalCount )
-			memcpy_s(m_data, m_totalCount * m_elementSize, array.m_data, m_totalCount);
+		for (int i = 0; i < m_currentCount; ++i)
+			m_data[i] = array.m_data[i];
+		memset(m_data + m_currentCount, 0, Math::Max(m_totalCount - m_currentCount, 0) * m_elementSize);
 
 		return *this;
 	}
 
 	// = operator
-	const CArray<T>&	operator = (const CArray<T>& array)
+	FORCE_INLINE const CArray<T>&	operator = (const CArray<T>& array)
 	{
 		return Clone(array);
 	}
 
 	// append array
-	void	Append(const CArray<T>& array)
+	FORCE_INLINE void	Append(const CArray<T>& array)
 	{
 		CArrayIterator<T> iterator(array);
 		while (!iterator.IsEnd())
@@ -337,10 +403,10 @@ public:
 	}
 
 	// Get Data pointer
-	const T* const	GetData() const { return m_data; }
+	FORCE_INLINE const T* const	GetData() const { return m_data; }
 
 	// check if the two arrays are equal
-	bool operator == (const CArray<T>& array) const
+	FORCE_INLINE bool operator == (const CArray<T>& array) const
 	{
 		if (array.m_currentCount != m_currentCount)
 			return false;
@@ -369,7 +435,7 @@ private:
 	int		m_currentCount = 0;
 
 	// recaculate size
-	void	_reAllocateMemory(int count)
+	FORCE_INLINE void	_reAllocateMemory(int count)
 	{
 		int target_count = (int)m_totalCount;
 		if (target_count < count)
@@ -382,9 +448,18 @@ private:
 					target_count <<= 1;
 
 			} while (target_count < count);
-		}
 
-		SafeAllocate(target_count);
+			SafeAllocate(target_count);
+		}
+	}
+
+	// there is no boundary check in this function, it is the caller's responsibility to make sure of it
+	FORCE_INLINE void	_moveMem(int dest_index, int src_index)
+	{
+		int min_index = Math::Min(dest_index, src_index);
+		int total_rest_size = Math::Max(m_currentCount - min_index, 0) * m_elementSize;
+		if (total_rest_size)
+			memmove_s(m_data + dest_index, total_rest_size, m_data + src_index, total_rest_size);
 	}
 
 	template<class T>

@@ -22,3 +22,4 @@ void		DisbleLogCatagory(uint32 catagory);
 bool		IsLogCatagoryEnabled(uint32 catagory);
 
 void		AddPlatformLogContext();
+void		AddFileLogContext(const TCHAR* filename);
