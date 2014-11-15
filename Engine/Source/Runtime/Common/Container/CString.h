@@ -13,11 +13,7 @@ public:
 	}
 	CString(const TCHAR* text)
 	{
-		int index = 0;
-		do
-		{
-			m_data.Add(text[index]);
-		} while (text[index++]);
+		FromString(text);
 	}
 	CString(const CString& str)
 	{
@@ -123,7 +119,7 @@ public:
 		CASSERT(data && size != 0);
 
 		m_data.Release();
-		m_data.Allocate(size / sizeof(TCHAR) + 1);
+		m_data.Allocate(size / sizeof(TCHAR)+1);
 		m_data.Add((const TCHAR*)data, size / sizeof(TCHAR));
 		_addStringEnd();
 	}
@@ -153,7 +149,7 @@ public:
 	// to bool
 	FORCE_INLINE bool ToBool() const
 	{
-		if (IsEqual( S("true") ))
+		if (IsEqual(S("true")))
 			return true;
 		return false;
 	}
@@ -174,6 +170,16 @@ public:
 		return PlatformString::StoF(m_data.GetData());
 	}
 
+	FORCE_INLINE void FromString(const TCHAR* str)
+	{
+		m_data.Release();
+
+		int index = 0;
+		while (str[index])
+			m_data.Add(str[index++]);
+		_addStringEnd();
+	}
+
 	FORCE_INLINE bool IsEmpty() const
 	{
 		return m_data.IsEmpty();
@@ -190,18 +196,33 @@ public:
 		return m_data.GetSize();
 	}
 
+	FORCE_INLINE void Format(const TCHAR* format, ...)
+	{
+		m_data.Release();
+
+		va_list args;
+
+		va_start(args, format);
+		TCHAR buffer[4096];
+		vsprintf_s(buffer, 4096, format, args);
+		va_end(args);
+
+		FromString(buffer);
+	}
+
 	friend FORCE_INLINE
 	CString operator + (const TCHAR* str0, const CString& str1)
 	{
-		CASSERT(str0);
+			CASSERT(str0);
 
-		CString ret(str0);
-		ret.m_data.Replace(ret.Strlen(), str1.Strlen(), str1);
+			CString ret(str0);
+			ret.m_data.Replace(ret.Strlen(), str1.Strlen(), str1);
 
-		ret._addStringEnd();
+			ret._addStringEnd();
 
-		return ret;
+			return ret;
 	}
+	friend CString STR(const TCHAR* format, ...);
 
 private:
 	CArray<TCHAR>	m_data;
@@ -213,3 +234,15 @@ private:
 			m_data.Add(0);
 	}
 };
+
+FORCE_INLINE CString STR(const TCHAR* format, ...)
+{
+	va_list args;
+
+	va_start(args, format);
+	TCHAR buffer[4096];
+	vsprintf_s(buffer, 4096, format, args);
+	va_end(args);
+
+	return CString(buffer);
+}

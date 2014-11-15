@@ -13,12 +13,14 @@ public:
 	static void		ItoS(int32 data, PWCHAR str, int32 strlen);
 	static float	StoF(CPWCHAR str);
 	static void		FtoS(float data, PWCHAR str, int32 strlen);
+	static void		Format(PCHAR buf, int32 strlen, CPCHAR format, va_list);
 
 	static int32	Strlen(CPCHAR str);
 	static int32	StoI(CPCHAR str);
 	static void		ItoS(int32 data, PCHAR str, int32 strlen);
 	static float	StoF(CPCHAR str);
 	static void		FtoS(float data, PCHAR str, int32 strlen);
+	static void		Format(PWCHAR str, int32 strlen, CPWCHAR format, va_list);
 };
 
 FORCE_INLINE int32	WinString::Strlen(CPWCHAR str)
@@ -41,6 +43,10 @@ FORCE_INLINE void	WinString::FtoS(float data, PWCHAR str, int32 strlen)
 {
 	swprintf(str, strlen, L"%f", data);
 }
+FORCE_INLINE void	WinString::Format(PCHAR buf, int32 strlen, CPCHAR format, va_list args)
+{
+	vsprintf_s(buf, strlen, format, args);
+}
 
 FORCE_INLINE int32	WinString::Strlen(CPCHAR str)
 {
@@ -61,6 +67,11 @@ FORCE_INLINE float	WinString::StoF(CPCHAR str)
 FORCE_INLINE void	WinString::FtoS(float data, PCHAR str, int32 strlen)
 {
 	sprintf_s(str, strlen, "%f", data);
+}
+
+FORCE_INLINE void	WinString::Format(PWCHAR buf, int32 strlen, CPWCHAR format, va_list args)
+{
+	vswprintf(buf, strlen, format, args);
 }
 
 typedef	WinString	PlatformString;

@@ -102,8 +102,7 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 	CArrayIterator<int> it(ta);
 	while (it.IsEnd() == false)
 	{
-		CString log(S("Index ") + CString(i) + S(" : ") + CString(*it));
-		CARBON_LOG(LOG_NORMAL, LOG_GENERAL, log);
+		CARBON_LOG(LOG_NORMAL, LOG_GENERAL, STR("New Index %d : %d", i, *it));
 		++it;
 		++i;
 	}
