@@ -37,13 +37,13 @@ public:
 	{
 	}
 
-	const T& operator*() const
+	FORCE_INLINE const T& operator*() const
 	{
 		CASSERT(m_currentId < m_elementCount);
 		return m_data[m_currentId];
 	}
 
-	T& operator*()
+	FORCE_INLINE T& operator*()
 	{
 		CASSERT(m_currentId < m_elementCount);
 		return m_data[m_currentId];
@@ -61,7 +61,7 @@ public:
 
 	FORCE_INLINE CArrayIterator operator++(int)
 	{
-		CArrayIterator it(*this);
+		CArrayIterator<T> it(*this);
 
 		++m_currentId;
 		if (m_currentId >= m_elementCount)

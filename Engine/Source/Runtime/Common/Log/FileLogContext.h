@@ -19,6 +19,6 @@ public:
 	void Flush();
 
 private:
-	CString			m_LogFileName;
+	const TCHAR*	m_LogFileName;
 	CArray<CString>	m_LogInfo;
 };

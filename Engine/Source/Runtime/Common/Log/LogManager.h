@@ -9,7 +9,8 @@ enum LOG_LEVEL
 {
 	LOG_NORMAL = 0,
 	LOG_WARNING,
-	LOG_CRITICAL
+	LOG_CRITICAL,
+	LOG_DEBUG,
 };
 
 enum LOG_CATAGORY
@@ -49,8 +50,8 @@ private:
 
 	CArray<LogContext*>	m_Contexts;
 
-	CString		_formatLevel(uint32 level);
-	CString		_formatCatagory(uint32 level);
-	CString		_formatLog(uint32 type, uint32 catagory, const TCHAR* message);
-	void		_releaseLogContexts();
+	const CString&	_formatLevel(uint32 level);
+	const CString&	_formatCatagory(uint32 level);
+	CString			_formatLog(uint32 type, uint32 catagory, const TCHAR* message);
+	void			_releaseLogContexts();
 };

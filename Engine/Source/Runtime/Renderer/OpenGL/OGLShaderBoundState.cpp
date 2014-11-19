@@ -42,5 +42,5 @@ RALShaderBoundState(vl,vs,ps)
 
 OGLShaderBoundState::~OGLShaderBoundState()
 {
-
+	glDeleteProgram(m_programId);
 }

@@ -76,46 +76,32 @@ uint32 LogManager::GetLogFilter() const
 
 CString	LogManager::_formatLog(uint32 type, uint32 catagory, const TCHAR* message)
 {
-	CString	formated_log;
-
-	formated_log = S("[") + _formatLevel(type) + S("]\t[") + _formatCatagory(catagory) + S("]\t");
-	formated_log += message;
-	formated_log += S("\r\n");
-
-	return formated_log;
+	return STR("[%s]\t[%s]\t%s\r\n", (const TCHAR*)_formatLevel(type), (const TCHAR*)_formatCatagory(catagory), message);
 }
 
-CString	LogManager::_formatLevel(uint32 level)
+const CString&	LogManager::_formatLevel(uint32 level)
 {
 	static const CString strLogLevels[] = {
 		S("LOG_NORMAL"),
 		S("LOG_WARNING"),
-		S("LOG_CRITICAL")
+		S("LOG_CRITICAL"),
+		S("LOG_DEBUG")
 	};
 
 	return strLogLevels[level];
 }
 
-CString	LogManager::_formatCatagory(uint32 level)
+const CString&	LogManager::_formatCatagory(uint32 level)
 {
 #define	DEFINE_LOG_STR(log)	static const CString str##log(S(#log))
 	DEFINE_LOG_STR(LOG_GENERAL);
 	DEFINE_LOG_STR(LOG_RENDERER);
+	DEFINE_LOG_STR(LOG_NONE);
 
-	bool hit = false;
-	CString ret;
 	if (LOG_GENERAL & level)
-	{
-		ret += strLOG_GENERAL;
-		hit = true;
-	}
-	if (LOG_RENDERER & level)
-	{
-		if (hit)
-			ret += S(" ");
-		ret += strLOG_RENDERER;
-		hit = true;
-	}
-	
-	return ret;
+		return strLOG_GENERAL;
+	else if (LOG_RENDERER & level)
+		return strLOG_RENDERER;
+
+	return strLOG_NONE;
 }

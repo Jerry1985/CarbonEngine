@@ -11,12 +11,16 @@
 #include "Renderer\Common\RALShader.h"
 #include "Renderer\Common\RALVertexLayout.h"
 #include "Common\Container\CArray.h"
+#include "Platform\PlatformFile.h"
+#include "Platform\PlatformString.h"
+#include "Container\CString.h"
+#include "Log\Log.h"
 
 #include "../Temp/vs.h"
 #include "../Temp/ps.h"
 
 #define TWO_VIEWS 0
-#define D3D11_RAL 1
+#define D3D11_RAL 0
 
 const char g_ogl_vs[] = {
 	"#version 330 core\n"
@@ -120,6 +124,13 @@ BaseWindow::BaseWindow(QWidget *parent)
 	pVS = RALCreateVertexShader();
 	pPS = RALCreatePixelShader();
 
+	PlatformFileHandle* handle = PlatformFile::OpenFile(CString("E:\\CarbonEngine\\Engine\\Shader\\ogl_vs.shader"));
+	uint32	data_size = handle->Size();
+	char* data = new char[data_size+1];
+	data[data_size] = 0;
+	bool flag = handle->Read((uint8*)data, data_size);
+	delete handle;
+
 #if D3D11_RAL
 	if (pVS)
 		pVS->CreateShader((void*)g_vs, sizeof(g_vs));
@@ -127,10 +138,12 @@ BaseWindow::BaseWindow(QWidget *parent)
 		pPS->CreateShader((void*)g_ps, sizeof(g_ps));
 #else
 	if (pVS)
-		pVS->CreateShader((void*)g_ogl_vs, sizeof(g_ogl_vs));
+		pVS->CreateShader((void*)data, data_size);
 	if (pPS)
 		pPS->CreateShader((void*)g_ogl_fs, sizeof(g_ogl_fs));
 #endif
+
+	delete[] data;
 
 	pShaders = RALCreateShaderBoundState(vl, pVS, pPS);
 
