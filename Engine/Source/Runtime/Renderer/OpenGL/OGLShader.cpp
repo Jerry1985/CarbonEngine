@@ -23,6 +23,7 @@ OGLShader::~OGLShader()
 
 OGLVertexShader::OGLVertexShader()
 {
+	m_ShaderType = RAL_SHADERTYPE_VERTEXSHADER;
 }
 
 OGLVertexShader::~OGLVertexShader()
@@ -30,30 +31,37 @@ OGLVertexShader::~OGLVertexShader()
 }
 
 // create shader from byte code
-bool OGLVertexShader::CreateShader(void* data, unsigned length)
+bool OGLVertexShader::CreateShader(void* data, unsigned length, bool bytecode)
 {
-	m_shaderId = glCreateShader(GL_VERTEX_SHADER);
+	if (bytecode)
+	{
+	}
+	else
+	{
+		m_shaderId = glCreateShader(GL_VERTEX_SHADER);
 
-	glShaderSource(m_shaderId, 1, (const char* const*)&data, NULL);
-	glCompileShader(m_shaderId);
+		glShaderSource(m_shaderId, 1, (const char* const*)&data, NULL);
+		glCompileShader(m_shaderId);
 
-	// Check Vertex Shader
-	GLint Result = GL_FALSE;
-	int InfoLogLength;
-	glGetShaderiv(m_shaderId, GL_COMPILE_STATUS, &Result);
-	glGetShaderiv(m_shaderId, GL_INFO_LOG_LENGTH, &InfoLogLength);
-	if (Result != GL_TRUE && InfoLogLength > 0){
-		char* log = new char[InfoLogLength + 1];
-		glGetShaderInfoLog(m_shaderId, InfoLogLength, NULL, log);
-		delete[] log;
-		
-		return false;
+		// Check Vertex Shader
+		GLint Result = GL_FALSE;
+		int InfoLogLength;
+		glGetShaderiv(m_shaderId, GL_COMPILE_STATUS, &Result);
+		glGetShaderiv(m_shaderId, GL_INFO_LOG_LENGTH, &InfoLogLength);
+		if (Result != GL_TRUE && InfoLogLength > 0){
+			char* log = new char[InfoLogLength + 1];
+			glGetShaderInfoLog(m_shaderId, InfoLogLength, NULL, log);
+			delete[] log;
+
+			return false;
+		}
 	}
 	return true;
 }
 
 OGLPixelShader::OGLPixelShader()
 {
+	m_ShaderType = RAL_SHADERTYPE_PIXELSHADER;
 }
 
 OGLPixelShader::~OGLPixelShader()
@@ -61,23 +69,29 @@ OGLPixelShader::~OGLPixelShader()
 }
 
 // create shader from byte code
-bool OGLPixelShader::CreateShader(void* data, unsigned length)
+bool OGLPixelShader::CreateShader(void* data, unsigned length, bool bytecode)
 {
-	m_shaderId = glCreateShader(GL_FRAGMENT_SHADER);
+	if (bytecode)
+	{
+	}else
+	{
+		m_shaderId = glCreateShader(GL_FRAGMENT_SHADER);
 
-	glShaderSource(m_shaderId, 1, (const char* const*)&data, NULL);
-	glCompileShader(m_shaderId);
+		glShaderSource(m_shaderId, 1, (const char* const*)&data, NULL);
+		glCompileShader(m_shaderId);
 
-	// Check Vertex Shader
-	GLint Result = GL_FALSE;
-	int InfoLogLength;
-	glGetShaderiv(m_shaderId, GL_COMPILE_STATUS, &Result);
-	glGetShaderiv(m_shaderId, GL_INFO_LOG_LENGTH, &InfoLogLength);
-	if (Result != GL_TRUE && InfoLogLength > 0){
-		char* log = new char[InfoLogLength + 1];
-		glGetShaderInfoLog(m_shaderId, InfoLogLength, NULL, log);
+		// Check Vertex Shader
+		GLint Result = GL_FALSE;
+		int InfoLogLength;
+		glGetShaderiv(m_shaderId, GL_COMPILE_STATUS, &Result);
+		glGetShaderiv(m_shaderId, GL_INFO_LOG_LENGTH, &InfoLogLength);
+		if (Result != GL_TRUE && InfoLogLength > 0){
+			char* log = new char[InfoLogLength + 1];
+			glGetShaderInfoLog(m_shaderId, InfoLogLength, NULL, log);
 
-		return false;
+			return false;
+		}
 	}
+
 	return true;
 }

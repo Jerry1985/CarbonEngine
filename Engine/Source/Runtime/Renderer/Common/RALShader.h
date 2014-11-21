@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RALResource.h"
+#include "RALDefine.h"
 
 class RALShader : public RALResource
 {
@@ -9,5 +10,9 @@ public:
 	virtual ~RALShader();
 
 	// create shader from byte code
-	virtual bool CreateShader(void* data, unsigned length) = 0;
+	// if "bytecode" is false, HLSL or GLSL will be parsed
+	virtual bool CreateShader(void* data, unsigned length, bool bytecode = true) = 0;
+
+protected:
+	RAL_SHADERTYPE m_ShaderType;
 };

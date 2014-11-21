@@ -15,6 +15,7 @@
 #include "Platform\PlatformString.h"
 #include "Container\CString.h"
 #include "Log\Log.h"
+#include "Shader\FlipViewShader.h"
 
 #include "../Temp/vs.h"
 #include "../Temp/ps.h"
@@ -138,10 +139,12 @@ BaseWindow::BaseWindow(QWidget *parent)
 		pPS->CreateShader((void*)g_ps, sizeof(g_ps));
 #else
 	if (pVS)
-		pVS->CreateShader((void*)data, data_size);
+		pVS->CreateShader((void*)data, data_size,false);
 	if (pPS)
-		pPS->CreateShader((void*)g_ogl_fs, sizeof(g_ogl_fs));
+		pPS->CreateShader((void*)g_ogl_fs, sizeof(g_ogl_fs),false);
 #endif
+
+//	FlipViewVertexShader::m_ShaderMetaData.CreateShaderFromHL((uint8*)data, data_size);
 
 	delete[] data;
 

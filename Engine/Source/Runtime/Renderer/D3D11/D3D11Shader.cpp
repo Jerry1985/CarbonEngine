@@ -23,6 +23,7 @@ D3D11Shader::~D3D11Shader()
 
 D3D11VertexShader::D3D11VertexShader() :m_shader(0)
 {
+	m_ShaderType = RAL_SHADERTYPE_VERTEXSHADER;
 }
 D3D11VertexShader::~D3D11VertexShader()
 {
@@ -30,7 +31,7 @@ D3D11VertexShader::~D3D11VertexShader()
 }
 
 // create shader from byte code
-bool D3D11VertexShader::CreateShader(void* data, unsigned length)
+bool D3D11VertexShader::CreateShader(void* data, unsigned length, bool bytecode)
 {
 	SAFE_RELEASE(m_shader);
 
@@ -41,6 +42,7 @@ bool D3D11VertexShader::CreateShader(void* data, unsigned length)
 
 D3D11PixelShader::D3D11PixelShader() :m_shader(0)
 {
+	m_ShaderType = RAL_SHADERTYPE_PIXELSHADER;
 }
 D3D11PixelShader::~D3D11PixelShader()
 {
@@ -48,11 +50,18 @@ D3D11PixelShader::~D3D11PixelShader()
 }
 
 // create shader from byte code
-bool D3D11PixelShader::CreateShader(void* data, unsigned length)
+bool D3D11PixelShader::CreateShader(void* data, unsigned length, bool bytecode)
 {
 	SAFE_RELEASE(m_shader);
 
-	gD3D11Interface->m_D3D11Device->CreatePixelShader(data, length, 0, &m_shader);
+	if (bytecode)
+	{
+		// create shader from byte code, fast.
+		gD3D11Interface->m_D3D11Device->CreatePixelShader(data, length, 0, &m_shader);
+	}else
+	{
+		// compile hlsl, slow.
+	}
 
 	return m_shader != 0;
 }

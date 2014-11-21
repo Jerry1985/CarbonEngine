@@ -160,6 +160,13 @@ public:
 		return node;
 	}
 
+	// Clear is not responsible for releasing allocated memory
+	void Clear()
+	{
+		m_First = 0;
+		m_Last = 0;
+	}
+
 private:
 	CLinkedListNode<T>*	m_First = 0;
 	CLinkedListNode<T>*	m_Last = 0;

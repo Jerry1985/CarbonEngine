@@ -22,7 +22,7 @@ public:
 	virtual ~OGLVertexShader();
 
 	// create shader from byte code
-	bool CreateShader(void* data, unsigned length);
+	bool CreateShader(void* data, unsigned length, bool bytecode = true);
 };
 
 class OGLPixelShader : public OGLShader
@@ -32,5 +32,5 @@ public:
 	virtual ~OGLPixelShader();
 
 	// create shader from byte code
-	bool CreateShader(void* data, unsigned length);
+	bool CreateShader(void* data, unsigned length, bool bytecode = true);
 };
