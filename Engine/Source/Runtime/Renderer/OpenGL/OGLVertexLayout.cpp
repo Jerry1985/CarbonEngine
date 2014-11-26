@@ -5,12 +5,12 @@
 
 extern OGLInterface* gOGLInterface;
 
-RALVertexLayout* OGLInterface::CreateVertexLayout(const CArray<RALVertexElementDesc>& descs, const void* bcode, unsigned bcodelen)
+RALVertexLayout* OGLInterface::CreateVertexLayout(const CArray<RALVertexElementDesc>& descs, const CBitArray& bytecode)
 {
-	return new OGLVertexLayout(descs, bcode, bcodelen);
+	return new OGLVertexLayout(descs, bytecode);
 }
 
-OGLVertexLayout::OGLVertexLayout(const CArray<RALVertexElementDesc>& layouts, const void* bcode, unsigned bcodelen) :m_elements(0), m_elementCount(0)
+OGLVertexLayout::OGLVertexLayout(const CArray<RALVertexElementDesc>& layouts, const CBitArray& bytecode) : m_elements(0), m_elementCount(0)
 {
 	int count = layouts.GetCount();
 	if (count <= 0 || count >= MAX_VERTEX_ELEMENT_COUNT)

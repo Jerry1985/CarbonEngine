@@ -16,12 +16,10 @@
 #include "Container\CString.h"
 #include "Log\Log.h"
 #include "Shader\FlipViewShader.h"
-
-#include "../Temp/vs.h"
-#include "../Temp/ps.h"
+#include "Container\CBitArray.h"
 
 #define TWO_VIEWS 0
-#define D3D11_RAL 0
+#define D3D11_RAL 1
 
 const char g_ogl_vs[] = {
 	"#version 330 core\n"
@@ -48,10 +46,9 @@ RALVertexBuffer*		vb = 0;
 RALIndexBuffer*			ib = 0;
 RALVertexLayout*		vl = 0;
 
-RALShader*				pVS;
-RALShader*				pPS;
-RALShaderBoundState*	pShaders;
 RALView*				pView;
+
+ShaderBoundState		shaderstate;
 
 BaseWindow::BaseWindow(QWidget *parent)
 : QMainWindow(parent)
@@ -120,35 +117,42 @@ BaseWindow::BaseWindow(QWidget *parent)
 
 	CArray<RALVertexElementDesc> layoutDescs;
 	layoutDescs.Add(layoutDesc);
-	vl = RALCreateVertexLayout(layoutDescs, (void*)g_vs, sizeof(g_vs));
 
-	pVS = RALCreateVertexShader();
-	pPS = RALCreatePixelShader();
-
-	PlatformFileHandle* handle = PlatformFile::OpenFile(CString("E:\\CarbonEngine\\Engine\\Shader\\ogl_vs.shader"));
+	PlatformFileHandle* handle = PlatformFile::OpenFile(CString("E:\\CarbonEngine\\Engine\\Shader\\vs.shader"));
 	uint32	data_size = handle->Size();
 	char* data = new char[data_size+1];
 	data[data_size] = 0;
 	bool flag = handle->Read((uint8*)data, data_size);
 	delete handle;
 
-#if D3D11_RAL
-	if (pVS)
-		pVS->CreateShader((void*)g_vs, sizeof(g_vs));
-	if (pPS)
-		pPS->CreateShader((void*)g_ps, sizeof(g_ps));
-#else
-	if (pVS)
-		pVS->CreateShader((void*)data, data_size,false);
-	if (pPS)
-		pPS->CreateShader((void*)g_ogl_fs, sizeof(g_ogl_fs),false);
-#endif
-
-//	FlipViewVertexShader::m_ShaderMetaData.CreateShaderFromHL((uint8*)data, data_size);
+	CBitArray vs_bytecode;
+	RALCompileShader(data, data_size, RAL_SHADERTYPE_VERTEXSHADER, vs_bytecode);
 
 	delete[] data;
 
-	pShaders = RALCreateShaderBoundState(vl, pVS, pPS);
+	handle = PlatformFile::OpenFile(CString("E:\\CarbonEngine\\Engine\\Shader\\ps.shader"));
+	data_size = handle->Size();
+	data = new char[data_size + 1];
+	data[data_size] = 0;
+	flag = handle->Read((uint8*)data, data_size);
+	delete handle;
+
+	CBitArray ps_bytecode;
+	RALCompileShader(data, data_size, RAL_SHADERTYPE_PIXELSHADER, ps_bytecode);
+
+	delete[] data;
+
+#if !D3D11_RAL
+	FlipViewVertexShader::m_ShaderMetaData.CreateShaderFromHL((uint8*)data, data_size);
+	FlipViewPixelShader::m_ShaderMetaData.CreateShaderFromHL((uint8*)g_ogl_fs, sizeof(g_ogl_fs));
+#else
+	FlipViewVertexShader::m_ShaderMetaData.CreateShader(vs_bytecode);
+	FlipViewPixelShader::m_ShaderMetaData.CreateShader(ps_bytecode);
+#endif
+
+	vl = RALCreateVertexLayout(layoutDescs, vs_bytecode);
+
+	shaderstate.SetupGraphics(vl, new FlipViewVertexShader(), new FlipViewPixelShader());
 
 	// Setup the viewport
 	RALViewport vp(size().width(), size().height());
@@ -176,7 +180,7 @@ void BaseWindow::paintEvent(QPaintEvent *e)
 	RALBeginRender(pView);
 	RALClear(1, Color::BLACK, 1.0f);
 
-	RALSetShaderBoundState(pShaders);
+	shaderstate.Bind();
 
 	RALSetPrimitiveType(RAL_PRIMITIVE_TRIANGLELIST);
 	RALSetVertexBuffers(0, 1, vb);

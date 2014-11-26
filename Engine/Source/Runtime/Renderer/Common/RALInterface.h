@@ -2,9 +2,12 @@
 
 #include "Common\Math\Color.h"
 #include "RALDefine.h"
+#include "../Common/Platform/Platform.h"
 
 template< class T >
 class CArray;
+
+class CBitArray;
 
 struct RALViewport;
 struct RALVertexElementDesc;

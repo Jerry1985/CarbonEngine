@@ -6,7 +6,7 @@
 class OGLShaderBoundState : public RALShaderBoundState
 {
 public:
-	OGLShaderBoundState(RALVertexLayout* vl, RALShader* vs, RALShader* ps);
+	OGLShaderBoundState(const RALVertexLayout* vl, const RALShader* vs, const RALShader* ps);
 	~OGLShaderBoundState();
 
 private:

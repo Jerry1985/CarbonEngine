@@ -2,7 +2,7 @@
 #include "OGLInterface.h"
 #include "OGLShader.h"
 
-RALShaderBoundState* OGLInterface::CreateShaderBoundState(RALVertexLayout* vl, RALShader* vs, RALShader* ps)
+RALShaderBoundState* OGLInterface::CreateShaderBoundState(const RALVertexLayout* vl, const RALShader* vs, const RALShader* ps)
 {
 	return new OGLShaderBoundState(vl,vs,ps);
 }
@@ -16,11 +16,11 @@ void OGLInterface::SetShaderBoundState(const RALShaderBoundState* state)
 	_setVertexLayout(ogl_state->m_vl);
 }
 
-OGLShaderBoundState::OGLShaderBoundState(RALVertexLayout* vl, RALShader* vs, RALShader* ps):
+OGLShaderBoundState::OGLShaderBoundState(const RALVertexLayout* vl, const RALShader* vs, const RALShader* ps):
 RALShaderBoundState(vl,vs,ps)
 {
-	OGLShader* pVS = dynamic_cast<OGLShader*>(vs);
-	OGLShader* pFS = dynamic_cast<OGLShader*>(ps);
+	const OGLShader* pVS = dynamic_cast<const OGLShader*>(vs);
+	const OGLShader* pFS = dynamic_cast<const OGLShader*>(ps);
 
 	m_programId = glCreateProgram();
 

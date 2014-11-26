@@ -1,7 +1,7 @@
 #include "D3D11ShaderBoundState.h"
 #include "D3D11Interface.h"
 
-RALShaderBoundState* D3D11Interface::CreateShaderBoundState(RALVertexLayout* vl, RALShader* vs, RALShader* ps)
+RALShaderBoundState* D3D11Interface::CreateShaderBoundState(const RALVertexLayout* vl, const RALShader* vs, const RALShader* ps)
 {
 	return new D3D11ShaderBoundState(vl,vs,ps);
 }
@@ -15,7 +15,7 @@ void D3D11Interface::SetShaderBoundState(const RALShaderBoundState* state)
 	_setPixelShader(d3d11_state->m_ps);
 }
 
-D3D11ShaderBoundState::D3D11ShaderBoundState(RALVertexLayout* vl, RALShader* vs, RALShader* ps):
+D3D11ShaderBoundState::D3D11ShaderBoundState(const RALVertexLayout* vl, const RALShader* vs, const RALShader* ps):
 RALShaderBoundState(vl,vs,ps)
 {
 }

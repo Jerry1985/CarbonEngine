@@ -6,6 +6,7 @@
 #include "Renderer\Common\RALGlobalMethods.h"
 #include "Misc\Assertion.h"
 #include "ShaderManater.h"
+#include "Container\CBitArray.h"
 
 class Shader;
 
@@ -43,16 +44,10 @@ public:
 		return 0;
 	}
 
-	// create shader from high level language
-	void CreateShaderFromHL(const uint8* source, uint32 len)
-	{
-		_createShader(source, len, false);
-	}
-
 	// create shader from byte code (GL byte code is hardware and driver dependent. Shader cache needs to be flushed if either of them is changed.)
-	void CreateShaderFromBC(const uint8* bytecode, uint32 len)
+	void CreateShader(const CBitArray& bytecode)
 	{
-		_createShader(bytecode, len, true);
+		_createShader(bytecode);
 	}
 
 	RALShader*		m_Shader = 0;
@@ -64,7 +59,7 @@ public:
 	RAL_SHADERTYPE	m_ShaderType = RAL_SHADERTYPE_NONE;
 
 private:
-	FORCE_INLINE void _createShader(const uint8* code, uint32 len, bool bytecode)
+	FORCE_INLINE void _createShader(const CBitArray& bytecode)
 	{
 		CASSERT(!m_Shader);
 
@@ -81,9 +76,12 @@ private:
 			break;
 		}
 
-		m_Shader->CreateShader((void*)code, len, bytecode);
+		m_Shader->CreateShader(bytecode);
 	}
 };
 
-#define DECLARE_SHADER(Shader)				static ShaderMetaData m_ShaderMetaData;
+#define DECLARE_SHADER(Shader)				\
+	static ShaderMetaData m_ShaderMetaData; \
+	const RALShader* GetRALShader() const { return m_ShaderMetaData.m_Shader; }
+	
 #define DEFINE_SHADER(Shader, ShaderType)	ShaderMetaData Shader::m_ShaderMetaData(RAL_SHADERTYPE_##ShaderType);

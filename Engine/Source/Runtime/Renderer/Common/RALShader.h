@@ -3,6 +3,8 @@
 #include "RALResource.h"
 #include "RALDefine.h"
 
+class CBitArray;
+
 class RALShader : public RALResource
 {
 public:
@@ -11,7 +13,7 @@ public:
 
 	// create shader from byte code
 	// if "bytecode" is false, HLSL or GLSL will be parsed
-	virtual bool CreateShader(void* data, unsigned length, bool bytecode = true) = 0;
+	virtual bool CreateShader( const CBitArray& bytecode ) = 0;
 
 protected:
 	RAL_SHADERTYPE m_ShaderType;

@@ -1,6 +1,6 @@
 #include "RALShaderBoundState.h"
 
-RALShaderBoundState::RALShaderBoundState(RALVertexLayout* vl, RALShader* vs, RALShader* ps):
+RALShaderBoundState::RALShaderBoundState(const RALVertexLayout* vl, const RALShader* vs, const RALShader* ps):
 m_vs(vs), m_ps(ps), m_vl(vl)
 {
 }

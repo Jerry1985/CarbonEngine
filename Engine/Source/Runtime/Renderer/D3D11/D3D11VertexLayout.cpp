@@ -2,15 +2,16 @@
 #include "D3D11Interface.h"
 #include "D3D11Define.h"
 #include "Common\Container\CArray.h"
+#include "Container\CBitArray.h"
 
 extern D3D11Interface* gD3D11Interface;
 
-RALVertexLayout* D3D11Interface::CreateVertexLayout(const CArray<RALVertexElementDesc>& descs, const void* bcode, unsigned bcodelen)
+RALVertexLayout* D3D11Interface::CreateVertexLayout(const CArray<RALVertexElementDesc>& descs, const CBitArray& bytecode)
 {
-	return new D3D11VertexLayout(descs, bcode, bcodelen);
+	return new D3D11VertexLayout(descs, bytecode);
 }
 
-D3D11VertexLayout::D3D11VertexLayout(const CArray<RALVertexElementDesc>& layouts, const void* bcode, unsigned bcodelen) : m_inputLayout(0)
+D3D11VertexLayout::D3D11VertexLayout(const CArray<RALVertexElementDesc>& layouts, const CBitArray& bytecode) : m_inputLayout(0)
 {
 	int count = layouts.GetCount();
 	if (count == 0 || count >= MAX_VERTEX_ELEMENT_COUNT)
@@ -27,7 +28,7 @@ D3D11VertexLayout::D3D11VertexLayout(const CArray<RALVertexElementDesc>& layouts
 		descs[i].InstanceDataStepRate = 0;
 	}
 
-	gD3D11Interface->m_D3D11Device->CreateInputLayout(descs, count, bcode, bcodelen, &m_inputLayout);
+	gD3D11Interface->m_D3D11Device->CreateInputLayout(descs, count, bytecode.GetData(), bytecode.GetSize(), &m_inputLayout);
 
 	delete descs;
 }

@@ -4,6 +4,7 @@
 
 template<class T>
 class CArray;
+class CBitArray;
 
 struct RALVertexElementLayout;
 struct ID3D11InputLayout;
@@ -11,7 +12,7 @@ struct ID3D11InputLayout;
 class D3D11VertexLayout : public RALVertexLayout
 {
 public:
-	D3D11VertexLayout(const CArray<RALVertexElementDesc>& descs, const void* bcode, unsigned bcodelen);
+	D3D11VertexLayout(const CArray<RALVertexElementDesc>& descs, const CBitArray& bytecode);
 	~D3D11VertexLayout();
 
 	void Release();

@@ -4,6 +4,7 @@
 
 template<class T>
 class CArray;
+class CBitArray;
 
 struct RALVertexElementLayout;
 
@@ -19,7 +20,7 @@ struct OGLVertexElementLayout
 class OGLVertexLayout : public RALVertexLayout
 {
 public:
-	OGLVertexLayout(const CArray<RALVertexElementDesc>& layouts, const void* bcode, unsigned bcodelen);
+	OGLVertexLayout(const CArray<RALVertexElementDesc>& layouts, const CBitArray& bytecode);
 	~OGLVertexLayout();
 
 	void Release();

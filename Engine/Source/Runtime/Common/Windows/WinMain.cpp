@@ -32,28 +32,7 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 	BaseWindow p;
 	p.show();
 
-	CLinkedList<int>		list;
-	CLinkedListNode<int>	node[10];
-	for (int i = 0; i < 10; ++i)
-	{
-		node[i].m_Data = i;
-		list.Link(&node[i]);
-	}
-	node[3].UnLink();
-	node[5].UnLink();
-	node[0].UnLink();
-	node[9].UnLink();
-
-	list.Link(&node[9]);
-
-	CLinkedListIterator<int> it(list);
-	while (!it.IsEnd())
-		CARBON_LOG(LOG_NORMAL, LOG_GENERAL, STR("%d", *it++));
-
 	LogManager::DeleteSingleton();
-
-	// flip view shader
-	FlipViewVertexShader shader;
 
 	return a.exec();
 }

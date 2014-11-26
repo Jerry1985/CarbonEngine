@@ -1,5 +1,6 @@
 #include "D3D11Shader.h"
 #include "D3D11Interface.h"
+#include "Container\CBitArray.h"
 
 extern D3D11Interface* gD3D11Interface;
 
@@ -31,11 +32,10 @@ D3D11VertexShader::~D3D11VertexShader()
 }
 
 // create shader from byte code
-bool D3D11VertexShader::CreateShader(void* data, unsigned length, bool bytecode)
+bool D3D11VertexShader::CreateShader(const CBitArray& bytecode)
 {
 	SAFE_RELEASE(m_shader);
-
-	gD3D11Interface->m_D3D11Device->CreateVertexShader(data, length, 0, &m_shader);
+	gD3D11Interface->m_D3D11Device->CreateVertexShader(bytecode.GetData(), bytecode.GetSize(), 0, &m_shader);
 
 	return m_shader != 0;
 }
@@ -50,18 +50,10 @@ D3D11PixelShader::~D3D11PixelShader()
 }
 
 // create shader from byte code
-bool D3D11PixelShader::CreateShader(void* data, unsigned length, bool bytecode)
+bool D3D11PixelShader::CreateShader(const CBitArray& bytecode)
 {
 	SAFE_RELEASE(m_shader);
-
-	if (bytecode)
-	{
-		// create shader from byte code, fast.
-		gD3D11Interface->m_D3D11Device->CreatePixelShader(data, length, 0, &m_shader);
-	}else
-	{
-		// compile hlsl, slow.
-	}
+	gD3D11Interface->m_D3D11Device->CreatePixelShader(bytecode.GetData(), bytecode.GetSize(), 0, &m_shader);
 
 	return m_shader != 0;
 }

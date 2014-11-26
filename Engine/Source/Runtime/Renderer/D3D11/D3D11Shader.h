@@ -19,7 +19,7 @@ public:
 	virtual ~D3D11VertexShader();
 
 	// create shader from byte code
-	bool CreateShader(void* data, unsigned length, bool bytecode = true);
+	bool CreateShader(const CBitArray& bytecode);
 
 private:
 	ID3D11VertexShader*	m_shader;
@@ -34,7 +34,7 @@ public:
 	virtual ~D3D11PixelShader();
 
 	// create shader from byte code
-	bool CreateShader(void* data, unsigned length, bool bytecode = true);
+	bool CreateShader(const CBitArray& bytecode);
 
 private:
 	ID3D11PixelShader* m_shader;

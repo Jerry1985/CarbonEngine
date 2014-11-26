@@ -113,9 +113,9 @@ RAL_METHOD(
 RAL_METHOD(
 	RALVertexLayout*,
 	CreateVertexLayout,
-	(const CArray<RALVertexElementDesc>& descs, const void* bcode, unsigned bcodelen),
-	(const CArray<RALVertexElementDesc>& descs, const void* bcode, unsigned bcodelen),
-	(descs, bcode, bcodelen)
+	(const CArray<RALVertexElementDesc>& descs, const CBitArray& bytecode),
+	(const CArray<RALVertexElementDesc>& descs, const CBitArray& bytecode),
+	(descs, bytecode)
 )
 
 RAL_METHOD(
@@ -137,8 +137,8 @@ RAL_METHOD(
 RAL_METHOD(
 	RALShaderBoundState*,
 	CreateShaderBoundState,
-	(RALVertexLayout* vl,RALShader* vs, RALShader* ps),
-	(RALVertexLayout* vl,RALShader* vs, RALShader* ps),
+	(const RALVertexLayout* vl,const RALShader* vs, const RALShader* ps),
+	(const RALVertexLayout* vl,const RALShader* vs, const RALShader* ps),
 	(vl,vs,ps)
 )
 
@@ -148,4 +148,12 @@ RAL_METHOD(
 	(const RALShaderBoundState* state),
 	(const RALShaderBoundState* state),
 	(state)
+)
+
+RAL_METHOD(
+	bool,
+	CompileShader,
+	(const TCHAR* source, uint32 len, uint8 shaderType, CBitArray& bytecode),
+	(const TCHAR* source, uint32 len, uint8 shaderType, CBitArray& bytecode),
+	(source, len, shaderType, bytecode)
 )

@@ -8,12 +8,12 @@ class RALVertexLayout;
 class RALShaderBoundState : public RALResource
 {
 public:
-	RALShaderBoundState(RALVertexLayout* vl,RALShader* vs,RALShader* ps);
+	RALShaderBoundState(const RALVertexLayout* vl,const RALShader* vs,const RALShader* ps);
 	virtual ~RALShaderBoundState();
 
 protected:
-	RALShader*	m_vs;
-	RALShader*	m_ps;
+	const RALShader*	m_vs;
+	const RALShader*	m_ps;
 
-	RALVertexLayout*	m_vl;
+	const RALVertexLayout*	m_vl;
 };
