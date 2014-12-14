@@ -17,7 +17,7 @@ class RALVertexBuffer;
 class RALIndexBuffer;
 class RALShader;
 class RALVertexLayout;
-class RALShaderBoundState;
+class RALPipelineBoundState;
 
 // Rendering Abstraction Layer Interface
 class RALInterface

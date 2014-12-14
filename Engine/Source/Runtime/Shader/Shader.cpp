@@ -1,7 +1,7 @@
 #include "Shader.h"
 #include "Renderer\Common\RALShader.h"
 #include "Renderer\Common\RALVertexLayout.h"
-#include "Renderer\Common\RALShaderBoundState.h"
+#include "Renderer\Common\RALPipelineBoundState.h"
 
 Shader::Shader()
 {
@@ -34,7 +34,7 @@ void ShaderBoundState::SetupGraphics(RALVertexLayout* layout, Shader* vs, Shader
 	m_DomainShader = ds;
 	m_GeometryShader = gs;
 
-	m_ShaderBoundState = RALCreateShaderBoundState(m_VertexLayout, m_VertexShader->GetRALShader(), m_PixelShader->GetRALShader());
+	m_ShaderBoundState = RALCreatePipelineBoundState(m_VertexLayout, m_VertexShader->GetRALShader(), m_PixelShader->GetRALShader());
 }
 
 // Setup compute shader
@@ -54,7 +54,7 @@ void ShaderBoundState::Bind()
 
 	}
 	else if (m_ShaderBoundState)
-		RALSetShaderBoundState(m_ShaderBoundState);
+		RALSetPipelineBoundState(m_ShaderBoundState);
 }
 
 // release shader bound state

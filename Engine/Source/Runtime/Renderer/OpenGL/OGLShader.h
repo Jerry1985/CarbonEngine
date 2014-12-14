@@ -12,7 +12,7 @@ public:
 protected:
 	GLuint	m_shaderId;
 
-	friend class OGLShaderBoundState;
+	friend class OGLPipelineBoundState;
 };
 
 class OGLVertexShader : public OGLShader

@@ -1,23 +1,23 @@
-#include "OGLShaderBoundState.h"
+#include "OGLPipelineBoundState.h"
 #include "OGLInterface.h"
 #include "OGLShader.h"
 
-RALShaderBoundState* OGLInterface::CreateShaderBoundState(const RALVertexLayout* vl, const RALShader* vs, const RALShader* ps)
+RALPipelineBoundState* OGLInterface::CreatePipelineBoundState(const RALVertexLayout* vl, const RALShader* vs, const RALShader* ps)
 {
-	return new OGLShaderBoundState(vl,vs,ps);
+	return new OGLPipelineBoundState(vl, vs, ps);
 }
 
 // set shader bound state
-void OGLInterface::SetShaderBoundState(const RALShaderBoundState* state)
+void OGLInterface::SetPipelineBoundState(const RALPipelineBoundState* state)
 {
-	const OGLShaderBoundState* ogl_state = dynamic_cast<const OGLShaderBoundState*>(state);
+	const OGLPipelineBoundState* ogl_state = dynamic_cast<const OGLPipelineBoundState*>(state);
 	
 	glUseProgram(ogl_state->m_programId);
 	_setVertexLayout(ogl_state->m_vl);
 }
 
-OGLShaderBoundState::OGLShaderBoundState(const RALVertexLayout* vl, const RALShader* vs, const RALShader* ps):
-RALShaderBoundState(vl,vs,ps)
+OGLPipelineBoundState::OGLPipelineBoundState(const RALVertexLayout* vl, const RALShader* vs, const RALShader* ps) :
+RALPipelineBoundState(vl, vs, ps)
 {
 	const OGLShader* pVS = dynamic_cast<const OGLShader*>(vs);
 	const OGLShader* pFS = dynamic_cast<const OGLShader*>(ps);
@@ -40,7 +40,7 @@ RALShaderBoundState(vl,vs,ps)
 	}
 }
 
-OGLShaderBoundState::~OGLShaderBoundState()
+OGLPipelineBoundState::~OGLPipelineBoundState()
 {
 	glDeleteProgram(m_programId);
 }

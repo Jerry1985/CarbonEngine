@@ -5,11 +5,11 @@
 class RALShader;
 class RALVertexLayout;
 
-class RALShaderBoundState : public RALResource
+class RALPipelineBoundState : public RALResource
 {
 public:
-	RALShaderBoundState(const RALVertexLayout* vl,const RALShader* vs,const RALShader* ps);
-	virtual ~RALShaderBoundState();
+	RALPipelineBoundState(const RALVertexLayout* vl, const RALShader* vs, const RALShader* ps);
+	virtual ~RALPipelineBoundState();
 
 protected:
 	const RALShader*	m_vs;

@@ -135,8 +135,8 @@ RAL_METHOD(
 )
 
 RAL_METHOD(
-	RALShaderBoundState*,
-	CreateShaderBoundState,
+	RALPipelineBoundState*,
+	CreatePipelineBoundState,
 	(const RALVertexLayout* vl,const RALShader* vs, const RALShader* ps),
 	(const RALVertexLayout* vl,const RALShader* vs, const RALShader* ps),
 	(vl,vs,ps)
@@ -144,9 +144,9 @@ RAL_METHOD(
 
 RAL_METHOD(
 	void,
-	SetShaderBoundState,
-	(const RALShaderBoundState* state),
-	(const RALShaderBoundState* state),
+	SetPipelineBoundState,
+	(const RALPipelineBoundState* state),
+	(const RALPipelineBoundState* state),
 	(state)
 )
 

@@ -4,7 +4,7 @@
 
 class RALShader;
 class RALVertexLayout;
-class RALShaderBoundState;
+class RALPipelineBoundState;
 
 class Shader
 {
@@ -42,7 +42,7 @@ private:
 
 	Shader*	m_ComputeShader = 0;
 
-	RALShaderBoundState*	m_ShaderBoundState = 0;
+	RALPipelineBoundState*	m_ShaderBoundState = 0;
 
 	RALVertexLayout*	m_VertexLayout = 0;
 };
