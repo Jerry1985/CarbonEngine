@@ -80,6 +80,16 @@ public:
 		return m_Current->m_Data;
 	}
 
+	FORCE_INLINE T* operator ->()
+	{
+		return &m_Current->m_Data;
+	}
+
+	FORCE_INLINE const T* operator ->() const
+	{
+		return &m_Current->m_Data;
+	}
+
 	FORCE_INLINE const CLinkedListIterator& operator++()
 	{
 		if (!m_Current)
@@ -150,6 +160,30 @@ public:
 			m_First = node;
 			m_Last = node;
 		}else
+		{
+			node->m_Previous = m_Last;
+			m_Last->m_Next = node;
+
+			m_Last = node;
+		}
+
+		return node;
+	}
+	
+	// add a new linked list node
+	FORCE_INLINE CLinkedListNode<T>*	Link(T nodeData)
+	{
+		CLinkedListNode<T>* node = new CLinkedListNode<T>();
+		node->m_Data = nodeData;
+
+		node->m_List = this;
+
+		if (m_First == 0 && m_Last == 0)
+		{
+			m_First = node;
+			m_Last = node;
+		}
+		else
 		{
 			node->m_Previous = m_Last;
 			m_Last->m_Next = node;

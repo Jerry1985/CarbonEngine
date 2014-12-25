@@ -51,7 +51,7 @@ bool OGLVertexShader::CreateShader(const CBitArray& bytecode)
 	if (Result != GL_TRUE && InfoLogLength > 0){
 		char* log = new char[InfoLogLength + 1];
 		glGetShaderInfoLog(m_shaderId, InfoLogLength, NULL, log);
-		CARBON_LOG(LOG_WARNING, LOG_RENDERER, log);
+		// to be modified CARBON_LOG(LOG_WARNING, LOG_RENDERER, log);
 		delete[] log;
 
 		return false;
@@ -87,7 +87,7 @@ bool OGLPixelShader::CreateShader(const CBitArray& bytecode)
 	if (Result != GL_TRUE && InfoLogLength > 0){
 		char* log = new char[InfoLogLength + 1];
 		glGetShaderInfoLog(m_shaderId, InfoLogLength, NULL, log);
-		CARBON_LOG(LOG_WARNING, LOG_RENDERER, log);
+		// to be modified CARBON_LOG(LOG_WARNING, LOG_RENDERER, log);
 		delete[] log;
 
 		return false;

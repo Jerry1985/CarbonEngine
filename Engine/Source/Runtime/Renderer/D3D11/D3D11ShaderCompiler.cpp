@@ -3,7 +3,7 @@
 #include "Container\CBitArray.h"
 #include "Common\Log\Log.h"
 
-bool D3D11Interface::CompileShader(const TCHAR* source, uint32 len, uint8 shaderType, CBitArray& bytecode)
+bool D3D11Interface::CompileShader(const uint8* source, uint32 len, uint8 shaderType, CBitArray& bytecode)
 {
 	static const char* shader_types[] =
 	{
@@ -26,7 +26,7 @@ bool D3D11Interface::CompileShader(const TCHAR* source, uint32 len, uint8 shader
 	{
 		if (errorBlob)
 		{
-			CARBON_LOG(LOG_WARNING, LOG_RENDERER, (char*)errorBlob->GetBufferPointer());
+			// to be modified CARBON_LOG(LOG_WARNING, LOG_RENDERER, (char*)errorBlob->GetBufferPointer());
 			errorBlob->Release();
 		}
 

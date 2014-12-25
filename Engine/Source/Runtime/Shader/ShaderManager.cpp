@@ -1,4 +1,4 @@
-#include "ShaderManater.h"
+#include "ShaderManager.h"
 #include "ShaderMetaData.h"
 
 DEFINE_SINGLETON(ShaderManager)

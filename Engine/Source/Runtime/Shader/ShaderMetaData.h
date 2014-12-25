@@ -5,10 +5,16 @@
 #include "Renderer\Common\RALShader.h"
 #include "Renderer\Common\RALGlobalMethods.h"
 #include "Misc\Assertion.h"
-#include "ShaderManater.h"
+#include "ShaderManager.h"
 #include "Container\CBitArray.h"
 
 class Shader;
+
+struct ShaderKey
+{
+	uint32	data0 = 0;
+	uint32	data1 = 0;
+};
 
 class ShaderMetaData
 {
@@ -52,11 +58,14 @@ public:
 
 	RALShader*		m_Shader = 0;
 
-	const TCHAR*	m_FileName = 0;
 	const TCHAR*	m_ShaderName = 0;
+
+	const TCHAR*	m_FileName = 0;
 	const TCHAR*	m_ShaderEntry = 0;
 
 	RAL_SHADERTYPE	m_ShaderType = RAL_SHADERTYPE_NONE;
+
+	ShaderKey		m_ShaderKey;
 
 private:
 	FORCE_INLINE void _createShader(const CBitArray& bytecode)

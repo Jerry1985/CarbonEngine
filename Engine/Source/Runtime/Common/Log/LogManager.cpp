@@ -76,7 +76,7 @@ uint32 LogManager::GetLogFilter() const
 
 CString	LogManager::_formatLog(uint32 type, uint32 catagory, const TCHAR* message)
 {
-	return STR("[%s]\t[%s]\t%s\r\n", (const TCHAR*)_formatLevel(type), (const TCHAR*)_formatCatagory(catagory), message);
+	return STR(S("[%s]\t[%s]\t%s\r\n"), (const TCHAR*)_formatLevel(type), (const TCHAR*)_formatCatagory(catagory), message);
 }
 
 const CString&	LogManager::_formatLevel(uint32 level)

@@ -7,6 +7,7 @@ set(CMAKE_SUPPRESS_REGENERATION TRUE)
 
 include_directories( "${Carbon_SOURCE_DIR}/Source/Runtime/Common" )
 include_directories( "${Carbon_SOURCE_DIR}/Source/Runtime/" )
+include_directories( "${Carbon_SOURCE_DIR}/Source" )
 include_directories( "${Carbon_SOURCE_DIR}/Source/UI/Base/GeneratedFiles")
 include_directories( "$ENV{DXSDK_DIR}")
 include_directories( "$ENV{QTDIR}/include")

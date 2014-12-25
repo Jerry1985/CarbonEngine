@@ -122,13 +122,19 @@ public:
 	{
 		Clone(array);
 	}
+	CArray(int count, bool allocateAll = false)
+	{
+		CASSERT(count >= 0);
+
+		Allocate(count, allocateAll);
+	}
 	virtual ~CArray()
 	{
 		Release();
 	}
 
 	// Allocate data
-	FORCE_INLINE void	Allocate(int count)
+	FORCE_INLINE void	Allocate(int count, bool allocateAll = false)
 	{
 		CASSERT(count > 0);
 
@@ -139,9 +145,13 @@ public:
 		m_data = (T*)::operator new(m_elementSize*count);
 		memset(m_data, 0, m_elementSize*count);
 
+		if (allocateAll)
+			for (int i = 0; i < count; ++i)
+				new (&m_data[i]) T();
+
 		// update information
 		m_totalCount = count;
-		m_currentCount = 0;
+		m_currentCount = allocateAll ? count : 0;
 	}
 
 	// Safe Allocate, the original data won't be lost
@@ -339,6 +349,13 @@ public:
 
 	// [] operator
 	FORCE_INLINE T const & __cdecl operator[](int index) const
+	{
+		CASSERT(index < m_currentCount);
+
+		return m_data[index];
+	}
+	// [] operator
+	FORCE_INLINE T & __cdecl operator[](int index)
 	{
 		CASSERT(index < m_currentCount);
 

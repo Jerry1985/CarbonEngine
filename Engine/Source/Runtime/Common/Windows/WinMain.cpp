@@ -4,16 +4,7 @@
 #include <windows.h>
 #include <QtWidgets/QApplication>
 #include "../UI/Base/basewindow.h"
-
-
-// to be deleted
-#include "Container\CString.h"
-#include "Container\CArray.h"
-#include "Platform\PlatformFile.h"
-#include "Utility\PtrProxy.h"
-#include "Log\Log.h"
-#include "Container\CLinkedList.h"
-#include "Shader\FlipViewShader.h"
+#include "Common\Log\Log.h"
 
 int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,

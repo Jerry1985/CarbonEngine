@@ -204,7 +204,8 @@ public:
 
 		va_start(args, format);
 		TCHAR buffer[4096];
-		vsprintf_s(buffer, 4096, format, args);
+		//vsprintf_s(buffer, 4096, format, args);
+		PlatformString::Format(buffer, 4096, format, args);
 		va_end(args);
 
 		FromString(buffer);
@@ -241,7 +242,7 @@ FORCE_INLINE CString STR(const TCHAR* format, ...)
 
 	va_start(args, format);
 	TCHAR buffer[4096];
-	vsprintf_s(buffer, 4096, format, args);
+	PlatformString::Format(buffer, 4096, format, args);
 	va_end(args);
 
 	return CString(buffer);

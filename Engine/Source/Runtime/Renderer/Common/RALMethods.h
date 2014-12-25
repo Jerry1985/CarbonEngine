@@ -153,7 +153,7 @@ RAL_METHOD(
 RAL_METHOD(
 	bool,
 	CompileShader,
-	(const TCHAR* source, uint32 len, uint8 shaderType, CBitArray& bytecode),
-	(const TCHAR* source, uint32 len, uint8 shaderType, CBitArray& bytecode),
+	(const uint8* source, uint32 len, uint8 shaderType, CBitArray& bytecode),
+	(const uint8* source, uint32 len, uint8 shaderType, CBitArray& bytecode),
 	(source, len, shaderType, bytecode)
 )
