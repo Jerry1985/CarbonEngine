@@ -11,6 +11,10 @@ public:
 	{
 		_addStringEnd();
 	}
+	CString(TCHAR text[])
+	{
+		FromString(text);
+	}
 	CString(const TCHAR* text)
 	{
 		FromString(text);
@@ -231,7 +235,9 @@ private:
 	// add end
 	FORCE_INLINE void	_addStringEnd()
 	{
-		if(m_data.GetData()[m_data.GetCount() - 1] != 0)
+		if (m_data.GetCount() == 0)
+			m_data.Add(0);
+		else if(m_data.GetData()[m_data.GetCount() - 1] != 0)
 			m_data.Add(0);
 	}
 };

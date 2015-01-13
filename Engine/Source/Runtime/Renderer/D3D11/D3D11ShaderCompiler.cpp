@@ -26,7 +26,8 @@ bool D3D11Interface::CompileShader(const uint8* source, uint32 len, uint8 shader
 	{
 		if (errorBlob)
 		{
-			// to be modified CARBON_LOG(LOG_WARNING, LOG_RENDERER, (char*)errorBlob->GetBufferPointer());
+			CARBON_LOG(LOG_WARNING, LOG_RENDERER, (char*)errorBlob->GetBufferPointer());
+
 			errorBlob->Release();
 		}
 

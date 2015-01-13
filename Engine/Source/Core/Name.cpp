@@ -19,7 +19,7 @@ bool NameItem::IsEqual(const TCHAR* name)
 Name::Name()
 {
 }
-Name::Name(TCHAR* name)
+Name::Name(const TCHAR* name)
 {
 	setup(name);
 }

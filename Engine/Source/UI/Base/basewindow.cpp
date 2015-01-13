@@ -17,6 +17,7 @@
 #include "Log\Log.h"
 #include "Shader\FlipViewShader.h"
 #include "Container\CBitArray.h"
+#include "Shader\GlobalShaders.h"
 
 #define TWO_VIEWS 0
 #define D3D11_RAL 1
@@ -50,6 +51,8 @@ RALView*				pView;
 
 ShaderBoundState		shaderstate;
 
+extern RAL_RENDERER	gRendererType;
+
 BaseWindow::BaseWindow(QWidget *parent)
 : QMainWindow(parent)
 {
@@ -63,11 +66,11 @@ BaseWindow::BaseWindow(QWidget *parent)
 	timer->start(20);
 
 	// create D3D11RAL
-#if D3D11_RAL
-	RALCreateInterface(RAL_RENDERER_D3D11);
-#else
-	RALCreateInterface(RAL_RENDERER_OPENGL);
-#endif
+	gRendererType = RAL_RENDERER_D3D11;	 
+	RALCreateInterface(gRendererType);
+
+	// Load global shaders
+	LoadGlobalShaders();
 
 	pView = RALCreateView((void*)winId(), size().width(), size().height(), false, RAL_FORMAT_R8G8B8A8_UNORM);
 
@@ -118,7 +121,7 @@ BaseWindow::BaseWindow(QWidget *parent)
 	CArray<RALVertexElementDesc> layoutDescs;
 	layoutDescs.Add(layoutDesc);
 
-	PlatformFileHandle* handle = PlatformFile::OpenFile(CString(S("E:\\CarbonEngine\\Engine\\Shader\\vs.shader")));
+	PlatformFileHandle* handle = PlatformFile::OpenFile(S("E:\\CarbonEngine\\Engine\\Shader\\OpenGL\\vs.shader"));
 	uint32	data_size = handle->Size();
 	char* data = new char[data_size+1];
 	data[data_size] = 0;
@@ -130,7 +133,7 @@ BaseWindow::BaseWindow(QWidget *parent)
 
 	delete[] data;
 
-	handle = PlatformFile::OpenFile(CString(S("E:\\CarbonEngine\\Engine\\Shader\\ps.shader")));
+	handle = PlatformFile::OpenFile(S("E:\\CarbonEngine\\Engine\\Shader\\OpenGL\\ps.shader"));
 	data_size = handle->Size();
 	data = new char[data_size + 1];
 	data[data_size] = 0;

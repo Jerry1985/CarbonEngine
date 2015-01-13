@@ -41,7 +41,8 @@ public:
 
 	void		AddLogContext(LogContext* context);
 
-	void		AddLog(uint32 type, uint32 catagory, const TCHAR* message);
+	void		AddLog(uint32 type, uint32 catagory, CPCHAR message);
+	void		AddLog(uint32 type, uint32 catagory, CPWCHAR message);
 
 private:
 	bool			m_LogEnabled = true;
@@ -54,4 +55,5 @@ private:
 	const CString&	_formatCatagory(uint32 level);
 	CString			_formatLog(uint32 type, uint32 catagory, const TCHAR* message);
 	void			_releaseLogContexts();
+	void			_addLog(uint32 type, uint32 catagory, const TCHAR* message);
 };

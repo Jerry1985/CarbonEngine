@@ -11,11 +11,32 @@ LogManager::~LogManager()
 	_releaseLogContexts();
 }
 
-void LogManager::AddLog(uint32 type, uint32 catagory, const TCHAR* message)
+void LogManager::AddLog(uint32 type, uint32 catagory, CPCHAR message)
 {
 	if (!(m_LogFilter&catagory) || type < m_LogMinLevel)
 		return;
 
+	TCHAR	desc[4096];
+	PlatformString::StringConvert(message, desc);
+
+	// add log
+	_addLog(type, catagory, desc);
+}
+
+void LogManager::AddLog(uint32 type, uint32 catagory, CPWCHAR message)
+{
+	if (!(m_LogFilter&catagory) || type < m_LogMinLevel)
+		return;
+
+	TCHAR	desc[4096];
+	PlatformString::StringConvert(message, desc);
+
+	// add log
+	_addLog(type, catagory, desc);
+}
+
+void LogManager::_addLog(uint32 type, uint32 catagory, const TCHAR* message)
+{
 	CString formated_log = _formatLog(type, catagory, message);
 
 	CArrayIterator<LogContext*> it(m_Contexts);

@@ -27,7 +27,7 @@ class Name
 public:
 	// constructor
 	Name();
-	Name(TCHAR* name);
+	Name(const TCHAR* name);
 	Name(const CString& name);
 
 	// = operator

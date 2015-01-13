@@ -69,4 +69,37 @@ namespace PlatformString
 	{
 		return wcscmp(src, dst);
 	}
+
+	FORCE_INLINE PCHAR	MultiByteFromWideChar(CPWCHAR src, PCHAR dst)
+	{
+		int chars_num = WideCharToMultiByte(CP_UTF8, 0, src, -1, 0, 0, 0, 0);
+		WideCharToMultiByte(CP_UTF8, 0, src, -1, dst, chars_num, 0, 0);
+
+		return dst;
+	}
+	FORCE_INLINE CPWCHAR	WideCharFromMultiByte(CPCHAR src, PWCHAR dst)
+	{
+		int wchars_num = MultiByteToWideChar(CP_UTF8, 0, src, -1, 0, 0);
+		MultiByteToWideChar(CP_UTF8, 0, src, -1, dst, wchars_num);
+
+		return dst;
+	}
+	FORCE_INLINE const TCHAR*	StringConvert(CPWCHAR src, TCHAR* dst)
+	{
+		#ifdef UNICODE
+			Strcpy(dst, -1, src);
+			return src;
+		#else
+			return MultiByteFromWideChar(src, dst);
+		#endif
+	}
+	FORCE_INLINE const TCHAR*	StringConvert(CPCHAR src, TCHAR* dst)
+	{
+		#ifdef UNICODE
+			return WideCharFromMultiByte(src,dst);
+		#else
+			Strcpy(dst, -1, src);
+			return dst;
+		#endif
+	}
 }

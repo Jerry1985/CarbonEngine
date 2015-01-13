@@ -7,41 +7,31 @@
 #include "Misc\Assertion.h"
 #include "ShaderManager.h"
 #include "Container\CBitArray.h"
+#include "Core\Name.h"
 
 class Shader;
 
 struct ShaderKey
 {
-	uint32	data0 = 0;
-	uint32	data1 = 0;
+	Name			fileName;
+	Name			entryName;
+	RAL_SHADERTYPE	shaderType;
+
+	ShaderKey(const TCHAR* filename, const TCHAR* entryname, RAL_SHADERTYPE shadertype) : fileName(filename), entryName(entryname), shaderType(shadertype)
+	{
+	}
 };
 
 class ShaderMetaData
 {
 public:
-	ShaderMetaData(RAL_SHADERTYPE type) :m_ShaderType(type)
+	ShaderMetaData(RAL_SHADERTYPE type, const TCHAR* shaderName, const TCHAR* fileName, const TCHAR* entryName) :m_ShaderName(shaderName), m_ShaderKey(fileName, entryName, type)
 	{
 		ShaderManager::GetSingleton().AddShaderMetaData(this);
 	}
 	~ShaderMetaData()
 	{
 		SAFE_DELETE(m_Shader);
-	}
-
-	// setup basic data
-	void	SetFileName(const TCHAR* filename)
-	{
-		m_FileName = filename;
-	}
-	// set shader name
-	void	SetShaderName(const TCHAR* shadername)
-	{
-		m_ShaderName = shadername;
-	}
-	// set shader entry name
-	void	SetShaderEntry(const TCHAR* shaderentry)
-	{
-		m_ShaderEntry = shaderentry;
 	}
 
 	// construct shader
@@ -56,23 +46,18 @@ public:
 		_createShader(bytecode);
 	}
 
-	RALShader*		m_Shader = 0;
+	RALShader*		m_Shader = 0;		// Compiled Shader of OGL or D3D
 
-	const TCHAR*	m_ShaderName = 0;
+	const TCHAR*	m_ShaderName = 0;	// Name of the shader
 
-	const TCHAR*	m_FileName = 0;
-	const TCHAR*	m_ShaderEntry = 0;
-
-	RAL_SHADERTYPE	m_ShaderType = RAL_SHADERTYPE_NONE;
-
-	ShaderKey		m_ShaderKey;
+	ShaderKey		m_ShaderKey;		// Shader key
 
 private:
 	FORCE_INLINE void _createShader(const CBitArray& bytecode)
 	{
 		CASSERT(!m_Shader);
 
-		switch (m_ShaderType)
+		switch (m_ShaderKey.shaderType)
 		{
 		case RAL_SHADERTYPE_VERTEXSHADER:
 			m_Shader = RALCreateVertexShader();
@@ -93,4 +78,4 @@ private:
 	static ShaderMetaData m_ShaderMetaData; \
 	const RALShader* GetRALShader() const { return m_ShaderMetaData.m_Shader; }
 	
-#define DEFINE_SHADER(Shader, ShaderType)	ShaderMetaData Shader::m_ShaderMetaData(RAL_SHADERTYPE_##ShaderType);
+#define DEFINE_SHADER(Shader, ShaderType, ShaderName, ShaderFile, ShaderEntry)	ShaderMetaData Shader::m_ShaderMetaData(RAL_SHADERTYPE_##ShaderType, ShaderName, ShaderFile, ShaderEntry);
