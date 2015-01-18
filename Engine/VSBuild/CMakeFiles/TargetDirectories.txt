@@ -1,0 +1,2 @@
+E:/CarbonEngine/Engine/VSBuild/CMakeFiles/ALL_BUILD.dir
+E:/CarbonEngine/Engine/VSBuild/CMakeFiles/Carbon.dir

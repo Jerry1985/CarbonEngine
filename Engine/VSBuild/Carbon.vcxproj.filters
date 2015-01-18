@@ -1,0 +1,471 @@
+﻿<?xml version="1.0" encoding="Windows-1252"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Core\Archive.cpp">
+      <Filter>Source\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Core\FileArchive.cpp">
+      <Filter>Source\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Core\GlobalParameters.cpp">
+      <Filter>Source\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Core\Name.cpp">
+      <Filter>Source\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Log\FileLogContext.cpp">
+      <Filter>Source\Runtime\Common\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Log\Log.cpp">
+      <Filter>Source\Runtime\Common\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Log\LogManager.cpp">
+      <Filter>Source\Runtime\Common\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Math\Color.cpp">
+      <Filter>Source\Runtime\Common\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Math\Matrix.cpp">
+      <Filter>Source\Runtime\Common\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Windows\WinFile.cpp">
+      <Filter>Source\Runtime\Common\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Windows\WinLogContext.cpp">
+      <Filter>Source\Runtime\Common\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Windows\WinMain.cpp">
+      <Filter>Source\Runtime\Common\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Windows\WinNames.cpp">
+      <Filter>Source\Runtime\Common\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RAL.cpp">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALBuffer.cpp">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALGlobalMethods.cpp">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALIndexBuffer.cpp">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALInterface.cpp">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALPipelineBoundState.cpp">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALRenderTarget.cpp">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALShader.cpp">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALVertexBuffer.cpp">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALVertexLayout.cpp">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALView.cpp">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALViewport.cpp">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\D3D11\D3D11Define.cpp">
+      <Filter>Source\Runtime\Renderer\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\D3D11\D3D11IndexBuffer.cpp">
+      <Filter>Source\Runtime\Renderer\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\D3D11\D3D11Interface.cpp">
+      <Filter>Source\Runtime\Renderer\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\D3D11\D3D11Methods.cpp">
+      <Filter>Source\Runtime\Renderer\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\D3D11\D3D11PipelineBoundState.cpp">
+      <Filter>Source\Runtime\Renderer\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\D3D11\D3D11RenderTarget.cpp">
+      <Filter>Source\Runtime\Renderer\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\D3D11\D3D11Shader.cpp">
+      <Filter>Source\Runtime\Renderer\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\D3D11\D3D11ShaderCompiler.cpp">
+      <Filter>Source\Runtime\Renderer\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\D3D11\D3D11VertexBuffer.cpp">
+      <Filter>Source\Runtime\Renderer\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\D3D11\D3D11VertexLayout.cpp">
+      <Filter>Source\Runtime\Renderer\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\D3D11\D3D11View.cpp">
+      <Filter>Source\Runtime\Renderer\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\OpenGL\OGLDefine.cpp">
+      <Filter>Source\Runtime\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\OpenGL\OGLIndexBuffer.cpp">
+      <Filter>Source\Runtime\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\OpenGL\OGLInterface.cpp">
+      <Filter>Source\Runtime\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\OpenGL\OGLMethods.cpp">
+      <Filter>Source\Runtime\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\OpenGL\OGLPipelineBoundState.cpp">
+      <Filter>Source\Runtime\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\OpenGL\OGLShader.cpp">
+      <Filter>Source\Runtime\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\OpenGL\OGLShaderCompiler.cpp">
+      <Filter>Source\Runtime\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\OpenGL\OGLVertexBuffer.cpp">
+      <Filter>Source\Runtime\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\OpenGL\OGLVertexLayout.cpp">
+      <Filter>Source\Runtime\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\OpenGL\OGLView.cpp">
+      <Filter>Source\Runtime\Renderer\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\OpenGL\PlatformOGL\WindowsOGL.cpp">
+      <Filter>Source\Runtime\Renderer\OpenGL\PlatformOGL</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Shader\FlipViewShader.cpp">
+      <Filter>Source\Runtime\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Shader\GlobalShaderCache.cpp">
+      <Filter>Source\Runtime\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Shader\GlobalShaders.cpp">
+      <Filter>Source\Runtime\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Shader\Shader.cpp">
+      <Filter>Source\Runtime\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\Runtime\Shader\ShaderManager.cpp">
+      <Filter>Source\Runtime\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\UI\Base\basewindow.cpp">
+      <Filter>Source\UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\UI\Base\GeneratedFiles\Debug\moc_basewindow.cpp">
+      <Filter>Source\UI\Base\GeneratedFiles\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\CarbonEngine\Engine\Source\UI\Base\GeneratedFiles\qrc_basewindow.cpp">
+      <Filter>Source\UI\Base\GeneratedFiles</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Core\Archive.h">
+      <Filter>Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Core\FileArchive.h">
+      <Filter>Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Core\Name.h">
+      <Filter>Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Container\CArray.h">
+      <Filter>Source\Runtime\Common\Container</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Container\CBitArray.h">
+      <Filter>Source\Runtime\Common\Container</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Container\CLinkedList.h">
+      <Filter>Source\Runtime\Common\Container</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Container\CString.h">
+      <Filter>Source\Runtime\Common\Container</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Log\FileLogContext.h">
+      <Filter>Source\Runtime\Common\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Log\Log.h">
+      <Filter>Source\Runtime\Common\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Log\LogContext.h">
+      <Filter>Source\Runtime\Common\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Log\LogManager.h">
+      <Filter>Source\Runtime\Common\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Math\Color.h">
+      <Filter>Source\Runtime\Common\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Math\Math.h">
+      <Filter>Source\Runtime\Common\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Math\Matrix.h">
+      <Filter>Source\Runtime\Common\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Math\Vector2.h">
+      <Filter>Source\Runtime\Common\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Math\Vector3.h">
+      <Filter>Source\Runtime\Common\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Math\Vector4.h">
+      <Filter>Source\Runtime\Common\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Math\VectorCommon.h">
+      <Filter>Source\Runtime\Common\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Misc\Assertion.h">
+      <Filter>Source\Runtime\Common\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Misc\Build.h">
+      <Filter>Source\Runtime\Common\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Platform\DataType.h">
+      <Filter>Source\Runtime\Common\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Platform\Platform.h">
+      <Filter>Source\Runtime\Common\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Platform\PlatformFile.h">
+      <Filter>Source\Runtime\Common\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Platform\PlatformFileNames.h">
+      <Filter>Source\Runtime\Common\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Platform\PlatformString.h">
+      <Filter>Source\Runtime\Common\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Utility\PtrProxy.h">
+      <Filter>Source\Runtime\Common\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Utility\Singleton.h">
+      <Filter>Source\Runtime\Common\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Utility\UtilityMacro.h">
+      <Filter>Source\Runtime\Common\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Windows\WinFile.h">
+      <Filter>Source\Runtime\Common\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Windows\WinLogContext.h">
+      <Filter>Source\Runtime\Common\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Windows\WinNames.h">
+      <Filter>Source\Runtime\Common\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Windows\WinPlatform.h">
+      <Filter>Source\Runtime\Common\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Common\Windows\WinString.h">
+      <Filter>Source\Runtime\Common\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RAL.h">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALBuffer.h">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALDefine.h">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALGlobalMethods.h">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALIndexBuffer.h">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALInterface.h">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALMethods.h">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALPipelineBoundState.h">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALRenderTarget.h">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALResource.h">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALShader.h">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALVertexBuffer.h">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALVertexLayout.h">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALView.h">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\Common\RALViewport.h">
+      <Filter>Source\Runtime\Renderer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\D3D11\D3D11Define.h">
+      <Filter>Source\Runtime\Renderer\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\D3D11\D3D11IndexBuffer.h">
+      <Filter>Source\Runtime\Renderer\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\D3D11\D3D11Interface.h">
+      <Filter>Source\Runtime\Renderer\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\D3D11\D3D11PipelineBoundState.h">
+      <Filter>Source\Runtime\Renderer\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\D3D11\D3D11RenderTarget.h">
+      <Filter>Source\Runtime\Renderer\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\D3D11\D3D11Shader.h">
+      <Filter>Source\Runtime\Renderer\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\D3D11\D3D11VertexBuffer.h">
+      <Filter>Source\Runtime\Renderer\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\D3D11\D3D11VertexLayout.h">
+      <Filter>Source\Runtime\Renderer\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\D3D11\D3D11View.h">
+      <Filter>Source\Runtime\Renderer\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\OpenGL\OGLDefine.h">
+      <Filter>Source\Runtime\Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\OpenGL\OGLIndexBuffer.h">
+      <Filter>Source\Runtime\Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\OpenGL\OGLInterface.h">
+      <Filter>Source\Runtime\Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\OpenGL\OGLPipelineBoundState.h">
+      <Filter>Source\Runtime\Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\OpenGL\OGLShader.h">
+      <Filter>Source\Runtime\Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\OpenGL\OGLVertexBuffer.h">
+      <Filter>Source\Runtime\Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\OpenGL\OGLVertexLayout.h">
+      <Filter>Source\Runtime\Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\OpenGL\OGLView.h">
+      <Filter>Source\Runtime\Renderer\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Renderer\OpenGL\PlatformOGL\PlatformOGL.h">
+      <Filter>Source\Runtime\Renderer\OpenGL\PlatformOGL</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Shader\FlipViewShader.h">
+      <Filter>Source\Runtime\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Shader\GlobalShaderCache.h">
+      <Filter>Source\Runtime\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Shader\GlobalShaders.h">
+      <Filter>Source\Runtime\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Shader\Shader.h">
+      <Filter>Source\Runtime\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Shader\ShaderManager.h">
+      <Filter>Source\Runtime\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\Runtime\Shader\ShaderMetaData.h">
+      <Filter>Source\Runtime\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\ThirdParty\Regal\Include\Regal.h">
+      <Filter>Source\ThirdParty\Regal\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\UI\Base\basewindow.h">
+      <Filter>Source\UI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\CarbonEngine\Engine\Source\UI\Base\GeneratedFiles\ui_basewindow.h">
+      <Filter>Source\UI\Base\GeneratedFiles</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source\UI\Base\GeneratedFiles\Debug">
+      <UniqueIdentifier>{0A440448-533D-4B81-AF57-FCEDB5BB19CA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\Base\GeneratedFiles">
+      <UniqueIdentifier>{D04D58E8-8333-4D92-9561-C185A84AC11C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\ThirdParty\Regal\Include">
+      <UniqueIdentifier>{95F229BA-9114-4A83-BDD9-324E42735882}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI\Base">
+      <UniqueIdentifier>{C6262E19-B150-4CF4-8A30-FD51B1E9DCF1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Runtime\Renderer\OpenGL\PlatformOGL">
+      <UniqueIdentifier>{25DC19F9-7FC9-459B-8ED0-20C6EC1CFF86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\ThirdParty\Regal">
+      <UniqueIdentifier>{8976C6A8-7AAA-4FAB-9147-FC715F89492B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core">
+      <UniqueIdentifier>{33A99408-1C45-4DA2-9509-D0C17942C0DE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Runtime">
+      <UniqueIdentifier>{97EFD327-9E2A-4D3E-92DA-B1F76FA67079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\ThirdParty">
+      <UniqueIdentifier>{FF72CC2D-A7A5-4B19-A58F-6353E106B116}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI">
+      <UniqueIdentifier>{E7B094C9-9ADF-4542-BFE3-2F79F0E52D79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{0172BCEF-1A2B-4F82-BC33-214BFAD35CBB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Runtime\Common">
+      <UniqueIdentifier>{EC5076A9-121D-4D97-BB6D-24D75291C060}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Runtime\Renderer">
+      <UniqueIdentifier>{EC6FDC14-6E92-4CA2-B8D8-2CAE9A504DEE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Runtime\Shader">
+      <UniqueIdentifier>{BF0798C0-143B-4275-BB1E-FDB65E5EAFCC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Runtime\Common\Container">
+      <UniqueIdentifier>{DCC07EB8-1898-447B-A105-AAD32ADA3269}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Runtime\Common\Log">
+      <UniqueIdentifier>{ED469B70-2478-49AE-B9BE-691421A64D88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Runtime\Common\Math">
+      <UniqueIdentifier>{98DC8891-A7C6-4775-8812-9FBC078F6828}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Runtime\Common\Misc">
+      <UniqueIdentifier>{DB2A3C3E-83FC-451C-BEC2-EA4BED7EDF2C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Runtime\Common\Platform">
+      <UniqueIdentifier>{CE815683-3CBF-4C8B-BFA7-08E7BD7EE5EE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Runtime\Common\Utility">
+      <UniqueIdentifier>{C51DD47E-7709-44A9-B8BC-80EFF0E2D3E0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Runtime\Common\Windows">
+      <UniqueIdentifier>{8C679B5F-BFFD-483B-B220-F71E50D4A659}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Runtime\Renderer\Common">
+      <UniqueIdentifier>{75712834-C74E-4543-9314-36A61BB69DDC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Runtime\Renderer\D3D11">
+      <UniqueIdentifier>{727A8203-44F6-48BC-8D83-53B1D1AA77CA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Runtime\Renderer\OpenGL">
+      <UniqueIdentifier>{5A3D90CD-AF28-41A7-BD1D-F38DA9BAA628}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
