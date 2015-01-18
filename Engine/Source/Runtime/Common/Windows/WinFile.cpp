@@ -2,7 +2,7 @@
 #include "Container\CString.h"
 #include <fileapi.h>
 
-WinFileHandle::WinFileHandle(HANDLE handle) : m_Handle(handle)
+WinFileHandle::WinFileHandle(HANDLE handle, const TCHAR* filename) : m_Handle(handle), m_Name(filename)
 {
 	CASSERT(_isValid());
 
@@ -41,26 +41,32 @@ bool WinFileHandle::Read(uint8* data, int32 sizeToRead)
 }
 
 // Seek
-uint32	WinFileHandle::Seek(uint32 pos)
+int32	WinFileHandle::Seek(uint32 pos)
 {
 	return _seek(pos, FILE_BEGIN);
 }
 
-uint32	WinFileHandle::SeekEnd(uint32 pos)
+int32	WinFileHandle::SeekEnd(uint32 pos)
 {
 	return _seek(pos, FILE_END);
 }
 
 // Tell the current position
-uint32	WinFileHandle::Tell() const
+int32	WinFileHandle::Tell() const
 {
 	return _seek(0, FILE_CURRENT);
 }
 
 // Total size of the file
-uint32	WinFileHandle::Size() const
+int32	WinFileHandle::Size() const
 {
 	return m_Size;
+}
+
+// Get Filename
+const CString& WinFileHandle::GetFileName() const
+{
+	return m_Name;
 }
 
 // Write data
@@ -114,7 +120,7 @@ WinFileHandle*	WinFile::OpenFile(const CString& filename, bool read)
 	HANDLE handle = (HANDLE)CreateFile(filename, readFlag, FILE_SHARE_READ, NULL, openFlag, NULL, NULL);
 	if (handle == INVALID_HANDLE_VALUE)
 		return 0;
-	return new WinFileHandle(handle);
+	return new WinFileHandle(handle,filename);
 }
 
 // check if the directory exist

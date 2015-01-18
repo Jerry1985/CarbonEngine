@@ -3,12 +3,12 @@
 #include "Platform\PlatformString.h"
 #include "Container\CArray.h"
 #include "Container\CLinkedList.h"
+#include "Core\Archive.h"
+#include "Container\CString.h"
 
 #define	NAME_ARRAY_COUNT		8192
 #define	NAME_ARRAY_COUNT_MASK	NAME_ARRAY_COUNT-1
 #define	NAME_MAX_SIZE		128
-
-class CString;
 
 struct NameItem
 {
@@ -50,6 +50,23 @@ public:
 	// != operator
 	FORCE_INLINE bool operator != (const Name& name){
 		return name.m_HashIndex != m_HashIndex;
+	}
+
+	friend FORCE_INLINE
+	Archive& operator &(Archive& ar, Name& ba)
+	{
+		if (ar.IsLoading())
+		{
+			CString name;
+			ar & name;
+
+			ba.setup(name);
+		}
+		else
+		{
+			ar & ba.ToString();
+		}
+		return ar;
 	}
 
 private:

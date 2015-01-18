@@ -3,6 +3,7 @@
 #include "Platform\PlatformString.h"
 #include "Container\CArray.h"
 #include "Math\Math.h"
+#include "Core\Archive.h"
 
 class CString
 {
@@ -228,6 +229,12 @@ public:
 			return ret;
 	}
 	friend CString STR(const TCHAR* format, ...);
+
+	friend FORCE_INLINE 
+	Archive& operator &(Archive& ar, CString& str)
+	{
+		return ar & str.m_data;
+	}
 
 private:
 	CArray<TCHAR>	m_data;

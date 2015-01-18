@@ -9,23 +9,24 @@ public:
 	PtrProxy( T* p );
 	~PtrProxy();
 
-	operator T* ()
+	FORCE_INLINE operator T* ()
 	{
 		return m_Ptr;
 	}
 
-	T* operator ->()
+	FORCE_INLINE T* operator ->()
 	{
 		return m_Ptr;
 	}
 
-	const PtrProxy& operator = (const PtrProxy& proxy)
+	FORCE_INLINE const PtrProxy& operator = (const PtrProxy& proxy)
 	{
 		// this function should never be invoked
 		CASSERT(false);
+		return *this;
 	}
 
-	void Release()
+	FORCE_INLINE void Release()
 	{
 		SAFE_DELETE(m_Ptr);
 	}

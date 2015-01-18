@@ -1,13 +1,13 @@
 #pragma once
 
-class CString;
+#include "Common\Container\CString.h"
 
 #define	FILECHUNK_SIZE	1024*1024*4
 
 class WinFileHandle
 {
 public:
-	WinFileHandle(HANDLE handle);
+	WinFileHandle(HANDLE handle , const TCHAR* filename );
 	~WinFileHandle();
 
 	// Read data
@@ -17,19 +17,24 @@ public:
 	bool	Write(uint8* data, int32 size);
 
 	// Total size of the file
-	uint32	Size() const;
+	int32	Size() const;
 
 	// Seek
-	uint32	Seek(uint32 pos);
-	uint32	SeekEnd(uint32 pos);
+	int32	Seek(uint32 pos);
+	int32	SeekEnd(uint32 pos);
 
 	// Tell the current position
-	uint32	Tell() const;
+	int32	Tell() const;
+
+	// Get Filename
+	const CString& GetFileName() const;
 
 private:
 	HANDLE	m_Handle;
 
 	uint32	m_Size;
+
+	CString	m_Name;
 
 	// check if the handle is a valid one
 	FORCE_INLINE bool	_isValid()

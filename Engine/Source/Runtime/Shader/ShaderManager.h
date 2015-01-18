@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Utility\Singleton.h"
-#include "Container\CLinkedList.h"
+#include "Container\CArray.h"
 
 class ShaderMetaData;
 
@@ -15,10 +15,10 @@ public:
 	void	AddShaderMetaData(ShaderMetaData* metadata);
 
 	// Get Shader metadata list
-	CLinkedList<ShaderMetaData*>& GetShaderMetaData();
+	CArray<ShaderMetaData*>& GetShaderMetaData();
 
 private:
-	CLinkedList<ShaderMetaData*>	m_ShaderMetaData;
+	CArray<ShaderMetaData*>	m_ShaderMetaData;
 
 	// clear shader metadata
 	void	_clearShaderMetaData();

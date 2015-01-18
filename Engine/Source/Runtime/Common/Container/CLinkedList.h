@@ -131,6 +131,11 @@ public:
 		return !m_Current;
 	}
 
+	FORCE_INLINE CLinkedListNode<T>& operator = (CLinkedList<T>* list)
+	{
+		m_Current = list->m_First;
+	}
+
 private:
 	CLinkedListNode<T>*	m_Current;
 };

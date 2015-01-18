@@ -22,25 +22,6 @@
 #define TWO_VIEWS 0
 #define D3D11_RAL 1
 
-const char g_ogl_vs[] = {
-	"#version 330 core\n"
-	"layout(location = 0) in vec3 vertexPosition_modelspace;\n"
-	"void main(){\n"
-	"gl_Position.xyz = vertexPosition_modelspace;\n"
-	"gl_Position.y *= -1.0;\n"
-	"gl_Position.w = 1.0;\n"
-	"}"
-};
-
-const char g_ogl_fs[] = {
-	"#version 330 core\n"
-	"out vec4 color;\n"
-	"void main()\n"
-	"{\n"
-	"color = vec4(1.0 , 1.0 , 1.0 , 1.0);\n"
-	"}"
-};
-
 RALRenderTarget* m_rt;
 
 RALVertexBuffer*		vb = 0;
@@ -66,7 +47,7 @@ BaseWindow::BaseWindow(QWidget *parent)
 	timer->start(20);
 
 	// create D3D11RAL
-	gRendererType = RAL_RENDERER_D3D11;	 
+	gRendererType = RAL_RENDERER_OPENGL;	 
 	RALCreateInterface(gRendererType);
 
 	// Load global shaders

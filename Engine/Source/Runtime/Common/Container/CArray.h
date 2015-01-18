@@ -3,6 +3,7 @@
 #include "Platform\Platform.h"
 #include "Misc\Assertion.h"
 #include "Math\Math.h"
+#include "Core\Archive.h"
 
 #define	ARRAY_BASECHUNK_SIZE		256
 
@@ -436,6 +437,29 @@ public:
 				return false;
 		}
 		return true;
+	}
+
+	friend FORCE_INLINE
+	Archive& operator &(Archive& ar, CArray<T>& arr)
+	{
+		if (ar.IsLoading())
+		{
+			ar & arr.m_totalCount;
+			arr.Allocate(arr.m_totalCount);
+
+			ar & arr.m_currentCount;
+			for (int i = 0; i < arr.m_currentCount; ++i)
+				ar & arr.m_data[i];
+		}
+		else
+		{
+			ar & arr.m_totalCount;
+			ar & arr.m_currentCount;
+
+			for (int i = 0; i < arr.m_currentCount; ++i)
+				ar & arr.m_data[i];
+		}
+		return ar;
 	}
 
 private:

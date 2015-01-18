@@ -13,7 +13,7 @@ ShaderManager::~ShaderManager()
 }
 
 // Get Shader metadata list
-CLinkedList<ShaderMetaData*>& ShaderManager::GetShaderMetaData()
+CArray<ShaderMetaData*>& ShaderManager::GetShaderMetaData()
 {
 	return m_ShaderMetaData;
 }
@@ -22,15 +22,12 @@ CLinkedList<ShaderMetaData*>& ShaderManager::GetShaderMetaData()
 void ShaderManager::AddShaderMetaData(ShaderMetaData* metadata)
 {
 	CASSERT(metadata);
-	m_ShaderMetaData.Link(new CLinkedListNode<ShaderMetaData*>(metadata));
+	m_ShaderMetaData.Add(metadata);
 }
 
 void ShaderManager::_clearShaderMetaData()
 {
-	CLinkedListIterator<ShaderMetaData*> it(m_ShaderMetaData);
+	CArrayIterator<ShaderMetaData*> it(m_ShaderMetaData);
 	while (!it.IsEnd())
 		SAFE_DELETE(*it++);
-
-	// clear the list
-	m_ShaderMetaData.Clear();
 }

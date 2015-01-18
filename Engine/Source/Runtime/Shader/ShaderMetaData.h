@@ -8,26 +8,41 @@
 #include "ShaderManager.h"
 #include "Container\CBitArray.h"
 #include "Core\Name.h"
+#include "Core\Archive.h"
 
 class Shader;
 
 struct ShaderKey
 {
+	Name			shaderName;
 	Name			fileName;
 	Name			entryName;
 	RAL_SHADERTYPE	shaderType;
 
-	ShaderKey(const TCHAR* filename, const TCHAR* entryname, RAL_SHADERTYPE shadertype) : fileName(filename), entryName(entryname), shaderType(shadertype)
+	ShaderKey(const TCHAR* name, const TCHAR* filename, const TCHAR* entryname, RAL_SHADERTYPE shadertype) : shaderName(name), fileName(filename), entryName(entryname), shaderType(shadertype)
 	{
+	}
+	ShaderKey()
+	{
+	}
+
+	FORCE_INLINE bool operator == (const ShaderKey& key)
+	{
+		return	key.fileName == fileName &&
+				key.entryName == entryName &&
+				key.shaderType == shaderType;
 	}
 };
 
 class ShaderMetaData
 {
 public:
-	ShaderMetaData(RAL_SHADERTYPE type, const TCHAR* shaderName, const TCHAR* fileName, const TCHAR* entryName) :m_ShaderName(shaderName), m_ShaderKey(fileName, entryName, type)
+	ShaderMetaData(RAL_SHADERTYPE type, const TCHAR* shaderName, const TCHAR* fileName, const TCHAR* entryName) :m_ShaderKey(shaderName,fileName, entryName, type)
 	{
 		ShaderManager::GetSingleton().AddShaderMetaData(this);
+	}
+	ShaderMetaData()
+	{
 	}
 	~ShaderMetaData()
 	{
@@ -46,10 +61,22 @@ public:
 		_createShader(bytecode);
 	}
 
+	// serialization
+	friend Archive& operator & (Archive& ar, ShaderMetaData& md)
+	{
+		// serialize shader key
+		ar & md.m_ShaderKey.shaderName;
+		ar & md.m_ShaderKey.fileName;
+		ar & md.m_ShaderKey.entryName;
+
+		uint32 shaderType = 0;
+		ar & shaderType;
+		md.m_ShaderKey.shaderType = (RAL_SHADERTYPE)shaderType;
+
+		return ar;
+	}
+
 	RALShader*		m_Shader = 0;		// Compiled Shader of OGL or D3D
-
-	const TCHAR*	m_ShaderName = 0;	// Name of the shader
-
 	ShaderKey		m_ShaderKey;		// Shader key
 
 private:

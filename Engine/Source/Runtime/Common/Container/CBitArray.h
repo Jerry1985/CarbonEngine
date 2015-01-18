@@ -3,6 +3,7 @@
 #include "Platform\Platform.h"
 #include "Misc\Assertion.h"
 #include "Utility\UtilityMacro.h"
+#include "Core\Archive.h"
 
 class CBitArray
 {
@@ -42,6 +43,35 @@ public:
 	{
 		::operator delete(m_Data);
 		m_Data = 0;
+	}
+
+	friend FORCE_INLINE
+	Archive& operator &(Archive& ar, CBitArray& ba)
+	{
+		if (ar.IsLoading())
+		{
+			ar & ba.m_Size;
+
+			// release the data
+			ba.Release();
+
+			// allocate new data
+			if (ba.m_Size)
+			{
+				ba.m_Data = (uint8*)operator new(ba.m_Size);
+				ar.Serialize(ba.m_Data, ba.m_Size);
+			}
+			else
+			{
+				ba.m_Data = 0;
+			}
+		}
+		else
+		{
+			ar & ba.m_Size;
+			ar.Serialize(ba.m_Data, ba.m_Size);
+		}
+		return ar;
 	}
 
 private:
