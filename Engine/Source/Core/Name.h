@@ -60,7 +60,8 @@ public:
 			CString name;
 			ar & name;
 
-			ba.setup(name);
+			if (!name.IsEmpty())
+				ba.setup(name);
 		}
 		else
 		{

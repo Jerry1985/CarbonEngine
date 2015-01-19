@@ -102,41 +102,10 @@ BaseWindow::BaseWindow(QWidget *parent)
 	CArray<RALVertexElementDesc> layoutDescs;
 	layoutDescs.Add(layoutDesc);
 
-	PlatformFileHandle* handle = PlatformFile::OpenFile(S("E:\\CarbonEngine\\Engine\\Shader\\OpenGL\\vs.shader"));
-	uint32	data_size = handle->Size();
-	char* data = new char[data_size+1];
-	data[data_size] = 0;
-	bool flag = handle->Read((uint8*)data, data_size);
-	delete handle;
-
-	CBitArray vs_bytecode;
-	RALCompileShader((const uint8*)data, data_size, RAL_SHADERTYPE_VERTEXSHADER, vs_bytecode);
-
-	delete[] data;
-
-	handle = PlatformFile::OpenFile(S("E:\\CarbonEngine\\Engine\\Shader\\OpenGL\\ps.shader"));
-	data_size = handle->Size();
-	data = new char[data_size + 1];
-	data[data_size] = 0;
-	flag = handle->Read((uint8*)data, data_size);
-	delete handle;
-
-	CBitArray ps_bytecode;
-	RALCompileShader((const uint8*)data, data_size, RAL_SHADERTYPE_PIXELSHADER, ps_bytecode);
-
-	delete[] data;
-
-#if !D3D11_RAL
-	FlipViewVertexShader::m_ShaderMetaData.CreateShader(vs_bytecode);
-	FlipViewPixelShader::m_ShaderMetaData.CreateShader(ps_bytecode);
-#else
-	FlipViewVertexShader::m_ShaderMetaData.CreateShader(vs_bytecode);
-	FlipViewPixelShader::m_ShaderMetaData.CreateShader(ps_bytecode);
-#endif
-
-	vl = RALCreateVertexLayout(layoutDescs, vs_bytecode);
-
-	shaderstate.SetupGraphics(vl, new FlipViewVertexShader(), new FlipViewPixelShader());
+	FlipViewVertexShader* vs = new FlipViewVertexShader();
+	FlipViewPixelShader* ps = new FlipViewPixelShader();
+	vl = RALCreateVertexLayout(layoutDescs, vs->m_ShaderMetaData.m_CompiledShader);
+	shaderstate.SetupGraphics(vl, vs, ps);
 
 	// Setup the viewport
 	RALViewport vp(size().width(), size().height());

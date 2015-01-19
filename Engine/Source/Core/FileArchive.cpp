@@ -8,6 +8,11 @@ FileArchive::FileArchive(const TCHAR* name, bool loading) : Archive(loading), m_
 {
 }
 
+FileReadArchive::~FileReadArchive()
+{
+	CloseFileArchive();
+}
+
 FileReadArchive::FileReadArchive(const TCHAR* filename) : FileArchive(filename,true)
 {
 	m_FileHandle = PlatformFile::OpenFile(filename, true);
@@ -26,7 +31,7 @@ void FileReadArchive::Serialize(void* V, uint32 length)
 	if (V == 0 || length == 0)
 		return;
 
-	if (!m_FileHandle || m_CurrentBufferPos > m_FileSize)
+	if (!m_FileHandle || m_CurrentBufferPos >= m_FileSize)
 	{
 		CARBON_LOG(LOG_WARNING, LOG_FILE, S("File archive serialization error: ") + m_FileName.ToString());
 
@@ -65,7 +70,7 @@ void FileReadArchive::Serialize(void* V, uint32 length)
 // Close the file archive
 void FileReadArchive::CloseFileArchive()
 {
-	CloseFileArchive();
+	SAFE_DELETE(m_FileHandle);
 }
 
 FileWriteArchive::FileWriteArchive(const TCHAR* filename) : FileArchive(filename,false)

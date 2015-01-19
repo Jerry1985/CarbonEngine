@@ -1,7 +1,10 @@
 #pragma once
 
-// Cook Shader cache
-bool	CookGlobalShaderCache();
-
 // Load Global Shaders from Shader Cache
-bool	LoadFromShaderCache();
+void	LoadFromShaderCache();
+
+// Check global shader cache
+void	CheckGlobalShaderCache();
+
+// Save Shader cache
+bool	SaveGlobalShaderCache();

@@ -445,11 +445,17 @@ public:
 		if (ar.IsLoading())
 		{
 			ar & arr.m_totalCount;
-			arr.Allocate(arr.m_totalCount);
 
-			ar & arr.m_currentCount;
-			for (int i = 0; i < arr.m_currentCount; ++i)
-				ar & arr.m_data[i];
+			if (arr.m_totalCount)
+			{
+				arr.Allocate(arr.m_totalCount);
+
+				ar & arr.m_currentCount;
+				for (int i = 0; i < arr.m_currentCount; ++i)
+					ar & arr.m_data[i];
+			}
+			else
+				arr.Release();
 		}
 		else
 		{

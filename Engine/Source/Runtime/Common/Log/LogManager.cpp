@@ -117,12 +117,15 @@ const CString&	LogManager::_formatCatagory(uint32 level)
 #define	DEFINE_LOG_STR(log)	static const CString str##log(S(#log))
 	DEFINE_LOG_STR(LOG_GENERAL);
 	DEFINE_LOG_STR(LOG_RENDERER);
+	DEFINE_LOG_STR(LOG_FILE);
 	DEFINE_LOG_STR(LOG_NONE);
 
 	if (LOG_GENERAL & level)
 		return strLOG_GENERAL;
 	else if (LOG_RENDERER & level)
 		return strLOG_RENDERER;
+	else if (LOG_FILE & level)
+		return strLOG_FILE;
 
 	return strLOG_NONE;
 }

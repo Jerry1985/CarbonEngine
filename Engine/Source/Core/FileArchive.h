@@ -29,6 +29,7 @@ class FileReadArchive : public FileArchive
 {
 public:
 	FileReadArchive(const TCHAR* filename);
+	~FileReadArchive();
 
 	// Serialize
 	virtual void	Serialize(void* V, uint32 length);

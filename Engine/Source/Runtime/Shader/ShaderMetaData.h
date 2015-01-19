@@ -26,6 +26,28 @@ struct ShaderKey
 	{
 	}
 
+	// serialization
+	friend Archive& operator & (Archive& ar, ShaderKey& key)
+	{
+		// serialize shader key
+		ar & key.shaderName;
+		ar & key.fileName;
+		ar & key.entryName;
+
+		if (ar.IsLoading())
+		{
+			uint32 shaderType = 0;
+			ar & shaderType;
+			key.shaderType = (RAL_SHADERTYPE)shaderType;
+		}
+		else
+		{
+			uint32 shaderType = (uint32)key.shaderType;
+			ar & shaderType;
+		}
+		return ar;
+	}
+
 	FORCE_INLINE bool operator == (const ShaderKey& key)
 	{
 		return	key.fileName == fileName &&
@@ -56,28 +78,15 @@ public:
 	}
 
 	// create shader from byte code (GL byte code is hardware and driver dependent. Shader cache needs to be flushed if either of them is changed.)
-	void CreateShader(const CBitArray& bytecode)
+	void CreateShader()
 	{
-		_createShader(bytecode);
-	}
-
-	// serialization
-	friend Archive& operator & (Archive& ar, ShaderMetaData& md)
-	{
-		// serialize shader key
-		ar & md.m_ShaderKey.shaderName;
-		ar & md.m_ShaderKey.fileName;
-		ar & md.m_ShaderKey.entryName;
-
-		uint32 shaderType = 0;
-		ar & shaderType;
-		md.m_ShaderKey.shaderType = (RAL_SHADERTYPE)shaderType;
-
-		return ar;
+		_createShader(m_CompiledShader);
 	}
 
 	RALShader*		m_Shader = 0;		// Compiled Shader of OGL or D3D
 	ShaderKey		m_ShaderKey;		// Shader key
+
+	CBitArray		m_CompiledShader;
 
 private:
 	FORCE_INLINE void _createShader(const CBitArray& bytecode)

@@ -38,6 +38,11 @@ public:
 		return m_Data;
 	}
 
+	FORCE_INLINE bool IsEmpty() const
+	{
+		return m_Size == 0;
+	}
+
 	// Release data
 	FORCE_INLINE void Release()
 	{

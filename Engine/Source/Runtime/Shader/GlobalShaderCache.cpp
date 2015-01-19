@@ -10,13 +10,13 @@
 #include "Common\Log\Log.h"
 
 // Get Shader meta data
-ShaderMetaData*	GetShaderMetaData(const ShaderMetaData* metaData)
+ShaderMetaData*	GetShaderMetaData(const ShaderKey& key)
 {
 	CArray<ShaderMetaData*>& metaDatas = ShaderManager::GetSingleton().GetShaderMetaData();
 	CArrayIterator<ShaderMetaData*> it(metaDatas);
 	while (!it.IsEnd())
 	{
-		if ((*it)->m_ShaderKey == metaData->m_ShaderKey)
+		if ((*it)->m_ShaderKey == key)
 			return (*it);
 		++it;
 	}
@@ -24,7 +24,7 @@ ShaderMetaData*	GetShaderMetaData(const ShaderMetaData* metaData)
 }
 
 // Cook Shader cache
-bool	CookGlobalShaderCache()
+bool	SaveGlobalShaderCache()
 {
 	const CString shaderSourceFolder(GetGlobalShaderCacheFolderName());
 	const CString filename(GetGlobalShaderCacheFileName());
@@ -34,26 +34,14 @@ bool	CookGlobalShaderCache()
 	CArrayIterator<ShaderMetaData*> it(metaDatas);
 
 	// total number of global shaders
-	int totalNum = metaDatas.GetSize();
+	int totalNum = metaDatas.GetCount();
 	ar & totalNum;
 
 	while (!it.IsEnd())
 	{
 		ShaderMetaData* metaData = *it;
-		/*
-		PlatformFileHandle* shaderSrc = PlatformFile::OpenFile(shaderfile);
-		uint32	data_size = shaderSrc->Size();
-		char* data = new char[data_size + 1];
-		data[data_size] = 0;
-		bool flag = shaderSrc->Read((uint8*)data, data_size);
-		delete shaderSrc;
-
-		CBitArray bytecode;
-		RALCompileShader((const uint8*)data, data_size, metaData->m_ShaderKey.shaderType, bytecode);
-
-		delete[] data;
-		*/
-		ar & *metaData;
+		ar & metaData->m_ShaderKey;
+		ar & metaData->m_CompiledShader;
 		
 		++it;
 	}
@@ -61,8 +49,55 @@ bool	CookGlobalShaderCache()
 	return true;
 }
 
+void	CheckGlobalShaderCache()
+{
+	bool bSaveGlobalShaderCache = false;
+
+	const CString shaderSourceFolder(GetGlobalShaderCacheFolderName());
+
+	CArray<ShaderMetaData*>& metaDatas = ShaderManager::GetSingleton().GetShaderMetaData();
+	CArrayIterator<ShaderMetaData*> it(metaDatas);
+
+	while (!it.IsEnd())
+	{
+		ShaderMetaData* metaData = *it;
+
+		if (metaData && metaData->m_CompiledShader.IsEmpty())
+		{
+			CARBON_LOG(LOG_WARNING, LOG_RENDERER, S("Missing global shader ") + metaData->m_ShaderKey.shaderName.ToString() + S(" in global shader cache file.") );
+
+			CString shaderfile = shaderSourceFolder + metaData->m_ShaderKey.fileName.ToString();
+
+			// Load the file
+			PtrProxy<PlatformFileHandle> shaderSrc(PlatformFile::OpenFile(shaderfile));
+			uint32	data_size = shaderSrc->Size();
+			char* data = new char[data_size + 1];
+			data[data_size] = 0;
+			bool flag = shaderSrc->Read((uint8*)data, data_size);
+
+			// Compile shader
+			RALCompileShader((const uint8*)data, data_size, metaData->m_ShaderKey.shaderType, metaData->m_CompiledShader);
+
+			// Delete Data
+			delete[] data;
+
+			// save global shade cache
+			bSaveGlobalShaderCache = true;
+		}
+
+		++it;
+	}
+
+	if (bSaveGlobalShaderCache)
+	{
+		CARBON_LOG(LOG_WARNING, LOG_RENDERER, S("Save global shader cache file."));
+
+		SaveGlobalShaderCache();
+	}
+}
+
 // Load Global Shaders from Shader Cache
-bool	LoadFromShaderCache()
+void	LoadFromShaderCache()
 {
 	const CString shaderSourceFolder(GetGlobalShaderCacheFolderName());
 	const CString filename(GetGlobalShaderCacheFileName());
@@ -77,27 +112,18 @@ bool	LoadFromShaderCache()
 	for (int i = 0; i < totalNum; ++i)
 	{
 		ShaderMetaData md;
-		ar & md;
+		ar & md.m_ShaderKey;
 
-		bool found = false;
-		while (!it.IsEnd())
+		ShaderMetaData* pmd = GetShaderMetaData(md.m_ShaderKey);
+
+		if (!pmd)
 		{
-			ShaderMetaData* metaData = *it;
-
-			if (md.m_ShaderKey == metaData->m_ShaderKey)
-			{
-				found = true;
-				break;
-			}
-
-			++it;
-		}
-
-		if (!found)
+			CARBON_LOG(LOG_WARNING, LOG_RENDERER, S("Shader type ") + md.m_ShaderKey.shaderName.ToString() + S(" is not a valid one."));
+			continue;
+		}else
 		{
-			int a = 0;
+			// serialize compiled shader
+			ar & pmd->m_CompiledShader;
 		}
 	}
-
-	return false;
 }
