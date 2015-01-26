@@ -23,34 +23,3 @@ public:
 	virtual const CArray<RALVertexElementDesc>& GetVertexLayoutDesc() const = 0;
 	virtual const RALVertexLayout* GetRALVertexLayout() const = 0;
 };
-
-class PipelineBoundState
-{
-public:
-	PipelineBoundState();
-	~PipelineBoundState();
-
-	// Setup shader bound state
-	void	SetupGraphics(VertexShader* vs, Shader* ps, Shader* hs = 0, Shader* ds = 0, Shader* gs = 0);
-	// Setup compute shader
-	void	SetupCompute(Shader* cs);
-
-	// bind the shader states
-	void	Bind();
-
-	// release shader bound state
-	void	Release();
-
-private:
-	VertexShader*	m_VertexShader = 0;
-	Shader*	m_PixelShader = 0;
-	Shader*	m_HullShader = 0;
-	Shader*	m_DomainShader = 0;
-	Shader*	m_GeometryShader = 0;
-
-	Shader*	m_ComputeShader = 0;
-
-	RALPipelineBoundState*	m_ShaderBoundState = 0;
-
-	const RALVertexLayout*	m_VertexLayout = 0;
-};

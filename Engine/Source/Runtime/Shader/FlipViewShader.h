@@ -9,6 +9,7 @@ public:
 	DECLARE_SHADER_VERTEX_LAYOUT(FlipViewVertexShader);
 
 	FlipViewVertexShader();
+	~FlipViewVertexShader();
 
 	// Initialize
 	void Init();

@@ -2,28 +2,23 @@
 //
 
 #include <windows.h>
-#include <QtWidgets/QApplication>
-#include "../UI/Base/basewindow.h"
-#include "Common\Log\Log.h"
+#include "Core\Engine.h"
 
 int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
 	_In_ LPSTR     lpCmdLine,
 	_In_ int       nCmdShow)
 {
-	EnableLog();
-	AddPlatformLogContext();
-	AddFileLogContext(S("carbon.log"));
+	Engine engine = GetEngine();
 
-	// No need to pass the real parameter to QT
-	int argc = 0;
-	char argv[] = "";
-	QApplication a(argc, (char**)&argv);
+	// Initialize Game Engine
+	engine.Init();
 
-	BaseWindow p;
-	p.show();
+	// Run Game Engine
+	engine.Run();
 
-	LogManager::DeleteSingleton();
+	// Destroy Game Engine
+	engine.Destroy();
 
-	return a.exec();
+	return 0;
 }

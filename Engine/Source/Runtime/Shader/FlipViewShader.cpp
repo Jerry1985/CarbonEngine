@@ -21,6 +21,11 @@ FlipViewVertexShader::FlipViewVertexShader()
 	}
 }
 
+FlipViewVertexShader::~FlipViewVertexShader()
+{
+	Release();
+}
+
 // Initialize
 void FlipViewVertexShader::Init()
 {

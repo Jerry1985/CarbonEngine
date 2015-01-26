@@ -3,6 +3,7 @@
 
 #include <QtWidgets/QMainWindow>
 #include "ui_basewindow.h"
+#include "Core\ViewRenderer.h"
 
 class BaseWindow : public QMainWindow
 {
@@ -17,8 +18,15 @@ public:
 	
 	virtual QPaintEngine* paintEngine() const { return NULL; }
 
+	// setup view renderer
+	void setupViewRenderer(ViewRenderer* vr);
+
 private:
 	Ui::BaseWindowClass ui;
+
+	ViewRenderer*	m_ViewRenderer = 0;
+
+	RALView*		m_View = 0;
 };
 
 #endif // BASEWINDOW_H
