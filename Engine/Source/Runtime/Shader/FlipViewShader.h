@@ -2,16 +2,22 @@
 
 #include "Shader.h"
 
-class FlipViewVertexShader : public Shader
+class FlipViewVertexShader : public VertexShader
 {
 public:
-	// to be changed to private
 	DECLARE_SHADER(FlipViewVertexShader);
+	DECLARE_SHADER_VERTEX_LAYOUT(FlipViewVertexShader);
+
+	FlipViewVertexShader();
+
+	// Initialize
+	void Init();
+	// Release
+	void Release();
 };
 
 class FlipViewPixelShader : public Shader
 {
 public:
-	// to be changed to private
 	DECLARE_SHADER(FlipViewPixelShader);
 };

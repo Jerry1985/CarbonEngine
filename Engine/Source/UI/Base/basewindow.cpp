@@ -19,7 +19,6 @@
 #include "Container\CBitArray.h"
 #include "Shader\GlobalShaders.h"
 
-#define TWO_VIEWS 0
 #define D3D11_RAL 1
 
 RALRenderTarget* m_rt;
@@ -30,7 +29,7 @@ RALVertexLayout*		vl = 0;
 
 RALView*				pView;
 
-ShaderBoundState		shaderstate;
+PipelineBoundState		shaderstate;
 
 extern RAL_RENDERER	gRendererType;
 
@@ -54,11 +53,6 @@ BaseWindow::BaseWindow(QWidget *parent)
 	LoadGlobalShaders();
 
 	pView = RALCreateView((void*)winId(), size().width(), size().height(), false, RAL_FORMAT_R8G8B8A8_UNORM);
-
-#if TWO_VIEWS
-	frame1 = new MyFrame("Carbon Engine", wxPoint(690, 50), wxSize(640, 720));
-	frame1->Show(true);
-#endif
 
 	//	m_rt = RALCreateRenderTarget(size().width(), size().height(), RAL_FORMAT_R16G16_UNORM);
 
@@ -92,24 +86,9 @@ BaseWindow::BaseWindow(QWidget *parent)
 		ib->Unmap();
 	}
 
-	RALVertexElementDesc layoutDesc;
-	layoutDesc.attributeIndex = 0;
-	layoutDesc.offset = 0;
-	layoutDesc.streamIndex = 0;
-	layoutDesc.type = RAL_VERTEXELEMENTTYPE_FLOAT3;
-	layoutDesc.useInstanceIndex = false;
-
-	CArray<RALVertexElementDesc> layoutDescs;
-	layoutDescs.Add(layoutDesc);
-
-	FlipViewVertexShader* vs = new FlipViewVertexShader();
-	FlipViewPixelShader* ps = new FlipViewPixelShader();
-	vl = RALCreateVertexLayout(layoutDescs, vs->m_ShaderMetaData.m_CompiledShader);
-	shaderstate.SetupGraphics(vl, vs, ps);
-
-	// Setup the viewport
-	RALViewport vp(size().width(), size().height());
-	RALSetViewport(vp);
+	FlipViewVertexShader& vs = GetGlobalShader<FlipViewVertexShader>();
+	FlipViewPixelShader& ps = GetGlobalShader<FlipViewPixelShader>();
+	shaderstate.SetupGraphics(&vs, &ps);
 }
 
 BaseWindow::~BaseWindow()
@@ -142,23 +121,4 @@ void BaseWindow::paintEvent(QPaintEvent *e)
 	RALDrawIndexed(6);
 
 	RALEndRender(pView);
-
-#if TWO_VIEWS
-	RALBeginRender(frame1->view);
-
-	RALClear(1, Color::RED, 1.0f);
-
-	// Set the input layout
-	RALSetVertexLayout(vl);
-
-	RALSetPrimitiveType(RAL_PRIMITIVE_TRIANGLELIST);
-	RALSetVertexBuffers(0, 1, vb);
-	RALSetIndexBuffer(ib);
-
-	RALSetVertexShader(pVS);
-	RALSetPixelShader(pPS);
-	RALDrawIndexed(6);
-
-	RALEndRender(frame1->view);
-#endif
 }

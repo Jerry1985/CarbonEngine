@@ -113,5 +113,12 @@ private:
 #define DECLARE_SHADER(Shader)				\
 	static ShaderMetaData m_ShaderMetaData; \
 	const RALShader* GetRALShader() const { return m_ShaderMetaData.m_Shader; }
-	
+#define	DECLARE_SHADER_VERTEX_LAYOUT(Shader)		\
+	static CArray<RALVertexElementDesc> m_VertexLayoutDesc; \
+	static RALVertexLayout*	m_VertexLayout; \
+	const CArray<RALVertexElementDesc>& GetVertexLayoutDesc() const { return m_VertexLayoutDesc; } \
+	const RALVertexLayout* GetRALVertexLayout() const { return m_VertexLayout; }
+
 #define DEFINE_SHADER(Shader, ShaderType, ShaderName, ShaderFile, ShaderEntry)	ShaderMetaData Shader::m_ShaderMetaData(RAL_SHADERTYPE_##ShaderType, ShaderName, ShaderFile, ShaderEntry);
+#define DEFINE_SHADER_VERTEX_LAYOUT(Shader) CArray<RALVertexElementDesc> Shader::m_VertexLayoutDesc;\
+	RALVertexLayout* Shader::m_VertexLayout = 0;

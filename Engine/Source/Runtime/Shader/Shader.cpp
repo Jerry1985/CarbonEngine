@@ -3,29 +3,22 @@
 #include "Renderer\Common\RALVertexLayout.h"
 #include "Renderer\Common\RALPipelineBoundState.h"
 
-Shader::Shader()
+
+PipelineBoundState::PipelineBoundState()
 {
 }
 
-Shader::~Shader()
-{
-}
-
-ShaderBoundState::ShaderBoundState()
-{
-}
-
-ShaderBoundState::~ShaderBoundState()
+PipelineBoundState::~PipelineBoundState()
 {
 	Release();
 }
 
-void ShaderBoundState::SetupGraphics(RALVertexLayout* layout, Shader* vs, Shader* ps, Shader* hs, Shader* ds, Shader* gs)
+void PipelineBoundState::SetupGraphics(VertexShader* vs, Shader* ps, Shader* hs, Shader* ds, Shader* gs)
 {
 	// Release shader bound state first
 	Release();
 
-	m_VertexLayout = layout;
+	m_VertexLayout = vs->GetRALVertexLayout();
 
 	m_VertexShader = vs;
 	m_PixelShader = ps;
@@ -38,7 +31,7 @@ void ShaderBoundState::SetupGraphics(RALVertexLayout* layout, Shader* vs, Shader
 }
 
 // Setup compute shader
-void	ShaderBoundState::SetupCompute(Shader* cs)
+void	PipelineBoundState::SetupCompute(Shader* cs)
 {
 	// Release shader bound state first
 	Release();
@@ -47,7 +40,7 @@ void	ShaderBoundState::SetupCompute(Shader* cs)
 }
 
 // bind the shader states
-void ShaderBoundState::Bind()
+void PipelineBoundState::Bind()
 {
 	if (m_ComputeShader)
 	{
@@ -58,15 +51,7 @@ void ShaderBoundState::Bind()
 }
 
 // release shader bound state
-void ShaderBoundState::Release()
+void PipelineBoundState::Release()
 {
-	SAFE_DELETE(m_VertexLayout);
-
 	SAFE_DELETE(m_ShaderBoundState);
-
-	SAFE_DELETE(m_VertexShader);
-	SAFE_DELETE(m_PixelShader);
-	SAFE_DELETE(m_HullShader);
-	SAFE_DELETE(m_DomainShader);
-	SAFE_DELETE(m_GeometryShader);
 }

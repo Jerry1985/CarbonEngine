@@ -1,29 +1,37 @@
 #pragma once
 
+#include "Core\Resource.h"
 #include "ShaderMetaData.h"
+#include "Common\Container\CArray.h"
+#include "Renderer\Common\RALVertexLayout.h"
 
 class RALShader;
 class RALVertexLayout;
 class RALPipelineBoundState;
 
-class Shader
+class Shader : public Resource
 {
 public:
-	Shader();
-	~Shader();
-
 	// get ral shader
 	virtual const RALShader*	GetRALShader() const = 0;
 };
 
-class ShaderBoundState
+class VertexShader : public Shader
 {
 public:
-	ShaderBoundState();
-	~ShaderBoundState();
+	// get vertex layout desc
+	virtual const CArray<RALVertexElementDesc>& GetVertexLayoutDesc() const = 0;
+	virtual const RALVertexLayout* GetRALVertexLayout() const = 0;
+};
+
+class PipelineBoundState
+{
+public:
+	PipelineBoundState();
+	~PipelineBoundState();
 
 	// Setup shader bound state
-	void	SetupGraphics(RALVertexLayout* layout, Shader* vs, Shader* ps, Shader* hs = 0, Shader* ds = 0, Shader* gs = 0);
+	void	SetupGraphics(VertexShader* vs, Shader* ps, Shader* hs = 0, Shader* ds = 0, Shader* gs = 0);
 	// Setup compute shader
 	void	SetupCompute(Shader* cs);
 
@@ -34,7 +42,7 @@ public:
 	void	Release();
 
 private:
-	Shader*	m_VertexShader = 0;
+	VertexShader*	m_VertexShader = 0;
 	Shader*	m_PixelShader = 0;
 	Shader*	m_HullShader = 0;
 	Shader*	m_DomainShader = 0;
@@ -44,5 +52,5 @@ private:
 
 	RALPipelineBoundState*	m_ShaderBoundState = 0;
 
-	RALVertexLayout*	m_VertexLayout = 0;
+	const RALVertexLayout*	m_VertexLayout = 0;
 };
